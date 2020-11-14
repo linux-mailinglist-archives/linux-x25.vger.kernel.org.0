@@ -2,80 +2,160 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03CAA2B229B
-	for <lists+linux-x25@lfdr.de>; Fri, 13 Nov 2020 18:36:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id ACA742B2CBD
+	for <lists+linux-x25@lfdr.de>; Sat, 14 Nov 2020 11:36:56 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726309AbgKMRgB (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 13 Nov 2020 12:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60368 "EHLO
+        id S1726662AbgKNKgg (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sat, 14 Nov 2020 05:36:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726136AbgKMRgB (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 13 Nov 2020 12:36:01 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF549C0613D1;
-        Fri, 13 Nov 2020 09:36:00 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id f38so7657071pgm.2;
-        Fri, 13 Nov 2020 09:36:00 -0800 (PST)
+        with ESMTP id S1726654AbgKNKgf (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sat, 14 Nov 2020 05:36:35 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BAA6C0613D1;
+        Sat, 14 Nov 2020 02:36:34 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id a18so9610788pfl.3;
+        Sat, 14 Nov 2020 02:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WFsk02laB2PDDhAOiODMzXvVIH4r8zq9tMa2KeyB7uA=;
-        b=jqh5zy0G6VIg6y9se75gO+rCuuIvg76Zil/R7l1BFUvapWlGNihGiHAeY9Xuy7Rtlg
-         GDz9kqT9o5xMsuv554cWSJDLLecJlAOJhQx4YZb+rlwsKyJu6Ttkjxa/vmc27zPXKyi8
-         ong4H7vo4lsyWSkZIVqlj2NpAzA11tJ81k2QTDTSaCqM/2VhKfwHSp7m9Nf/WHqg3Bbk
-         DXLDxh9U7K8wh1U46pcoOHXLsW7uTVK9pFrErJGXNQ7AHv9+IMGLjHoJ2dqVZ467zrdo
-         1mOAxh9hB6ey2MQDXmIHJdxEyIt1meyF2VpyZLvsZ+jAcaBwYaKv2xsdQ6Bi3H34hTPH
-         T2XQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=XAjBGR7iclPjW0tNCUwr8SXUNRUreYnvO/cfmqFTPjo=;
+        b=KJW8kXjv9GGD1QrIgTokGsdExtsYBeB6XJbPYn9g45NXqz0fq2+ZiljDO4CIEDs48A
+         mLi4SNIL31tO6FkuQcTg1Dh/ntG3xzZZ3UI0hZkgUrVU4BnU77nTggzAVaOViPOKQBUp
+         N5q0HhyZh40s7b5qOijNy8W1roDXZEdQAtTzxg2tAvO2saTbUtyS3rO470Wi046NNo4f
+         j/NUB/U0Px3H2J+hKjTYvSWAZRRRZV56ME6u2F/M0S9w44gMgwMz4I49ddnEq1e69sDi
+         Pmna+X34DU3mTvPdn+XBlFkeE3KCJNWDACZsso2VbgNJTlM+oUFqj3XnexXRXZ7fyMbI
+         jdLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WFsk02laB2PDDhAOiODMzXvVIH4r8zq9tMa2KeyB7uA=;
-        b=kwDu/XnS4UnLmQty/RTyv0Eo0K7F6vxUsOnkuuE1LL3B9CLVKqst2imSGXeavs5t3F
-         QIo0RPQ3SQfsIPDh6GLy7TtDJTdR4PSruv+3PiQUqY3HGRtrDTQuHHp/PutC9xQK/i4j
-         FSdMfyWtaKzvtHVh+zeeewDL/rsTV6dyMbgF53oTR8GkgAp8bYdmMiSaHZmRK86NVdgP
-         y8oA8xFVJLLWc+5pR5gAOoBvonsh4Auk6UsS0ybRMoO69cIcZqMOufq2VfEkEUBNmsZd
-         hAGSRZOXL+DlmqllclrFx04KLl+z9/Ln+GCU0m0dtkmpFXqJ3Tgd4UCq4Mnt+m7uLKMV
-         JwSw==
-X-Gm-Message-State: AOAM533Psf5PpcYFPb+IU7ZF+tMcfZ7UQ80dUG5D8FUkvF43yraLA9OZ
-        3xNvdI6awu8jQzrrlvliw8UmvVZNWbpoih+IaQg=
-X-Google-Smtp-Source: ABdhPJy+W3bCjZfmVpQsSHdQpUOksuFNhp0ghlUTkyAogGTJrQb9McWj4gcOg9J2GF2E0hkXYXxtbDOf+blwL3UlFow=
-X-Received: by 2002:aa7:83c2:0:b029:156:5ece:98b6 with SMTP id
- j2-20020aa783c20000b02901565ece98b6mr3008556pfn.4.1605288955357; Fri, 13 Nov
- 2020 09:35:55 -0800 (PST)
-MIME-Version: 1.0
-References: <CAJht_EMXvAEtKfivV2K-mC=0=G1n2_yQAZduSt7rxRV+bFUUMQ@mail.gmail.com>
- <ed5b91db-fea9-99ff-59b7-fa0ffb810291@kernel.org> <f3b2c6ea4185226ad4058ed8a70ffb52@dev.tdt.de>
-In-Reply-To: <f3b2c6ea4185226ad4058ed8a70ffb52@dev.tdt.de>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=XAjBGR7iclPjW0tNCUwr8SXUNRUreYnvO/cfmqFTPjo=;
+        b=rNwfCC6af6FTiV9vRmaRn+J0TiOYjwTrlqyfKd8uGug9SMqmSuE0zTonyhwJc+BsOC
+         CQ1SVuTQxEXdvWCIAc+PG+SBOMAhearRn9Ei+nYt7iEN4xoVOAzcs0QiC/RpCnGL1zYK
+         mRDst9m1kpr2EUlAAIWRiY0TF3pcaBEZcdvgHd42OlTO+LZT4GOo6XOtni74trso3KxB
+         6QOfXhPK2FruUOMOBIxqK/l5zUL8U7RCnliaWbNWHnw/D3PbVpIRUXz9dF3zp04Evk0R
+         DcubGsMDsxDTL4wFre0n0vTA3qSNPNlNk1qNAmfPaiAxac0ksAUlfjIjfxHR+Xh4XTUX
+         YyDQ==
+X-Gm-Message-State: AOAM530h1uGXkLGA3D20UKlx56ob5FyLadl68CYRJIekBOGK53VORNgN
+        zqeiTSiggJ2/mgngYesCkOA=
+X-Google-Smtp-Source: ABdhPJwmwOtOxshKZnr8kn0P2KmDS1dd5X5noMm1loRcid1UpaNMuNkxbSx07cTHoiGP5ViNRNxjcw==
+X-Received: by 2002:a05:6a00:6:b029:18b:b5a:494c with SMTP id h6-20020a056a000006b029018b0b5a494cmr5909198pfk.81.1605350193601;
+        Sat, 14 Nov 2020 02:36:33 -0800 (PST)
+Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:98a0:19b2:d60d:c0c7])
+        by smtp.gmail.com with ESMTPSA id z22sm12423225pfa.220.2020.11.14.02.36.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Nov 2020 02:36:33 -0800 (PST)
 From:   Xie He <xie.he.0141@gmail.com>
-Date:   Fri, 13 Nov 2020 09:35:44 -0800
-Message-ID: <CAJht_ENUEN3WTcHA3U=oX6bkqE_tkxmpP0Q8QConRvx+z7CO7w@mail.gmail.com>
-Subject: Re: linux-x25 mail list not working
-To:     Martin Schiller <ms@dev.tdt.de>
-Cc:     "John 'Warthog9' Hawley" <warthog9@kernel.org>,
-        postmaster@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Arnd Bergmann <arnd@kernel.org>,
-        Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux X25 <linux-x25@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Jakub Kicinski <kuba@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Martin Schiller <ms@dev.tdt.de>
+Cc:     Xie He <xie.he.0141@gmail.com>
+Subject: [PATCH net] net: x25: Correct locking for x25_kill_by_device and x25_kill_by_neigh
+Date:   Sat, 14 Nov 2020 02:36:25 -0800
+Message-Id: <20201114103625.323919-1-xie.he.0141@gmail.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Thu, Nov 12, 2020 at 9:28 PM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> On 2020-11-13 03:17, John 'Warthog9' Hawley wrote:
-> > Give it a try now, there was a little wonkiness with the alias setup
-> > for it, and I have no historical context for a 'why', but I adjusted a
-> > couple of things and I was able to subscribe myself.
-> >
-> > - John 'Warthog9' Hawley
->
-> Thanks a lot John! Now it seems to work again.
+When the x25_connect function and the x25_disconnect function decrease
+the refcnt of "x25->neighbour" (struct x25_neigh) and reset this pointer
+to NULL, they would hold the x25_list_lock read lock. This is weird,
+because x25_list_lock is meant to protect x25_list, and neither the
+refcnt of "struct x25_neigh" nor the "x25->neighbour" pointer is related
+to x25_list itself.
 
-Thank you John!! I see the mail archive at
-https://www.spinics.net/lists/linux-x25/ is also working again!
+I checked the commit history. The author who added the locking in
+x25_disconnect didn't explain why in the commit message. I think they
+probably just copied the code from x25_connect. The author who added
+the locking in x25_connect did this probably because he wanted to
+protect the code from racing with x25_kill_by_device.
+
+However, I think this is not the correct way to protect from racing
+between x25_connect and x25_kill_by_device. The correct way should be
+letting x25_kill_by_device hold the appropriate sock lock instead.
+For x25_disconnect, holding x25_list_lock not only is incorrect, but also
+causes deadlock, because x25_disconnect is called by x25_kill_by_device
+with the x25_list_lock write lock held.
+
+For x25_kill_by_neigh, the situation is the same as x25_kill_by_device.
+
+This patch adds correct locking for x25_kill_by_device and
+x25_kill_by_neigh, and removes the incorrect locking in x25_connect and
+x25_disconnect.
+
+Fixes: 4becb7ee5b3d ("net/x25: Fix x25_neigh refcnt leak when x25 disconnect")
+Fixes: 95d6ebd53c79 ("net/x25: fix use-after-free in x25_device_event()")
+Cc: Martin Schiller <ms@dev.tdt.de>
+Signed-off-by: Xie He <xie.he.0141@gmail.com>
+---
+ net/x25/af_x25.c   | 12 ++++++++----
+ net/x25/x25_subr.c |  2 --
+ 2 files changed, 8 insertions(+), 6 deletions(-)
+
+diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
+index a10487e7574c..50f043f0c1d0 100644
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -208,9 +208,12 @@ static void x25_kill_by_device(struct net_device *dev)
+ 
+ 	write_lock_bh(&x25_list_lock);
+ 
+-	sk_for_each(s, &x25_list)
++	sk_for_each(s, &x25_list) {
++		bh_lock_sock(s);
+ 		if (x25_sk(s)->neighbour && x25_sk(s)->neighbour->dev == dev)
+ 			x25_disconnect(s, ENETUNREACH, 0, 0);
++		bh_unlock_sock(s);
++	}
+ 
+ 	write_unlock_bh(&x25_list_lock);
+ }
+@@ -826,10 +829,8 @@ static int x25_connect(struct socket *sock, struct sockaddr *uaddr,
+ 	rc = 0;
+ out_put_neigh:
+ 	if (rc && x25->neighbour) {
+-		read_lock_bh(&x25_list_lock);
+ 		x25_neigh_put(x25->neighbour);
+ 		x25->neighbour = NULL;
+-		read_unlock_bh(&x25_list_lock);
+ 		x25->state = X25_STATE_0;
+ 	}
+ out_put_route:
+@@ -1773,9 +1774,12 @@ void x25_kill_by_neigh(struct x25_neigh *nb)
+ 
+ 	write_lock_bh(&x25_list_lock);
+ 
+-	sk_for_each(s, &x25_list)
++	sk_for_each(s, &x25_list) {
++		bh_lock_sock(s);
+ 		if (x25_sk(s)->neighbour == nb)
+ 			x25_disconnect(s, ENETUNREACH, 0, 0);
++		bh_unlock_sock(s);
++	}
+ 
+ 	write_unlock_bh(&x25_list_lock);
+ 
+diff --git a/net/x25/x25_subr.c b/net/x25/x25_subr.c
+index 0285aaa1e93c..6c0f94257f7c 100644
+--- a/net/x25/x25_subr.c
++++ b/net/x25/x25_subr.c
+@@ -358,10 +358,8 @@ void x25_disconnect(struct sock *sk, int reason, unsigned char cause,
+ 		sock_set_flag(sk, SOCK_DEAD);
+ 	}
+ 	if (x25->neighbour) {
+-		read_lock_bh(&x25_list_lock);
+ 		x25_neigh_put(x25->neighbour);
+ 		x25->neighbour = NULL;
+-		read_unlock_bh(&x25_list_lock);
+ 	}
+ }
+ 
+-- 
+2.27.0
+
