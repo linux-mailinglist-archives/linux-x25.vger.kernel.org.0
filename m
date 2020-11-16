@@ -2,97 +2,115 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50EAF2B4574
-	for <lists+linux-x25@lfdr.de>; Mon, 16 Nov 2020 15:03:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F5FE2B4C1C
+	for <lists+linux-x25@lfdr.de>; Mon, 16 Nov 2020 18:07:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730234AbgKPOB5 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 16 Nov 2020 09:01:57 -0500
-Received: from mxout70.expurgate.net ([194.37.255.70]:56403 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729722AbgKPOB5 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 16 Nov 2020 09:01:57 -0500
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.90)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kef4r-0001x9-8K; Mon, 16 Nov 2020 15:01:53 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kef4q-0007jm-7n; Mon, 16 Nov 2020 15:01:52 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id BDC19240049;
-        Mon, 16 Nov 2020 15:01:51 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 3FC71240047;
-        Mon, 16 Nov 2020 15:01:51 +0100 (CET)
-Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
-        by mail.dev.tdt.de (Postfix) with ESMTPSA id ECB6B21F0F;
-        Mon, 16 Nov 2020 15:01:50 +0100 (CET)
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        xie.he.0141@gmail.com
-Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
-Subject: [PATCH net-next v2 6/6] net/lapb: fix t1 timer handling
-Date:   Mon, 16 Nov 2020 14:55:28 +0100
-Message-ID: <20201116135522.21791-7-ms@dev.tdt.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20201116135522.21791-1-ms@dev.tdt.de>
+        id S1732436AbgKPRF1 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Mon, 16 Nov 2020 12:05:27 -0500
+Received: from eu-smtp-delivery-151.mimecast.com ([207.82.80.151]:26262 "EHLO
+        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730725AbgKPRF1 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 16 Nov 2020 12:05:27 -0500
+Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-32-6hGtgbgIP0GQA7QZEJA7DA-1; Mon, 16 Nov 2020 17:05:23 +0000
+X-MC-Unique: 6hGtgbgIP0GQA7QZEJA7DA-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) with Microsoft SMTP
+ Server (TLS) id 15.0.1347.2; Mon, 16 Nov 2020 17:05:22 +0000
+Received: from AcuMS.Aculab.com ([fe80::43c:695e:880f:8750]) by
+ AcuMS.aculab.com ([fe80::43c:695e:880f:8750%12]) with mapi id 15.00.1347.000;
+ Mon, 16 Nov 2020 17:05:22 +0000
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Martin Schiller' <ms@dev.tdt.de>,
+        "andrew.hendry@gmail.com" <andrew.hendry@gmail.com>,
+        "davem@davemloft.net" <davem@davemloft.net>,
+        "kuba@kernel.org" <kuba@kernel.org>,
+        "xie.he.0141@gmail.com" <xie.he.0141@gmail.com>
+CC:     "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH net-next v2 2/6] net/x25: make neighbour params
+ configurable
+Thread-Topic: [PATCH net-next v2 2/6] net/x25: make neighbour params
+ configurable
+Thread-Index: AQHWvCDo0EreTMkGI0G9xcVRt+utm6nK+twg
+Date:   Mon, 16 Nov 2020 17:05:22 +0000
+Message-ID: <5d4faa10de734ba0af7a471b0eadd782@AcuMS.aculab.com>
 References: <20201116135522.21791-1-ms@dev.tdt.de>
+ <20201116135522.21791-3-ms@dev.tdt.de>
+In-Reply-To: <20201116135522.21791-3-ms@dev.tdt.de>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-Content-Transfer-Encoding: quoted-printable
-X-purgate-ID: 151534::1605535312-000013A4-351F6688/0/0
-X-purgate-type: clean
-X-purgate: clean
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-fix t1 timer handling in LAPB_STATE_0:
- o DTE interface changes immediately to LAPB_STATE_1 and start sending
-   SABM(E).
- o DCE interface sends N2-times DM and changes to LAPB_STATE_1
-   afterwards if there is no response in the meantime.
+From: Martin Schiller
+> Sent: 16 November 2020 13:55
+> Extended struct x25_neigh and x25_subscrip_struct to configure following
+> params through SIOCX25SSUBSCRIP:
+>   o mode (DTE/DCE)
+>   o number of channels
+>   o facilities (packet size, window size)
+>   o timer T20
+> 
+> Based on this configuration options the following changes/extensions
+> where made:
+>   o DTE/DCE handling to select the next lc (DCE=from bottom / DTE=from
+>     top)
+>   o DTE/DCE handling to set correct clear/reset/restart cause
+>   o take default facilities from neighbour settings
+> 
+...
+> +/*
+> + *	DTE/DCE subscription options.
+> + *
+> + *      As this is missing lots of options, user should expect major
+> + *	changes of this structure in 2.5.x which might break compatibility.
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
----
+A little out of date!
 
-Change from v1:
-fix 'subject_prefix' and 'checkpatch' warnings
+> + *      The somewhat ugly dimension 200-sizeof() is needed to maintain
+> + *	backward compatibility.
+> + */
+> +struct x25_subscrip_struct {
+> +	char device[200 - ((2 * sizeof(unsigned long)) +
+> +		    sizeof(struct x25_facilities) +
+> +		    (2 * sizeof(unsigned int)))];
+> +	unsigned int		dce;
+> +	unsigned int		lc;
+> +	struct x25_facilities	facilities;
+> +	unsigned long		t20;
+> +	unsigned long		global_facil_mask;	/* 0 to disable negotiation */
+> +	unsigned int		extended;
+> +};
 
----
- net/lapb/lapb_timer.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+Would it be better to used fixed size integer types to avoid
+'compat_32' issues?
 
-diff --git a/net/lapb/lapb_timer.c b/net/lapb/lapb_timer.c
-index 8f5b17001a07..baa247fe4ed0 100644
---- a/net/lapb/lapb_timer.c
-+++ b/net/lapb/lapb_timer.c
-@@ -85,11 +85,18 @@ static void lapb_t1timer_expiry(struct timer_list *t)
- 	switch (lapb->state) {
-=20
- 		/*
--		 *	If we are a DCE, keep going DM .. DM .. DM
-+		 *	If we are a DCE, send DM up to N2 times, then switch to
-+		 *	STATE_1 and send SABM(E).
- 		 */
- 		case LAPB_STATE_0:
--			if (lapb->mode & LAPB_DCE)
-+			if (lapb->mode & LAPB_DCE &&
-+			    lapb->n2count !=3D lapb->n2) {
-+				lapb->n2count++;
- 				lapb_send_control(lapb, LAPB_DM, LAPB_POLLOFF, LAPB_RESPONSE);
-+			} else {
-+				lapb->state =3D LAPB_STATE_1;
-+				lapb_establish_data_link(lapb);
-+			}
- 			break;
-=20
- 		/*
---=20
-2.20.1
+It might even be worth adding padding after the existing
+32bit layout to align any additional fields at the same offset
+in both 64bit and 32bit systems.
+
+I was also wondering if you can use an anonymous structure
+member for the actual fields and then use 200 - sizeof (struct foo)
+for the pad?
+
+	David
+
+-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+Registration No: 1397386 (Wales)
 
