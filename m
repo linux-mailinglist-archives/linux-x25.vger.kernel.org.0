@@ -2,88 +2,80 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3FAB2B5247
-	for <lists+linux-x25@lfdr.de>; Mon, 16 Nov 2020 21:17:21 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB3052B5C4B
+	for <lists+linux-x25@lfdr.de>; Tue, 17 Nov 2020 10:54:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731892AbgKPUQ1 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 16 Nov 2020 15:16:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42582 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729248AbgKPUQ0 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 16 Nov 2020 15:16:26 -0500
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0769C0613CF;
-        Mon, 16 Nov 2020 12:16:26 -0800 (PST)
-Received: by mail-pl1-x643.google.com with SMTP id t18so8970741plo.0;
-        Mon, 16 Nov 2020 12:16:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Hn+QJJDM3c7nvolPdWtjfb/V2c3QL8eTTV7HryUasbo=;
-        b=cdi3E7QjT4b66BWeXGUrBBDZIbJKQThCrL0W53RsvoMm2a//jNUHh6pHiaqvJS2Kbe
-         RpOAetEqtWzyq1iRqCD/LSGNh3xOlU15idieIZFU/HnTxSkVpaUcNZkfs4zqI5ThbJet
-         6iyFT7NhPHEQgiGPo1ig97kjlx6iyEWl3u/afLJV3y2/vX9MTnpY0f6rhq4hm1+9jypK
-         1xYLZSCNr5SrSj1fxWx5uDqLIAW0l+DEkNXJuTW0cpjUDRcg4yTrGBDBFMh5vG+pY2wP
-         N70HazL0C5Id+NrpmoQLKweS99qytySxUHrMuGBFg+HQhMtPA0Z80V1uMpgYlLCNhCDh
-         IbiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Hn+QJJDM3c7nvolPdWtjfb/V2c3QL8eTTV7HryUasbo=;
-        b=nMTli9p665STwWCustCMThqOOK2Evqi0dk6PHtp8VnP1OTht/GUQjDGD/RGf9NhWO5
-         GCHCGpymyUF3GA6oaVNiGtk0Le4wgNfxU1p0Ofxuq+tdVES1Q7hjxTqY2nK9XyJzh1FA
-         pWLJal6n0lDQjsWJqvvC810l8bgRFf18a+/V2tnI92frm2CpX8RIcfM7gu01P7Hkd+x7
-         +cH2Y/9EBXU6qfvFjBbYMS8q5DnYzajAT15e7+Cm/BrgUne4c/ILnNcUp4Sk0rgoSaWT
-         q5RN63/IncftljitKbwTvVWU+Gfd84k+NVJwIN6WMiYhNr9CEGxplYH+IMnWn8yYpVQ4
-         vXUQ==
-X-Gm-Message-State: AOAM531ZwB1auMbAeb1buviiBMdUjcEquA5Z/YTErv9zHqbpz8Pe3rpF
-        Y/gnn3NVCfEgMEwPfxWV5jM4eD5/PpM0v+brEWQ=
-X-Google-Smtp-Source: ABdhPJyL+y1xH5sr2TKEBqm0M4D0KAnaF4ZjERv2Fle2d3KauMybjjPrfwBbv9G8STA3C9Q3NkrfXbybTkDEc0y8740=
-X-Received: by 2002:a17:902:9890:b029:d8:e265:57ae with SMTP id
- s16-20020a1709029890b02900d8e26557aemr9905692plp.78.1605557786241; Mon, 16
- Nov 2020 12:16:26 -0800 (PST)
+        id S1727393AbgKQJxI (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 17 Nov 2020 04:53:08 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:49734 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727377AbgKQJxH (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 17 Nov 2020 04:53:07 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kexfY-000J4Z-WF; Tue, 17 Nov 2020 10:53:01 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kexfY-000Dne-4b; Tue, 17 Nov 2020 10:53:00 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id 6539A240041;
+        Tue, 17 Nov 2020 10:52:59 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id DB331240040;
+        Tue, 17 Nov 2020 10:52:58 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id A2EED21E27;
+        Tue, 17 Nov 2020 10:52:58 +0100 (CET)
 MIME-Version: 1.0
-References: <20201116135522.21791-1-ms@dev.tdt.de> <20201116135522.21791-6-ms@dev.tdt.de>
-In-Reply-To: <20201116135522.21791-6-ms@dev.tdt.de>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Mon, 16 Nov 2020 12:16:15 -0800
-Message-ID: <CAJht_EM-ic4-jtN7e9F6zcJgG3OTw_ePXiiH1i54M+Sc8zq6bg@mail.gmail.com>
-Subject: Re: [PATCH net-next v2 5/6] net/lapb: support netdev events
-To:     Martin Schiller <ms@dev.tdt.de>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 17 Nov 2020 10:52:58 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Xie He <xie.he.0141@gmail.com>
 Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Linux X25 <linux-x25@vger.kernel.org>,
         Linux Kernel Network Developers <netdev@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH net-next v2 5/6] net/lapb: support netdev events
+Organization: TDT AG
+In-Reply-To: <CAJht_EM-ic4-jtN7e9F6zcJgG3OTw_ePXiiH1i54M+Sc8zq6bg@mail.gmail.com>
+References: <20201116135522.21791-1-ms@dev.tdt.de>
+ <20201116135522.21791-6-ms@dev.tdt.de>
+ <CAJht_EM-ic4-jtN7e9F6zcJgG3OTw_ePXiiH1i54M+Sc8zq6bg@mail.gmail.com>
+Message-ID: <f3ab8d522b2bcd96506352656a1ef513@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.15
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-type: clean
+X-purgate: clean
+X-purgate-ID: 151534::1605606780-000035B9-6429194D/0/0
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Mon, Nov 16, 2020 at 6:01 AM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> This makes it possible to handle carrier loss and detection.
-> In case of Carrier Loss, layer 2 is terminated
-> In case of Carrier Detection, we start timer t1 on a DCE interface,
-> and on a DTE interface we change to state LAPB_STATE_1 and start
-> sending SABM(E).
+On 2020-11-16 21:16, Xie He wrote:
+> Do you mean we will now automatically establish LAPB connections
+> without upper layers instructing us to do so?
 
-> +                               lapb_dbg(0, "(%p): Carrier detected: %s\n",
-> +                                        dev, dev->name);
-> +                               if (lapb->mode & LAPB_DCE) {
-> +                                       lapb_start_t1timer(lapb);
-> +                               } else {
-> +                                       if (lapb->state == LAPB_STATE_0) {
-> +                                               lapb->state = LAPB_STATE_1;
-> +                                               lapb_establish_data_link(lapb);
-> +                                       }
-> +                               }
+Yes, as soon as the physical link is established, the L2 and also the
+L3 layer (restart handshake) is established.
 
-Do you mean we will now automatically establish LAPB connections
-without upper layers instructing us to do so?
+In this context I also noticed that I should add another patch to this
+patch-set to correct the restart handling.
 
-If that is the case, is the one-byte header for instructing the LAPB
-layer to connect / disconnect no longer needed?
+As already mentioned I have a stack of fixes and extensions lying around
+that I would like to get upstream.
+
+> If that is the case, is the one-byte header for instructing the LAPB
+> layer to connect / disconnect no longer needed?
+
+The one-byte header is still needed to signal the status of the LAPB
+connection to the upper layer.
