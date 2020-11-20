@@ -2,55 +2,55 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CB762BB93B
-	for <lists+linux-x25@lfdr.de>; Fri, 20 Nov 2020 23:41:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C4682BB9BC
+	for <lists+linux-x25@lfdr.de>; Sat, 21 Nov 2020 00:11:52 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728998AbgKTWkq (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 20 Nov 2020 17:40:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
+        id S1728755AbgKTXLT (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 20 Nov 2020 18:11:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728587AbgKTWkq (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 20 Nov 2020 17:40:46 -0500
-Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C02C0613CF;
-        Fri, 20 Nov 2020 14:40:46 -0800 (PST)
-Received: by mail-pl1-x642.google.com with SMTP id s2so5610206plr.9;
-        Fri, 20 Nov 2020 14:40:46 -0800 (PST)
+        with ESMTP id S1728559AbgKTXLT (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 20 Nov 2020 18:11:19 -0500
+Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F89C0613CF;
+        Fri, 20 Nov 2020 15:11:19 -0800 (PST)
+Received: by mail-pf1-x443.google.com with SMTP id 131so9320214pfb.9;
+        Fri, 20 Nov 2020 15:11:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Sgtncp9FPigEcaXHQf1sv5gXWmKILLQAAH0peI9rJmI=;
-        b=FtS4PJN799vGwsAvEZlBzBju3wKNl5Aie1A6KJxxdG25b9oLyJmUJ+HrU27trZ21SZ
-         IPWoSBuyc7eriH1qab2mi+wSGdgPx+LrBeZCx2nWYTTh+hEQNZG9WalPDVSNVFFzf0vJ
-         bI/guDxtU0fm3bkpRp1kjosaHz9+QD6drgLgUJRTqJeiw5sAcjkqIcvUaKspH90TKma3
-         13XHbS7mfz3VXT/7pE/Fbh8Qq3XX/qVrdOboHE8YXELAL+Mil6CopOoijKJo+QwhSGrA
-         mjEMFAv8Es1s8CCTjtIjZyjRBwn4cOvvKJHJZwOeLf5xJ1wQQhLYV5SW654u5idEHdJh
-         JJ6A==
+        bh=UWPMH4F8zpYKMQ+iVwWJvlmgxu/1LnPnr3HnFQg/Y88=;
+        b=OiOHYUgLaPXz88CxKOhR4d3ZFqH0WOaQDpA+KqZxYvwRPo+uT1j6TXzvSd1Wk1VMVd
+         huzg4SXZYqZnkcGlSFveMgn5IcRIktiabykZLdux4TCJtNsAtSk0F/fH/eeJ4oQxco1t
+         Ussp3YptQZfqMjiLQ3hYdU0YPBKiZsGxnhyfE84XT1WO20knxUt48hhrCNu0MeoDUPrb
+         8h5I/RvyrczBjFazMLoZ2d+CQ4HmM+87kGUkTUL86ogd0heqRPwue4uSF2gG5sTeg2nY
+         xxr5G2svkZHRS5rWea3Wzq5yQNVPUc/7/7UlyS43zkCWDGCsLpkQuc58N+ohaQGlHVmn
+         +z6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Sgtncp9FPigEcaXHQf1sv5gXWmKILLQAAH0peI9rJmI=;
-        b=Alng70yKX9iZEX4Sw9rrX/yMICz9nI1bljQGX3PH6tOSK5V/obHZySfnZuzNtI5Opw
-         dXjLM/9PqL2jiP/+JmPAEGBMTt9fWzbH83U2x62h5qzZtaPUYJdtLfRFmt8LE3iZmvtx
-         A1Vzy60fyuAIorsyC4VsuR/8zLLQTdpOgx49IVxHq+GpUxeR11W4/uouuJ7t9k9UwcXB
-         oyUen4vsacWVVnMIUxine7Z905qh3icvwFU/kLLEMUmrILxCRE19AwyrMAsbQuqE8Fb6
-         Oif+BtmSjRYWRNpFjhAusOyb+R5LfmITmSxSR9mI7XA/dBpUah5DRbBCLA0ldqfRt8wf
-         bgzw==
-X-Gm-Message-State: AOAM532/IXkQ8qulXjTFk8moJ4bYkj7gQhvZGdV9OwPz0bAIyg5LGi9i
-        bWEo/Z0zWUK1s1SPodg51zoTXXqOoD8L/ENKoOE/1oyK
-X-Google-Smtp-Source: ABdhPJxZz7ZAu71SQikBNC9bSlsXs6oaqTNYe6me8SKr3cUgLpsBVNvEhVCQ8vxXMzmoqTjMTUIvRxaUBp6CXoxetno=
-X-Received: by 2002:a17:902:aa4b:b029:d8:f87e:1f3c with SMTP id
- c11-20020a170902aa4bb02900d8f87e1f3cmr15106133plr.23.1605912045872; Fri, 20
- Nov 2020 14:40:45 -0800 (PST)
+        bh=UWPMH4F8zpYKMQ+iVwWJvlmgxu/1LnPnr3HnFQg/Y88=;
+        b=SbdWDYIxtqi6zTv2mqp+D4cCv5Mo/OxImRIB3cG/apU6S9bNHe9T67XDkl8SEB4/Z3
+         vmTmbFWN3fjojJm9JmVt37Re1WygE+z5RF/eE4M1D6aXswiaoM0Uz3HXG2fvl88I2WUE
+         2viSGqUOnYppcQttzujHLimKYU4G/ZlVboSStbiGsh5CbcVIpUCOc9p+FUa+G/MnB9H5
+         s0fIPKi+CSbyZbEvORT0Mh57qgDDt4ZTA1ydSeptJHrvzbsaFDpBO6wvd2+kj+9GPwxU
+         GfPDTC9FySL2bW4uTa1u5m3gF1dLYDO6pOnaSfwJfNsRi3LzKsecMagjYpNl2ORb18u2
+         NZgA==
+X-Gm-Message-State: AOAM531ITaw1TQP0L9VyQjggS8UwyAjLKb5pOZWCBIqUT3zvS+B+Jhgy
+        72DNQJRY/ctU7R/3ZEwv+bd42G0zNDfX4AOXsD8=
+X-Google-Smtp-Source: ABdhPJx/noFFLOnUSlLmjGmIxaez52dyLTunVPd3zpn170oZGX3zK/9/zfNzI67dSiBhfp7QOaNh6+DT29tRWVw8rSI=
+X-Received: by 2002:a62:170a:0:b029:196:5765:4abc with SMTP id
+ 10-20020a62170a0000b029019657654abcmr16122116pfx.4.1605913878966; Fri, 20 Nov
+ 2020 15:11:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20201120054036.15199-1-ms@dev.tdt.de>
-In-Reply-To: <20201120054036.15199-1-ms@dev.tdt.de>
+References: <20201120054036.15199-1-ms@dev.tdt.de> <20201120054036.15199-3-ms@dev.tdt.de>
+In-Reply-To: <20201120054036.15199-3-ms@dev.tdt.de>
 From:   Xie He <xie.he.0141@gmail.com>
-Date:   Fri, 20 Nov 2020 14:40:35 -0800
-Message-ID: <CAJht_EN0vTTzmd3WRLY96M0OO3V8a=Y987pWDu+O-fXQHRQYLg@mail.gmail.com>
-Subject: Re: [PATCH net-next v4 0/5] net/x25: netdev event handling
+Date:   Fri, 20 Nov 2020 15:11:08 -0800
+Message-ID: <CAJht_EONd3+S12upVPk2K3PWvzMLdE3BkzY_7c5gA493NHcGnA@mail.gmail.com>
+Subject: Re: [PATCH net-next v4 2/5] net/lapb: support netdev events
 To:     Martin Schiller <ms@dev.tdt.de>
 Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
         "David S. Miller" <davem@davemloft.net>,
@@ -63,10 +63,9 @@ Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Thu, Nov 19, 2020 at 9:40 PM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> Changes to v3:
-> o another complete rework of the patch-set to split event handling
->   for layer2 (LAPB) and layer3 (X.25)
+Should we also handle the NETDEV_UP event here? In previous versions
+of this patch series you seemed to want to establish the L2 connection
+on device-up. But in this patch, you didn't handle NETDEV_UP.
 
-Thanks for your work!!
+Maybe on device-up, we need to check if the carrier is up, and if it
+is, we do the same thing as we do on carrier-up.
