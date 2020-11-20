@@ -2,90 +2,71 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6EBFD2BA200
-	for <lists+linux-x25@lfdr.de>; Fri, 20 Nov 2020 06:44:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CB762BB93B
+	for <lists+linux-x25@lfdr.de>; Fri, 20 Nov 2020 23:41:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbgKTFl2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 20 Nov 2020 00:41:28 -0500
-Received: from mxout70.expurgate.net ([91.198.224.70]:36081 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726381AbgKTFl2 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 20 Nov 2020 00:41:28 -0500
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kfzAi-000S6Y-M4; Fri, 20 Nov 2020 06:41:24 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kfzAi-000JUM-1i; Fri, 20 Nov 2020 06:41:24 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id C3AC1240041;
-        Fri, 20 Nov 2020 06:41:23 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 4648C240040;
-        Fri, 20 Nov 2020 06:41:23 +0100 (CET)
-Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
-        by mail.dev.tdt.de (Postfix) with ESMTPSA id A4F4B20D9C;
-        Fri, 20 Nov 2020 06:41:22 +0100 (CET)
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        xie.he.0141@gmail.com
-Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
-Subject: [PATCH net-next v4 5/5] net/x25: remove x25_kill_by_device()
-Date:   Fri, 20 Nov 2020 06:40:36 +0100
-Message-ID: <20201120054036.15199-6-ms@dev.tdt.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20201120054036.15199-1-ms@dev.tdt.de>
-References: <20201120054036.15199-1-ms@dev.tdt.de>
+        id S1728998AbgKTWkq (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 20 Nov 2020 17:40:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728587AbgKTWkq (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 20 Nov 2020 17:40:46 -0500
+Received: from mail-pl1-x642.google.com (mail-pl1-x642.google.com [IPv6:2607:f8b0:4864:20::642])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C02C0613CF;
+        Fri, 20 Nov 2020 14:40:46 -0800 (PST)
+Received: by mail-pl1-x642.google.com with SMTP id s2so5610206plr.9;
+        Fri, 20 Nov 2020 14:40:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Sgtncp9FPigEcaXHQf1sv5gXWmKILLQAAH0peI9rJmI=;
+        b=FtS4PJN799vGwsAvEZlBzBju3wKNl5Aie1A6KJxxdG25b9oLyJmUJ+HrU27trZ21SZ
+         IPWoSBuyc7eriH1qab2mi+wSGdgPx+LrBeZCx2nWYTTh+hEQNZG9WalPDVSNVFFzf0vJ
+         bI/guDxtU0fm3bkpRp1kjosaHz9+QD6drgLgUJRTqJeiw5sAcjkqIcvUaKspH90TKma3
+         13XHbS7mfz3VXT/7pE/Fbh8Qq3XX/qVrdOboHE8YXELAL+Mil6CopOoijKJo+QwhSGrA
+         mjEMFAv8Es1s8CCTjtIjZyjRBwn4cOvvKJHJZwOeLf5xJ1wQQhLYV5SW654u5idEHdJh
+         JJ6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Sgtncp9FPigEcaXHQf1sv5gXWmKILLQAAH0peI9rJmI=;
+        b=Alng70yKX9iZEX4Sw9rrX/yMICz9nI1bljQGX3PH6tOSK5V/obHZySfnZuzNtI5Opw
+         dXjLM/9PqL2jiP/+JmPAEGBMTt9fWzbH83U2x62h5qzZtaPUYJdtLfRFmt8LE3iZmvtx
+         A1Vzy60fyuAIorsyC4VsuR/8zLLQTdpOgx49IVxHq+GpUxeR11W4/uouuJ7t9k9UwcXB
+         oyUen4vsacWVVnMIUxine7Z905qh3icvwFU/kLLEMUmrILxCRE19AwyrMAsbQuqE8Fb6
+         Oif+BtmSjRYWRNpFjhAusOyb+R5LfmITmSxSR9mI7XA/dBpUah5DRbBCLA0ldqfRt8wf
+         bgzw==
+X-Gm-Message-State: AOAM532/IXkQ8qulXjTFk8moJ4bYkj7gQhvZGdV9OwPz0bAIyg5LGi9i
+        bWEo/Z0zWUK1s1SPodg51zoTXXqOoD8L/ENKoOE/1oyK
+X-Google-Smtp-Source: ABdhPJxZz7ZAu71SQikBNC9bSlsXs6oaqTNYe6me8SKr3cUgLpsBVNvEhVCQ8vxXMzmoqTjMTUIvRxaUBp6CXoxetno=
+X-Received: by 2002:a17:902:aa4b:b029:d8:f87e:1f3c with SMTP id
+ c11-20020a170902aa4bb02900d8f87e1f3cmr15106133plr.23.1605912045872; Fri, 20
+ Nov 2020 14:40:45 -0800 (PST)
 MIME-Version: 1.0
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-Content-Transfer-Encoding: quoted-printable
-X-purgate-type: clean
-X-purgate-ID: 151534::1605850884-00008E89-CD28E413/0/0
-X-purgate: clean
+References: <20201120054036.15199-1-ms@dev.tdt.de>
+In-Reply-To: <20201120054036.15199-1-ms@dev.tdt.de>
+From:   Xie He <xie.he.0141@gmail.com>
+Date:   Fri, 20 Nov 2020 14:40:35 -0800
+Message-ID: <CAJht_EN0vTTzmd3WRLY96M0OO3V8a=Y987pWDu+O-fXQHRQYLg@mail.gmail.com>
+Subject: Re: [PATCH net-next v4 0/5] net/x25: netdev event handling
+To:     Martin Schiller <ms@dev.tdt.de>
+Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Remove obsolete function x25_kill_by_device(). It's not used any more.
+On Thu, Nov 19, 2020 at 9:40 PM Martin Schiller <ms@dev.tdt.de> wrote:
+>
+> Changes to v3:
+> o another complete rework of the patch-set to split event handling
+>   for layer2 (LAPB) and layer3 (X.25)
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
----
- net/x25/af_x25.c | 16 ----------------
- 1 file changed, 16 deletions(-)
-
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 313a6222ded9..1432a05805ab 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -199,22 +199,6 @@ static void x25_remove_socket(struct sock *sk)
- 	write_unlock_bh(&x25_list_lock);
- }
-=20
--/*
-- *	Kill all bound sockets on a dropped device.
-- */
--static void x25_kill_by_device(struct net_device *dev)
--{
--	struct sock *s;
--
--	write_lock_bh(&x25_list_lock);
--
--	sk_for_each(s, &x25_list)
--		if (x25_sk(s)->neighbour && x25_sk(s)->neighbour->dev =3D=3D dev)
--			x25_disconnect(s, ENETUNREACH, 0, 0);
--
--	write_unlock_bh(&x25_list_lock);
--}
--
- /*
-  *	Handle device status changes.
-  */
---=20
-2.20.1
-
+Thanks for your work!!
