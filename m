@@ -2,106 +2,87 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F134E2B8CDC
-	for <lists+linux-x25@lfdr.de>; Thu, 19 Nov 2020 09:12:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AB1DD2BA1ED
+	for <lists+linux-x25@lfdr.de>; Fri, 20 Nov 2020 06:41:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbgKSIJ1 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 19 Nov 2020 03:09:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726302AbgKSIJ0 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 19 Nov 2020 03:09:26 -0500
-Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7D4AC0613CF;
-        Thu, 19 Nov 2020 00:09:26 -0800 (PST)
-Received: by mail-pf1-x442.google.com with SMTP id a18so3716557pfl.3;
-        Thu, 19 Nov 2020 00:09:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=PVVrHpLNgq+kl9A2aIZQl8Ll9b4XaLdyqAsmoMcdYJs=;
-        b=Lt9kWa/44LbPO5/cPquY/oD00iPelLttboNoTpKbK9dVAWzH3RYKbgHDaeT6P23ez6
-         XYjih+2Wx91QAfzcjVrjNcMRQqyKMzvKWszEcpIYw3l4r6MDSSxf6w+tsg82r209sIyJ
-         IEGvTF5hruSESkPBKHd9ynQL4Fw5UaK/5mi3S9/aJHYwNANMhk2Fi5uPGPs8iLd0R+TY
-         q/ATxd8/gZwHYIXOpNQW2VZwlEK4lPQJweq4lAc8Om3wvrsXoz6C61JbXMeYgzktl/o9
-         a8nEhrjC+UR3qzkMKQRfh1Iig1LdAZBtpa2/9ZrJ0aUI/CPg4/NBgGPjEW6ESCBWn4VG
-         ckUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=PVVrHpLNgq+kl9A2aIZQl8Ll9b4XaLdyqAsmoMcdYJs=;
-        b=J3jxwGkmBeLrQEV//jlt+HblJ9sDFICZWcjgooDpMU9AjR0zkiu+oDjCWOKiiXCDWn
-         ui9x8Uouz5ytBCMVbwPm9chL3CfdB0UGF8Rxe57YzdTXGoq2WnKQi/HpoY51dWGyuYaz
-         SH6P61RpqQO/GpGDr14zdwF7sESR5ElvopjrrMLYvja6SsonQH6pXkGcFs2756pfcsmA
-         wVq+hK/Nq5T1kFjEdGcTXBplu6JQratqtK39gtQkc737nDKDy7mSvbEsnCQeGSNURjc9
-         v/vtnCurYwa3PVZj+qjY8Ad8gw1SW5hdv/SVwIaCaUc7RBNiVy9dHf2/NKjbAU0s+oeT
-         xvBA==
-X-Gm-Message-State: AOAM531GeZ8y825U1ol3AVGFLYFmxyJWV81Jic8Ip3GjXPbkRFPolMfg
-        Ou/QRHOBGd19M5jIll9UZp/TtobYlgNcWYtGeR0=
-X-Google-Smtp-Source: ABdhPJzMtCi6Lzy+hKBiQ1H0tfPFF0KZ7VqlwVI9VZTJv3bdyDqPXOQ+M26nyyu2U6Ahg5fVxF2kbbfXdJ/XIi3n5Mc=
-X-Received: by 2002:a17:90a:4884:: with SMTP id b4mr3128671pjh.198.1605773366305;
- Thu, 19 Nov 2020 00:09:26 -0800 (PST)
+        id S1725562AbgKTFkw (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 20 Nov 2020 00:40:52 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:55709 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725208AbgKTFkw (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 20 Nov 2020 00:40:52 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kfzA6-000GFk-FZ; Fri, 20 Nov 2020 06:40:46 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kfzA5-000JKw-Ks; Fri, 20 Nov 2020 06:40:45 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id D6745240043;
+        Fri, 20 Nov 2020 06:40:42 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 4F087240040;
+        Fri, 20 Nov 2020 06:40:42 +0100 (CET)
+Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
+        by mail.dev.tdt.de (Postfix) with ESMTPSA id E404720D9C;
+        Fri, 20 Nov 2020 06:40:41 +0100 (CET)
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
+        xie.he.0141@gmail.com
+Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
+Subject: [PATCH net-next v4 0/5] net/x25: netdev event handling
+Date:   Fri, 20 Nov 2020 06:40:31 +0100
+Message-ID: <20201120054036.15199-1-ms@dev.tdt.de>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <20201118135919.1447-1-ms@dev.tdt.de> <CAJht_EPB5g5ahHrVCM+K8MZG9u5bmqfjpB9-UptTt+bWqhyHWw@mail.gmail.com>
- <ae263ce5b1b31bfa763f755bdb3ef962@dev.tdt.de>
-In-Reply-To: <ae263ce5b1b31bfa763f755bdb3ef962@dev.tdt.de>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Thu, 19 Nov 2020 00:09:15 -0800
-Message-ID: <CAJht_EMb5uKo6J7BAaiC9mN-ZcG+xDGc2Q9NC0ybof61vr4m2w@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 0/6] net/x25: netdev event handling
-To:     Martin Schiller <ms@dev.tdt.de>
-Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+Content-Transfer-Encoding: quoted-printable
+X-purgate-ID: 151534::1605850846-0001FA9D-0BEA42DA/0/0
+X-purgate: clean
+X-purgate-type: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, Nov 18, 2020 at 11:02 PM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> On 2020-11-18 15:47, Xie He wrote:
-> >
-> > But... Won't it be better to handle L2 connections in L2 code?
-> >
-> > For example, if we are running X.25 over XOT, we can decide in the XOT
-> > layer whether and when we reconnect in case the TCP connection is
-> > dropped. We can decide how long we wait for responses before we
-> > consider the TCP connection to be dropped.
-> >
-> > If we still want "on-demand" connections in certain L2's, we can also
-> > implement it in that L2 without the need to change L3.
-> >
-> > Every L2 has its own characteristics. It might be better to let
-> > different L2's handle their connections in their own way. This gives
-> > L2 the flexibility to handle their connections according to their
-> > actual link characteristics.
-> >
-> > Letting L3 handle L2 connections also makes L2 code too related to /
-> > coupled with L3 code, which makes the logic complex.
->
-> OK, I will give it a try. But we need to keep the possibility to
-> initiate and terminate the L2 connection from L3.
+---
 
-OK. Thanks so much!
+Changes to v3:
+o another complete rework of the patch-set to split event handling
+  for layer2 (LAPB) and layer3 (X.25)
 
-> In the on demand scenario i mentioned, the L2 should be connected when
-> the first L3 logical channel goes up and needs to be disconnected, when
-> the last L3 logical channel on an interface is cleared.
+Changes to v2:
+o restructure complete patch-set
+o keep netdev event handling in layer3 (X.25)
+o add patch to fix lapb_connect_request() for DCE
+o add patch to handle carrier loss correctly in lapb
+o drop patch for x25_neighbour param handling
+  this may need fixes/cleanup and will be resubmitted later.
 
-I see. Maybe we can do it this way:
+Changes to v1:
+o fix 'subject_prefix' and 'checkpatch' warnings
 
-When L3 wants to initiate the first L3 connection, it can check
-whether the L2 connection is established, and if it is not, it can
-instruct L2 to connect. This is the same as what the current code
-(before this series) does.
+---
 
-When the last L3 connection is terminated, we can let L3 use the
-one-byte header to "suggest" (rather than "instruct") L2 to terminate
-the L2 connection. L2 can choose to either terminate the connection or
-continue to keep it, based on whether it is in on-demand mode.
+Martin Schiller (5):
+  net/x25: handle additional netdev events
+  net/lapb: support netdev events
+  net/lapb: fix t1 timer handling for LAPB_STATE_0
+  net/x25: fix restart request/confirm handling
+  net/x25: remove x25_kill_by_device()
+
+ net/lapb/lapb_iface.c | 72 +++++++++++++++++++++++++++++++++++++++++++
+ net/lapb/lapb_timer.c | 11 +++++--
+ net/x25/af_x25.c      | 38 ++++++++++-------------
+ net/x25/x25_link.c    | 47 +++++++++++++++++++++-------
+ net/x25/x25_route.c   |  3 --
+ 5 files changed, 133 insertions(+), 38 deletions(-)
+
+--=20
+2.20.1
+
