@@ -2,68 +2,102 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 884192BFBD0
-	for <lists+linux-x25@lfdr.de>; Sun, 22 Nov 2020 22:55:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CED422C005C
+	for <lists+linux-x25@lfdr.de>; Mon, 23 Nov 2020 07:56:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726311AbgKVVyd (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 22 Nov 2020 16:54:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726107AbgKVVyd (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 22 Nov 2020 16:54:33 -0500
-Received: from mail-ej1-x642.google.com (mail-ej1-x642.google.com [IPv6:2a00:1450:4864:20::642])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF121C0613CF;
-        Sun, 22 Nov 2020 13:54:32 -0800 (PST)
-Received: by mail-ej1-x642.google.com with SMTP id lv15so14764494ejb.12;
-        Sun, 22 Nov 2020 13:54:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:sender:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
-        b=CEUjmpzv7uNgM+7dNQCdVnHyNE9pb0tLCZl2HPHTWR/XZh/6gTq/qSqvTMZ4vEXgD9
-         QhTD43QUzbdePcFIVaemb/66EZN5r0Z2n+LP6DnEJl5m5of7lg3V0I0rLesgKZUxhAkZ
-         GZ9w/iFhtcvw5QCFvvifDXBwajd1F7ZxFreiV+nXFenvrxepXxXK5BkuExfQfmfWCFKp
-         sVnYq6yf16JQGF/S8Xt7y8EApGADoap8Hai84VOzYbV1cTGH8Ud1NK6y4UexHc2/wlLD
-         T6mt/KREAVhsSfT3e+ZDVjGkKiNJc/wEnJwN+2Lfvrb2bU8n9E96neH5hWyYmZvoZlf7
-         SQRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:sender:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=holMzMixu6L4mPkY4KLX0AXrH3B7KLU6Q1+gVZ1hbDo=;
-        b=Uzzi5wFSL2SUMN/Kq/qUzCTjT2SulIvedC2Op8AkL20n61em/wGdpHQAo4a7gDQ62T
-         psbgIYZWsmZu+3o0j5NFLfTvTrCptZ01vonxzXVidjZIttbRgy4SiDbRCYtEqvM6E09e
-         O5uGl9Ihdt81KiGqpeHHPF/2ttfAWU+66KV8Ya2jP442dmcTJzJt2myYsxYyJgrdXhUX
-         7smKi/D4/7oVzzTFOs0FgKPx7nBaQtLvwaHOUvnW+/qgmSpmwfe4CUpkxzrsvOLuP3Kt
-         YB32btWhAYwHPfs/+pI2qOLylgXEdPhpybuM7lfGL/q1yyL5OvLIYqUGsd/f+jhYxfQ+
-         bKwA==
-X-Gm-Message-State: AOAM532K3n+WaHDvzxpzfV07H9DWPcZJcIQGY8O/K+w7gtyht3dr18hy
-        FyNzHDN0vWkDso0oYSFXUV0=
-X-Google-Smtp-Source: ABdhPJzKX/5CiS0eupwwHF/cnlEjOKGTYMX5MbemC4mtq5R2GYEfyCj3t2KMnnDfPMWENl5ZbpPBpw==
-X-Received: by 2002:a17:906:349b:: with SMTP id g27mr43498877ejb.512.1606082071599;
-        Sun, 22 Nov 2020 13:54:31 -0800 (PST)
-Received: from [192.168.43.48] ([197.210.35.67])
-        by smtp.gmail.com with ESMTPSA id i19sm3978482ejz.71.2020.11.22.13.54.26
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sun, 22 Nov 2020 13:54:31 -0800 (PST)
-Message-ID: <5fbade17.1c69fb81.9b3f2.1059@mx.google.com>
-Sender: Lena Torres <ad482289@gmail.com>
-From:   Adelina Zeuki <anglicaramose@gmail.com>
-X-Google-Original-From: "Adelina Zeuki" <  adelinazeuki@gmail.comm >
-Content-Type: text/plain; charset="iso-8859-1"
+        id S1728005AbgKWGz3 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 23 Nov 2020 01:55:29 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:2187 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727852AbgKWGz2 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 23 Nov 2020 01:55:28 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kh5kw-000Rnq-HN; Mon, 23 Nov 2020 07:55:22 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kh5kv-000JSp-MD; Mon, 23 Nov 2020 07:55:21 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id E7E79240041;
+        Mon, 23 Nov 2020 07:55:20 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 69A4D240040;
+        Mon, 23 Nov 2020 07:55:20 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id C2B5220049;
+        Mon, 23 Nov 2020 07:55:18 +0100 (CET)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Hello !!
-To:     Recipients <adelinazeuki@gmail.comm>
-Date:   Sun, 22 Nov 2020 21:54:20 +0000
-Reply-To: adelinazeuki@gmail.com
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 23 Nov 2020 07:55:18 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Xie He <xie.he.0141@gmail.com>
+Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net-next v4 2/5] net/lapb: support netdev events
+Organization: TDT AG
+In-Reply-To: <CAJht_EP_oqCDs6mMThBZNtz4sgpbyQgMhKkHeqfS_7JmfEzfQg@mail.gmail.com>
+References: <20201120054036.15199-1-ms@dev.tdt.de>
+ <20201120054036.15199-3-ms@dev.tdt.de>
+ <CAJht_EONd3+S12upVPk2K3PWvzMLdE3BkzY_7c5gA493NHcGnA@mail.gmail.com>
+ <CAJht_EP_oqCDs6mMThBZNtz4sgpbyQgMhKkHeqfS_7JmfEzfQg@mail.gmail.com>
+Message-ID: <87a620b6a55ea8386bffefca0a1f8b77@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.15
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-type: clean
+X-purgate-ID: 151534::1606114522-000035B9-9654EEDC/0/0
+X-purgate: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hi dear,
+On 2020-11-21 00:50, Xie He wrote:
+> On Fri, Nov 20, 2020 at 3:11 PM Xie He <xie.he.0141@gmail.com> wrote:
+>> 
+>> Should we also handle the NETDEV_UP event here? In previous versions
+>> of this patch series you seemed to want to establish the L2 connection
+>> on device-up. But in this patch, you didn't handle NETDEV_UP.
+>> 
+>> Maybe on device-up, we need to check if the carrier is up, and if it
+>> is, we do the same thing as we do on carrier-up.
+> 
+> Are the device up/down status and the carrier up/down status
+> independent of each other? If they are, on device-up or carrier-up, we
+> only need to try establishing the L2 connection if we see both are up.
 
-Can i talk with you ?
+No, they aren't independent. The carrier can only be up if the device /
+interface is UP. And as far as I can see a NETDEV_CHANGE event will also
+only be generated on interfaces that are UP.
+
+So you can be sure, that if there is a NETDEV_CHANGE event then the
+device is UP.
+
+I removed the NETDEV_UP handling because I don't think it makes sense
+to implicitly try to establish layer2 (LAPB) if there is no carrier.
+And with the first X.25 connection request on that interface, it will
+be established anyway by x25_transmit_link().
+
+I've tested it here with an HDLC WAN Adapter and it works as expected.
+
+These are also the ideal conditions for the already mentioned "on
+demand" scenario. The only necessary change would be to call
+x25_terminate_link() on an interface after clearing the last X.25
+session.
+
+> On NETDEV_GOING_DOWN, we can also check the carrier status first and
+> if it is down, we don't need to call lapb_disconnect_request.
+
+This is not necessary because lapb_disconnect_request() checks the
+current state. And if the carrier is DOWN then the state should also be
+LAPB_STATE_0 and so lapb_disconnect_request() does nothing.
