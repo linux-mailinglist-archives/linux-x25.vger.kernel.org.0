@@ -2,139 +2,92 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 135292C25B2
-	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 13:29:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 05B822C306E
+	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 20:06:20 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387553AbgKXM3O (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 24 Nov 2020 07:29:14 -0500
-Received: from mxout70.expurgate.net ([91.198.224.70]:26591 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729172AbgKXM3O (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 07:29:14 -0500
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1khXRU-000H9v-8h; Tue, 24 Nov 2020 13:29:08 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1khXRT-000H8C-5G; Tue, 24 Nov 2020 13:29:07 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 9D702240041;
-        Tue, 24 Nov 2020 13:29:06 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 10B03240040;
-        Tue, 24 Nov 2020 13:29:06 +0100 (CET)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id 593DF20049;
-        Tue, 24 Nov 2020 13:29:05 +0100 (CET)
+        id S2404394AbgKXTFr (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 24 Nov 2020 14:05:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57918 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390880AbgKXTFq (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 14:05:46 -0500
+Received: from mail-pf1-x442.google.com (mail-pf1-x442.google.com [IPv6:2607:f8b0:4864:20::442])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3835EC0613D6;
+        Tue, 24 Nov 2020 11:05:46 -0800 (PST)
+Received: by mail-pf1-x442.google.com with SMTP id 131so19432527pfb.9;
+        Tue, 24 Nov 2020 11:05:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=B3AQ7qIleZ98ol81EX8UKJux3KkrTXmQK6HY6sjAr3Q=;
+        b=cyZ66djmj11YFpB8eyen5l1og8njPdYe2JKIwrrePLcZoLVDmSMe+hS6Od0LksguBw
+         eGwGFF6Q8d1FuGq6FkgIE266FU9eYTFoNGP2fsz7xIZuOxnBWLdO63qRCpREvO26AGQu
+         +S0pVAXwYJoJiubREQlItqhFva77//OPa1w4dfs1B75V/T4+pLDe3SKPoRnJCAMhi91m
+         P4zLMOU+Aw4XfzqlNzhKbm0Tho6QwgYVat0gVeYi3BM5C+1232G6a2H1UjXlRFTkyQFF
+         rSYxs/+8lsI22Hy1hiMC+Iy46F7PifXVZAXrx0Ied4gEXvPORA/46C4iHMKEgmLIGgvB
+         ObZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=B3AQ7qIleZ98ol81EX8UKJux3KkrTXmQK6HY6sjAr3Q=;
+        b=G/C4/4D/MDL9shokzWYTf4OIlbT0dzZ8phF3XHbjPZDLEUWlN357G+yfkd22zC13yf
+         GcAWQvk3m9vM8/x1ghPq0MnjmLipIGv6mmF36EV61UzwCwsRrfUazFyKa6xpufKSa0hG
+         FMvDIlleafBBmRQIKgGakytEwkJZDovBKfr40O1O0s0OV8+4AKi7FJBoFCcGPq2qPfa0
+         cxvLrvvRklFXsu0QzJ4bt2C/eH4BeXH8CY04eBQa7po/qlWqZArPsBs3iod+cQ/F7mPo
+         4b4DzJvWZiKn2nrGB6lpVS3quKOHVv3iic9csdfAbkajNinBrUMGpjP/ifnKG/+kN4v5
+         Owzg==
+X-Gm-Message-State: AOAM533ozAjH0EwYbT3GApVNY0vGNWUHrPLntGV8neB6hztutTbIhnV8
+        x/0Bw3xWhkqzP/BfQVf4nujm/KlP8jP3/ZtD60hjU1kksqw=
+X-Google-Smtp-Source: ABdhPJxjKII+6oaxfxVFzDno1Lx1iNTipA9Khcd+0BHqqjLkjNtdlrQW4o/TQ5RtCeTXuenG8SaDwMOjRlx6X1d8xlY=
+X-Received: by 2002:a17:90a:5905:: with SMTP id k5mr30953pji.198.1606244745869;
+ Tue, 24 Nov 2020 11:05:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 24 Nov 2020 13:29:05 +0100
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     David Laight <David.Laight@aculab.com>
-Cc:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        xie.he.0141@gmail.com, linux-x25@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v5 3/5] net/lapb: fix t1 timer handling for
- LAPB_STATE_0
-Organization: TDT AG
-In-Reply-To: <2d40b42aee314611b9ba1627e5eab30b@AcuMS.aculab.com>
-References: <20201124093538.21177-1-ms@dev.tdt.de>
- <20201124093538.21177-4-ms@dev.tdt.de>
- <2d40b42aee314611b9ba1627e5eab30b@AcuMS.aculab.com>
-Message-ID: <3d3f3733c08168bc8417021206cd93b9@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.15
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-X-purgate-type: clean
-X-purgate: clean
-X-purgate-ID: 151534::1606220947-00017060-88198D89/0/0
+References: <20201124093938.22012-1-ms@dev.tdt.de> <20201124093938.22012-3-ms@dev.tdt.de>
+In-Reply-To: <20201124093938.22012-3-ms@dev.tdt.de>
+From:   Xie He <xie.he.0141@gmail.com>
+Date:   Tue, 24 Nov 2020 11:05:35 -0800
+Message-ID: <CAJht_EOJ2M3tjN_2dQa2PweHCvJK8EXpnY7kGyJ7RezXBP4f8g@mail.gmail.com>
+Subject: Re: [PATCH net-next v6 2/5] net/lapb: support netdev events
+To:     Martin Schiller <ms@dev.tdt.de>
+Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2020-11-24 12:43, David Laight wrote:
-> From: Martin Schiller
->> Sent: 24 November 2020 09:36
->> 
->> 1. DTE interface changes immediately to LAPB_STATE_1 and start sending
->>    SABM(E).
->> 
->> 2. DCE interface sends N2-times DM and changes to LAPB_STATE_1
->>    afterwards if there is no response in the meantime.
-> 
-> Seems reasonable.
-> It is 35 years since I wrote LAPB and I can't exactly remember
-> what we did.
-> If I stole a copy of the code it's on a QIC-150 tape cartridge!
-> 
-> I really don't remember having a DTE/DCE option.
-> It is likely that LAPB came up sending DM (response without F)
-> until level3 requested the link come up when it would send
-> N2 SABM+P hoping to get a UA+F.
-> It would then send DM-F until a retry request was made.
-> 
-> We certainly had several different types of crossover connectors
-> for DTE-DTE working.
-> 
-> 	David
-> 
+On Tue, Nov 24, 2020 at 1:40 AM Martin Schiller <ms@dev.tdt.de> wrote:
+>
+> This patch allows layer2 (LAPB) to react to netdev events itself and
+> avoids the detour via layer3 (X.25).
+>
+> 1. Establish layer2 on NETDEV_UP events, if the carrier is already up.
+>
+> 2. Call lapb_disconnect_request() on NETDEV_GOING_DOWN events to signal
+>    the peer that the connection will go down.
+>    (Only when the carrier is up.)
+>
+> 3. When a NETDEV_DOWN event occur, clear all queues, enter state
+>    LAPB_STATE_0 and stop all timers.
+>
+> 4. The NETDEV_CHANGE event makes it possible to handle carrier loss and
+>    detection.
+>
+>    In case of Carrier Loss, clear all queues, enter state LAPB_STATE_0
+>    and stop all timers.
+>
+>    In case of Carrier Detection, we start timer t1 on a DCE interface,
+>    and on a DTE interface we change to state LAPB_STATE_1 and start
+>    sending SABM(E).
+>
+> Signed-off-by: Martin Schiller <ms@dev.tdt.de>
 
-The support for DTE/DCE was already in the LAPB code and I made it
-configurable from userspace (at least for hdlc interfaces) with this
-commit:
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit?id=f362e5fe0f1f
+Acked-by: Xie He <xie.he.0141@gmail.com>
 
-For Layer3 (X.25) I will add it with an addional patch (you already
-commented on that) on a next step.
-
-The described behaviour above is my interpretation of point 2.4.4.1 of
-the "ITU-T Recommendation X.25 (10/96) aka "Blue Book" [1].
-
-[1] https://www.itu.int/rec/T-REC-X.25-199610-I/
-
->> 
->> Signed-off-by: Martin Schiller <ms@dev.tdt.de>
->> ---
->>  net/lapb/lapb_timer.c | 11 +++++++++--
->>  1 file changed, 9 insertions(+), 2 deletions(-)
->> 
->> diff --git a/net/lapb/lapb_timer.c b/net/lapb/lapb_timer.c
->> index 8f5b17001a07..baa247fe4ed0 100644
->> --- a/net/lapb/lapb_timer.c
->> +++ b/net/lapb/lapb_timer.c
->> @@ -85,11 +85,18 @@ static void lapb_t1timer_expiry(struct timer_list 
->> *t)
->>  	switch (lapb->state) {
->> 
->>  		/*
->> -		 *	If we are a DCE, keep going DM .. DM .. DM
->> +		 *	If we are a DCE, send DM up to N2 times, then switch to
->> +		 *	STATE_1 and send SABM(E).
->>  		 */
->>  		case LAPB_STATE_0:
->> -			if (lapb->mode & LAPB_DCE)
->> +			if (lapb->mode & LAPB_DCE &&
->> +			    lapb->n2count != lapb->n2) {
->> +				lapb->n2count++;
->>  				lapb_send_control(lapb, LAPB_DM, LAPB_POLLOFF, LAPB_RESPONSE);
->> +			} else {
->> +				lapb->state = LAPB_STATE_1;
->> +				lapb_establish_data_link(lapb);
->> +			}
->>  			break;
->> 
->>  		/*
->> --
->> 2.20.1
-> 
-> -
-> Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes,
-> MK1 1PT, UK
-> Registration No: 1397386 (Wales)
+Thanks!
