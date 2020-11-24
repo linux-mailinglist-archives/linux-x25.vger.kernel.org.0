@@ -2,90 +2,121 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB5C02C21E7
-	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 10:44:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 63D6A2C24E0
+	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 12:43:35 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731338AbgKXJk2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 24 Nov 2020 04:40:28 -0500
-Received: from mxout70.expurgate.net ([91.198.224.70]:44765 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731615AbgKXJk0 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 04:40:26 -0500
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1khUo8-0007Ff-IZ; Tue, 24 Nov 2020 10:40:20 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1khUo7-000EPI-TM; Tue, 24 Nov 2020 10:40:19 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 0997F240041;
-        Tue, 24 Nov 2020 10:40:19 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 805B6240040;
-        Tue, 24 Nov 2020 10:40:18 +0100 (CET)
-Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
-        by mail.dev.tdt.de (Postfix) with ESMTPSA id 57C4620115;
-        Tue, 24 Nov 2020 10:40:18 +0100 (CET)
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        xie.he.0141@gmail.com
-Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
-Subject: [PATCH net-next v6 5/5] net/x25: remove x25_kill_by_device()
-Date:   Tue, 24 Nov 2020 10:39:38 +0100
-Message-ID: <20201124093938.22012-6-ms@dev.tdt.de>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20201124093938.22012-1-ms@dev.tdt.de>
-References: <20201124093938.22012-1-ms@dev.tdt.de>
+        id S1732925AbgKXLnI convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Tue, 24 Nov 2020 06:43:08 -0500
+Received: from eu-smtp-delivery-151.mimecast.com ([185.58.86.151]:45847 "EHLO
+        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1731223AbgKXLnH (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 06:43:07 -0500
+Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-91-jyJxJe5aNJiyxE4leEQJIA-1; Tue, 24 Nov 2020 11:43:03 +0000
+X-MC-Unique: jyJxJe5aNJiyxE4leEQJIA-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) with Microsoft SMTP
+ Server (TLS) id 15.0.1347.2; Tue, 24 Nov 2020 11:43:02 +0000
+Received: from AcuMS.Aculab.com ([fe80::43c:695e:880f:8750]) by
+ AcuMS.aculab.com ([fe80::43c:695e:880f:8750%12]) with mapi id 15.00.1347.000;
+ Tue, 24 Nov 2020 11:43:02 +0000
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Martin Schiller' <ms@dev.tdt.de>,
+        "andrew.hendry@gmail.com" <andrew.hendry@gmail.com>,
+        "davem@davemloft.net" <davem@davemloft.net>,
+        "kuba@kernel.org" <kuba@kernel.org>,
+        "xie.he.0141@gmail.com" <xie.he.0141@gmail.com>
+CC:     "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Subject: RE: [PATCH net-next v5 3/5] net/lapb: fix t1 timer handling for
+ LAPB_STATE_0
+Thread-Topic: [PATCH net-next v5 3/5] net/lapb: fix t1 timer handling for
+ LAPB_STATE_0
+Thread-Index: AQHWwkWB5njMObAgO0WeknXMDXzKn6nXJulw
+Date:   Tue, 24 Nov 2020 11:43:02 +0000
+Message-ID: <2d40b42aee314611b9ba1627e5eab30b@AcuMS.aculab.com>
+References: <20201124093538.21177-1-ms@dev.tdt.de>
+ <20201124093538.21177-4-ms@dev.tdt.de>
+In-Reply-To: <20201124093538.21177-4-ms@dev.tdt.de>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-Content-Transfer-Encoding: quoted-printable
-X-purgate: clean
-X-purgate-type: clean
-X-purgate-ID: 151534::1606210820-00019A69-40DEB5D7/0/0
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Remove obsolete function x25_kill_by_device(). It's not used any more.
+From: Martin Schiller
+> Sent: 24 November 2020 09:36
+> 
+> 1. DTE interface changes immediately to LAPB_STATE_1 and start sending
+>    SABM(E).
+> 
+> 2. DCE interface sends N2-times DM and changes to LAPB_STATE_1
+>    afterwards if there is no response in the meantime.
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
----
- net/x25/af_x25.c | 16 ----------------
- 1 file changed, 16 deletions(-)
+Seems reasonable.
+It is 35 years since I wrote LAPB and I can't exactly remember
+what we did.
+If I stole a copy of the code it's on a QIC-150 tape cartridge!
 
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 313a6222ded9..1432a05805ab 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -199,22 +199,6 @@ static void x25_remove_socket(struct sock *sk)
- 	write_unlock_bh(&x25_list_lock);
- }
-=20
--/*
-- *	Kill all bound sockets on a dropped device.
-- */
--static void x25_kill_by_device(struct net_device *dev)
--{
--	struct sock *s;
+I really don't remember having a DTE/DCE option.
+It is likely that LAPB came up sending DM (response without F)
+until level3 requested the link come up when it would send
+N2 SABM+P hoping to get a UA+F.
+It would then send DM-F until a retry request was made.
+
+We certainly had several different types of crossover connectors
+for DTE-DTE working.
+
+	David
+
+> 
+> Signed-off-by: Martin Schiller <ms@dev.tdt.de>
+> ---
+>  net/lapb/lapb_timer.c | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git a/net/lapb/lapb_timer.c b/net/lapb/lapb_timer.c
+> index 8f5b17001a07..baa247fe4ed0 100644
+> --- a/net/lapb/lapb_timer.c
+> +++ b/net/lapb/lapb_timer.c
+> @@ -85,11 +85,18 @@ static void lapb_t1timer_expiry(struct timer_list *t)
+>  	switch (lapb->state) {
+> 
+>  		/*
+> -		 *	If we are a DCE, keep going DM .. DM .. DM
+> +		 *	If we are a DCE, send DM up to N2 times, then switch to
+> +		 *	STATE_1 and send SABM(E).
+>  		 */
+>  		case LAPB_STATE_0:
+> -			if (lapb->mode & LAPB_DCE)
+> +			if (lapb->mode & LAPB_DCE &&
+> +			    lapb->n2count != lapb->n2) {
+> +				lapb->n2count++;
+>  				lapb_send_control(lapb, LAPB_DM, LAPB_POLLOFF, LAPB_RESPONSE);
+> +			} else {
+> +				lapb->state = LAPB_STATE_1;
+> +				lapb_establish_data_link(lapb);
+> +			}
+>  			break;
+> 
+>  		/*
+> --
+> 2.20.1
+
 -
--	write_lock_bh(&x25_list_lock);
--
--	sk_for_each(s, &x25_list)
--		if (x25_sk(s)->neighbour && x25_sk(s)->neighbour->dev =3D=3D dev)
--			x25_disconnect(s, ENETUNREACH, 0, 0);
--
--	write_unlock_bh(&x25_list_lock);
--}
--
- /*
-  *	Handle device status changes.
-  */
---=20
-2.20.1
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+Registration No: 1397386 (Wales)
 
