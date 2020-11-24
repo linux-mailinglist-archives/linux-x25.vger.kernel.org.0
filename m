@@ -2,99 +2,91 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AFD22C1D8E
-	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 06:30:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 675E92C217B
+	for <lists+linux-x25@lfdr.de>; Tue, 24 Nov 2020 10:39:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728147AbgKXF3y (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 24 Nov 2020 00:29:54 -0500
-Received: from mxout70.expurgate.net ([91.198.224.70]:2586 "EHLO
+        id S1731004AbgKXJf5 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 24 Nov 2020 04:35:57 -0500
+Received: from mxout70.expurgate.net ([194.37.255.70]:39519 "EHLO
         mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbgKXF3x (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 00:29:53 -0500
+        with ESMTP id S1727901AbgKXJf4 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 24 Nov 2020 04:35:56 -0500
 Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
+        by relay.expurgate.net with smtp (Exim 4.90)
         (envelope-from <ms@dev.tdt.de>)
-        id 1khQtf-000MZZ-Fa; Tue, 24 Nov 2020 06:29:47 +0100
+        id 1khUjm-0008M0-KM; Tue, 24 Nov 2020 10:35:50 +0100
 Received: from [195.243.126.94] (helo=securemail.tdt.de)
         by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
+        (Exim 4.90)
         (envelope-from <ms@dev.tdt.de>)
-        id 1khQte-0001dF-LO; Tue, 24 Nov 2020 06:29:46 +0100
+        id 1khUjl-0005kh-Gq; Tue, 24 Nov 2020 10:35:49 +0100
 Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 0E08E240041;
-        Tue, 24 Nov 2020 06:29:46 +0100 (CET)
+        by securemail.tdt.de (Postfix) with ESMTP id 74089240041;
+        Tue, 24 Nov 2020 10:35:48 +0100 (CET)
 Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 7CF87240040;
-        Tue, 24 Nov 2020 06:29:45 +0100 (CET)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id EF582204C2;
-        Tue, 24 Nov 2020 06:29:44 +0100 (CET)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 24 Nov 2020 06:29:44 +0100
+        by securemail.tdt.de (Postfix) with ESMTP id E5EA2240040;
+        Tue, 24 Nov 2020 10:35:47 +0100 (CET)
+Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
+        by mail.dev.tdt.de (Postfix) with ESMTPSA id 7857B20115;
+        Tue, 24 Nov 2020 10:35:47 +0100 (CET)
 From:   Martin Schiller <ms@dev.tdt.de>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     Jakub Kicinski <kuba@kernel.org>,
-        Andrew Hendry <andrew.hendry@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net-next v4 2/5] net/lapb: support netdev events
-Organization: TDT AG
-In-Reply-To: <CAJht_EOA4+DSjnKYZX3udrXX9jGHRmFw3OQesUb3AncD2oowwA@mail.gmail.com>
-References: <20201120054036.15199-1-ms@dev.tdt.de>
- <20201120054036.15199-3-ms@dev.tdt.de>
- <CAJht_EONd3+S12upVPk2K3PWvzMLdE3BkzY_7c5gA493NHcGnA@mail.gmail.com>
- <CAJht_EP_oqCDs6mMThBZNtz4sgpbyQgMhKkHeqfS_7JmfEzfQg@mail.gmail.com>
- <87a620b6a55ea8386bffefca0a1f8b77@dev.tdt.de>
- <CAJht_EPc8MF1TjznSjWTPyMbsrw3JVqxST5g=eF0yf_zasUdeA@mail.gmail.com>
- <d85a4543eae46bac1de28ec17a2389dd@dev.tdt.de>
- <CAJht_EMjO_Tkm93QmAeK_2jg2KbLdv2744kCSHiZLy48aXiHnw@mail.gmail.com>
- <CAJht_EO+enBOFMkVVB5y6aRnyMEsOZtUBJcAvOFBS91y7CauyQ@mail.gmail.com>
- <16b7e74e6e221f43420da7836659d7df@dev.tdt.de>
- <CAJht_EPtPDOSYfwc=9trBMdzLw4BbTzJbGvaEgWoyiy2624Q+Q@mail.gmail.com>
- <20201123113622.115c474b@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAJht_EOA4+DSjnKYZX3udrXX9jGHRmFw3OQesUb3AncD2oowwA@mail.gmail.com>
-Message-ID: <39b6386b4ce7462f6cb4448020735ed5@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.15
+To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
+        xie.he.0141@gmail.com
+Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
+Subject: [PATCH net-next v5 0/5] net/x25: netdev event handling
+Date:   Tue, 24 Nov 2020 10:35:33 +0100
+Message-ID: <20201124093538.21177-1-ms@dev.tdt.de>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
 X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
         autolearn_force=no version=3.4.2
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+Content-Transfer-Encoding: quoted-printable
 X-purgate-type: clean
+X-purgate-ID: 151534::1606210550-000064E4-2563A932/0/0
 X-purgate: clean
-X-purgate-ID: 151534::1606195787-00001F6B-CD377998/0/0
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2020-11-23 23:09, Xie He wrote:
-> On Mon, Nov 23, 2020 at 11:36 AM Jakub Kicinski <kuba@kernel.org> 
-> wrote:
->> 
->> > >  From this point of view it will be the best to handle the NETDEV_UP in
->> > > the lapb event handler and establish the link analog to the
->> > > NETDEV_CHANGE event if the carrier is UP.
->> >
->> > Thanks! This way we can make sure LAPB would automatically connect in
->> > all situations.
->> >
->> > Since we'll have a netif_carrier_ok check in NETDEV_UP handing, it
->> > might make the code look prettier to also have a netif_carrier_ok
->> > check in NETDEV_GOING_DOWN handing (for symmetry). Just a suggestion.
->> > You can do whatever looks good to you :)
->> 
->> Xie other than this the patches look good to you?
->> 
->> Martin should I expect a respin to follow Xie's suggestion
->> or should I apply v4?
-> 
-> There should be a respin because we need to handle the NETDEV_UP
-> event. The lapbether driver (and possibly some HDLC WAN drivers)
-> doesn't generate carrier events so we need to do auto-connect in the
-> NETDEV_UP event.
+---
 
-I'll send a v5 with the appropriate change.
+Changes to v4:
+o also establish layer2 (LAPB) on NETDEV_UP events, if the carrier is
+  already UP.
+
+Changes to v3:
+o another complete rework of the patch-set to split event handling
+  for layer2 (LAPB) and layer3 (X.25)
+
+Changes to v2:
+o restructure complete patch-set
+o keep netdev event handling in layer3 (X.25)
+o add patch to fix lapb_connect_request() for DCE
+o add patch to handle carrier loss correctly in lapb
+o drop patch for x25_neighbour param handling
+  this may need fixes/cleanup and will be resubmitted later.
+
+Changes to v1:
+o fix 'subject_prefix' and 'checkpatch' warnings
+
+---
+
+Martin Schiller (5):
+  net/x25: handle additional netdev events
+  net/lapb: support netdev events
+  net/lapb: fix t1 timer handling for LAPB_STATE_0
+  net/x25: fix restart request/confirm handling
+  net/x25: remove x25_kill_by_device()
+
+ net/lapb/lapb_iface.c | 94 +++++++++++++++++++++++++++++++++++++++++++
+ net/lapb/lapb_timer.c | 11 ++++-
+ net/x25/af_x25.c      | 38 ++++++++---------
+ net/x25/x25_link.c    | 47 +++++++++++++++++-----
+ net/x25/x25_route.c   |  3 --
+ 5 files changed, 155 insertions(+), 38 deletions(-)
+
+--=20
+2.20.1
+
