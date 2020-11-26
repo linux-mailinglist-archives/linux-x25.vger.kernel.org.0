@@ -2,115 +2,97 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E07832C4E9D
-	for <lists+linux-x25@lfdr.de>; Thu, 26 Nov 2020 07:16:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 547522C4ECC
+	for <lists+linux-x25@lfdr.de>; Thu, 26 Nov 2020 07:39:08 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732524AbgKZGOd (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 26 Nov 2020 01:14:33 -0500
-Received: from mxout70.expurgate.net ([194.37.255.70]:44423 "EHLO
+        id S1730663AbgKZGgL (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 26 Nov 2020 01:36:11 -0500
+Received: from mxout70.expurgate.net ([194.37.255.70]:46711 "EHLO
         mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732176AbgKZGOc (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 26 Nov 2020 01:14:32 -0500
+        with ESMTP id S1731824AbgKZGgL (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 26 Nov 2020 01:36:11 -0500
 Received: from [127.0.0.1] (helo=localhost)
         by relay.expurgate.net with smtp (Exim 4.90)
         (envelope-from <ms@dev.tdt.de>)
-        id 1kiAXz-0006mg-Bn; Thu, 26 Nov 2020 07:14:27 +0100
+        id 1kiAsv-0004yq-RA; Thu, 26 Nov 2020 07:36:05 +0100
 Received: from [195.243.126.94] (helo=securemail.tdt.de)
         by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.90)
         (envelope-from <ms@dev.tdt.de>)
-        id 1kiAXy-0006qs-BY; Thu, 26 Nov 2020 07:14:26 +0100
+        id 1kiAsu-0003lF-NY; Thu, 26 Nov 2020 07:36:04 +0100
 Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 5CBA7240041;
-        Thu, 26 Nov 2020 07:14:25 +0100 (CET)
+        by securemail.tdt.de (Postfix) with ESMTP id 09CE7240041;
+        Thu, 26 Nov 2020 07:36:04 +0100 (CET)
 Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id CD144240040;
-        Thu, 26 Nov 2020 07:14:24 +0100 (CET)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id 88FC4200F6;
-        Thu, 26 Nov 2020 07:14:24 +0100 (CET)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 26 Nov 2020 07:14:24 +0100
+        by securemail.tdt.de (Postfix) with ESMTP id 769AB240040;
+        Thu, 26 Nov 2020 07:36:03 +0100 (CET)
+Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
+        by mail.dev.tdt.de (Postfix) with ESMTPSA id 6B83D200F6;
+        Thu, 26 Nov 2020 07:36:02 +0100 (CET)
 From:   Martin Schiller <ms@dev.tdt.de>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next v6 2/5] net/lapb: support netdev events
-Organization: TDT AG
-In-Reply-To: <20201126000814.12108-1-xie.he.0141@gmail.com>
-References: <20201124093938.22012-3-ms@dev.tdt.de>
- <20201126000814.12108-1-xie.he.0141@gmail.com>
-Message-ID: <5c74d51e4cd3ee0aae47c84988dbbf91@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.15
+To:     andrew.hendry@gmail.com, davem@davemloft.net, kuba@kernel.org,
+        xie.he.0141@gmail.com
+Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
+Subject: [PATCH net-next v7 0/5] net/x25: netdev event handling
+Date:   Thu, 26 Nov 2020 07:35:52 +0100
+Message-ID: <20201126063557.1283-1-ms@dev.tdt.de>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
 X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
         autolearn_force=no version=3.4.2
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-X-purgate: clean
-X-purgate-ID: 151534::1606371267-00000FB8-A5135790/0/0
+Content-Transfer-Encoding: quoted-printable
 X-purgate-type: clean
+X-purgate: clean
+X-purgate-ID: 151534::1606372565-000064E4-6B688AB8/0/0
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2020-11-26 01:08, Xie He wrote:
-> Hi Martin,
-> 
-> Since we are going to assume lapb->state would remain in LAPB_STATE_0 
-> when
-> the carrier is down (as understood by me. Right?), could we add a check 
-> in
-> lapb_connect_request to reject the upper layer's "connect" instruction 
-> when
-> the carrier is down? Like this:
+---
 
-No, because this will break the considered "on demand" calling feature.
+Changes to v6:
+o integrated some code styling suggestions by Jakub.
 
-> 
-> diff --git a/include/linux/lapb.h b/include/linux/lapb.h
-> index eb56472f23b2..7923b1c6fc6a 100644
-> --- a/include/linux/lapb.h
-> +++ b/include/linux/lapb.h
-> @@ -14,6 +14,7 @@
->  #define	LAPB_REFUSED		5
->  #define	LAPB_TIMEDOUT		6
->  #define	LAPB_NOMEM		7
-> +#define	LAPB_NOCARRIER		8
-> 
->  #define	LAPB_STANDARD		0x00
->  #define	LAPB_EXTENDED		0x01
-> diff --git a/net/lapb/lapb_iface.c b/net/lapb/lapb_iface.c
-> index 3c03f6512c5f..c909d8db1bef 100644
-> --- a/net/lapb/lapb_iface.c
-> +++ b/net/lapb/lapb_iface.c
-> @@ -270,6 +270,10 @@ int lapb_connect_request(struct net_device *dev)
->  	if (!lapb)
->  		goto out;
-> 
-> +	rc = LAPB_NOCARRIER;
-> +	if (!netif_carrier_ok(dev))
-> +		goto out_put;
-> +
->  	rc = LAPB_OK;
->  	if (lapb->state == LAPB_STATE_1)
->  		goto out_put;
-> 
-> Also, since we are going to assume the lapb->state would remain in
-> LAPB_STATE_0 when the carrier is down, are the
-> "lapb->state == LAPB_STATE_0" checks in carrier-up/device-up event
-> handling necessary? If they are not necessary, it might be better to
-> remove them because it may confuse people reading the code.
+Changes to v5:
+o fix numbering in commit message of patch 2/5.
 
-They are still necessary, because if the link setup is initiated by
-upper layers, we've already entered the respective state by
-lapb_connect_request().
+Changes to v4:
+o also establish layer2 (LAPB) on NETDEV_UP events, if the carrier is
+  already UP.
 
+Changes to v3:
+o another complete rework of the patch-set to split event handling
+  for layer2 (LAPB) and layer3 (X.25)
 
-Every suggestion for improvement is really welcome, but please let this
-patch set pass now, if you don't find any more gross errors.
+Changes to v2:
+o restructure complete patch-set
+o keep netdev event handling in layer3 (X.25)
+o add patch to fix lapb_connect_request() for DCE
+o add patch to handle carrier loss correctly in lapb
+o drop patch for x25_neighbour param handling
+  this may need fixes/cleanup and will be resubmitted later.
 
-Martin
+Changes to v1:
+o fix 'subject_prefix' and 'checkpatch' warnings
+
+---
+
+Martin Schiller (5):
+  net/x25: handle additional netdev events
+  net/lapb: support netdev events
+  net/lapb: fix t1 timer handling for LAPB_STATE_0
+  net/x25: fix restart request/confirm handling
+  net/x25: remove x25_kill_by_device()
+
+ net/lapb/lapb_iface.c | 82 ++++++++++++++++++++++++++++++++++++++++++-
+ net/lapb/lapb_timer.c | 11 ++++--
+ net/x25/af_x25.c      | 38 +++++++++-----------
+ net/x25/x25_link.c    | 47 +++++++++++++++++++------
+ net/x25/x25_route.c   |  3 --
+ 5 files changed, 142 insertions(+), 39 deletions(-)
+
+--=20
+2.20.1
+
