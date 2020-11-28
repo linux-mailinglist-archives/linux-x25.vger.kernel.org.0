@@ -2,64 +2,68 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF58E2C5C6C
-	for <lists+linux-x25@lfdr.de>; Thu, 26 Nov 2020 20:04:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B78352C6E37
+	for <lists+linux-x25@lfdr.de>; Sat, 28 Nov 2020 02:39:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405185AbgKZTDN (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 26 Nov 2020 14:03:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52068 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2403990AbgKZTDN (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 26 Nov 2020 14:03:13 -0500
-Received: from mail-pg1-x541.google.com (mail-pg1-x541.google.com [IPv6:2607:f8b0:4864:20::541])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91582C0613D4;
-        Thu, 26 Nov 2020 11:03:13 -0800 (PST)
-Received: by mail-pg1-x541.google.com with SMTP id k11so2386164pgq.2;
-        Thu, 26 Nov 2020 11:03:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=P2L/YYCOnFeIb3+K5lIGoZyvHecSdK+D5x1TJ+KPjfw=;
-        b=X19cg+dGU5l8JWl+QsiEVPoZ12oJ+W8FO8y7+XZlEIK/Bgwt8q8dCM6rmu30mqOr3M
-         qvnmaC/aSVAYb29oJvW1CPmG1nbIvzig4t7ikJ4TeosfcaGJZCZBFDWWoCQ0H4jHmCmE
-         0SSjQwYjkfpt2OGkUhxRFHGyaoBRXIFBsw9aH8ea45PIMsiOhgqX54p5rTOttTHV0Y/O
-         XBQ8ulkyqxf1PwPImzVG4UgDbMfWCn504AXCSpaf6bkzR8zH+RKGySE5DGtlyvDauo6P
-         1L34FN9sYSvAYvDGLYDpsn7RBZasplj1Qq1d5xyDWQ1c6x5qIq1IDop53xFihROZ3WJi
-         aVrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=P2L/YYCOnFeIb3+K5lIGoZyvHecSdK+D5x1TJ+KPjfw=;
-        b=m9KGtrth1Cnp6Fy9hG41c1cfG3zeUD/eF05Yfp8J2hdQa1KuzR2EvO8rViNK2pcFew
-         D7ynBoerrGpFhuy+Rk/6lS3qhz8v7UIhCmaG/njm6gSx46V8/SGud56xKn3VsppQNKcd
-         i5bIbnqudOwch/y5JXhSOL/Ne/Rnowdpg6jSBuk0T8/5+CJ+e57K5fAYMjPhSK1atpKR
-         5V2hEck3KmrS5zoYYqAcVMGOJbUliNVZLPRUzcAhBwArrAb6npyk/4TlK8FesBUON4pH
-         Q+P+5OWhY5HTVjj7K56x3A54F6nKGxrkQbB9Tn1jdBxRyRRA8aYKFvLtWkwrXA3oJ4JQ
-         Qw8Q==
-X-Gm-Message-State: AOAM532Jrw2t8T0tuMHT7tb7zcwUo7rv4jPS2Ixj1Jx68wqr/xhS531K
-        /1dRtZqBPN9JO8kSN7AmbbJrCPnsk7P3UFecE2YKunTL570=
-X-Google-Smtp-Source: ABdhPJykCdB414DQhI0O8ejBvX0ZQHYHT87WuDey648LyB7lnU+1aMyV/eAEVICGrWszEeC747bxBKuAw8iAS//K9jQ=
-X-Received: by 2002:a63:a109:: with SMTP id b9mr3578797pgf.368.1606417393194;
- Thu, 26 Nov 2020 11:03:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20201126063557.1283-1-ms@dev.tdt.de> <20201126063557.1283-3-ms@dev.tdt.de>
-In-Reply-To: <20201126063557.1283-3-ms@dev.tdt.de>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Thu, 26 Nov 2020 11:03:03 -0800
-Message-ID: <CAJht_EN-H0ZbKa4rcOg4riVnecTtfSqPakW-g+UCgun9cWbf_w@mail.gmail.com>
-Subject: Re: [PATCH net-next v7 2/5] net/lapb: support netdev events
+        id S1730143AbgK1Bh2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 27 Nov 2020 20:37:28 -0500
+Received: from mail.kernel.org ([198.145.29.99]:60656 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729460AbgK1BgR (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Fri, 27 Nov 2020 20:36:17 -0500
+Received: from kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com (unknown [163.114.132.4])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id D098722255;
+        Sat, 28 Nov 2020 01:24:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1606526681;
+        bh=JgqrGL8/UorpI7LvAq8W+1sAojiyvVrREeEuZFT14fw=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=ZAqX/sBqi1R0zcXrG/cGib/dKN2yi31ki+lZdBIk+5iVZHmwtz4UQpgUVhPzcWnUM
+         eaJBvoACG8oPphkDg6B2utmIQm6SwaOV/BT3dRun+3c+T8V2IKcXv5A6Civ+t941J5
+         uqp3vc2zikhbDU59TUnrO662X4KeCaBAs/D56/tQ=
+Date:   Fri, 27 Nov 2020 17:24:39 -0800
+From:   Jakub Kicinski <kuba@kernel.org>
 To:     Martin Schiller <ms@dev.tdt.de>
-Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     andrew.hendry@gmail.com, davem@davemloft.net,
+        xie.he.0141@gmail.com, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next v7 0/5] net/x25: netdev event handling
+Message-ID: <20201127172439.1c5c73a3@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+In-Reply-To: <20201126063557.1283-1-ms@dev.tdt.de>
+References: <20201126063557.1283-1-ms@dev.tdt.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Acked-by: Xie He <xie.he.0141@gmail.com>
+On Thu, 26 Nov 2020 07:35:52 +0100 Martin Schiller wrote:
+> Changes to v6:
+> o integrated some code styling suggestions by Jakub.
+> 
+> Changes to v5:
+> o fix numbering in commit message of patch 2/5.
+> 
+> Changes to v4:
+> o also establish layer2 (LAPB) on NETDEV_UP events, if the carrier is
+>   already UP.
+> 
+> Changes to v3:
+> o another complete rework of the patch-set to split event handling
+>   for layer2 (LAPB) and layer3 (X.25)
+> 
+> Changes to v2:
+> o restructure complete patch-set
+> o keep netdev event handling in layer3 (X.25)
+> o add patch to fix lapb_connect_request() for DCE
+> o add patch to handle carrier loss correctly in lapb
+> o drop patch for x25_neighbour param handling
+>   this may need fixes/cleanup and will be resubmitted later.
+> 
+> Changes to v1:
+> o fix 'subject_prefix' and 'checkpatch' warnings
+
+Applied, thank you!
