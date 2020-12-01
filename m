@@ -2,125 +2,122 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C50B2C81B4
-	for <lists+linux-x25@lfdr.de>; Mon, 30 Nov 2020 11:07:10 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C45F82C97B2
+	for <lists+linux-x25@lfdr.de>; Tue,  1 Dec 2020 07:53:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728776AbgK3KGl (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 30 Nov 2020 05:06:41 -0500
-Received: from userp2130.oracle.com ([156.151.31.86]:37450 "EHLO
-        userp2130.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726579AbgK3KGl (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 30 Nov 2020 05:06:41 -0500
-Received: from pps.filterd (userp2130.oracle.com [127.0.0.1])
-        by userp2130.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AU9xBhm078632;
-        Mon, 30 Nov 2020 10:04:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
- : subject : message-id : mime-version : content-type :
- content-transfer-encoding : in-reply-to; s=corp-2020-01-29;
- bh=89d0xM4SUH4a0fX74f4jEtNnPihawrq2u89AGEQ/K1I=;
- b=v3Cb2GUa5tO1ck9uZJVgTSfz+Rqgf8BbP8CWZySuiRS1/MNhwFWwNMtwQlb6BS0HJNpX
- ZojXTgzG2Fvtwb7uvXkg9ITVM0TglIFIXygOBQ1NyY1YoVigALg05yrXDCMyvbfG0wAG
- jOqphwIZGcajIQ39bHzyLoIvcq8boyKIl3UUA/ouDVTu0y7192w5r74TANPHlVZnQ3AL
- ET1ROYKM8FjYAvM9Kg2RmmZlLLYXmibim+fYLMlBx33AVDAJ91GP4Q0XdXRqqn0pyWzA
- Cx5stsAD6qWNtAKI/54XICGwfGBrlFS817x6+GJnGSdhnNyJoM2SyqMh+rWv2pvCu3Q5 VA== 
-Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
-        by userp2130.oracle.com with ESMTP id 353dyqc9sh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
-        Mon, 30 Nov 2020 10:04:42 +0000
-Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
-        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 0AUA1GcJ076901;
-        Mon, 30 Nov 2020 10:04:42 GMT
-Received: from userv0122.oracle.com (userv0122.oracle.com [156.151.31.75])
-        by userp3030.oracle.com with ESMTP id 3540fuucxc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 30 Nov 2020 10:04:42 +0000
-Received: from abhmp0005.oracle.com (abhmp0005.oracle.com [141.146.116.11])
-        by userv0122.oracle.com (8.14.4/8.14.4) with ESMTP id 0AUA4b0q001002;
-        Mon, 30 Nov 2020 10:04:37 GMT
-Received: from kadam (/102.36.221.92)
-        by default (Oracle Beehive Gateway v4.0)
-        with ESMTP ; Mon, 30 Nov 2020 02:04:36 -0800
-Date:   Mon, 30 Nov 2020 13:04:25 +0300
-From:   Dan Carpenter <dan.carpenter@oracle.com>
-To:     Andrew Hendry <andrew.hendry@gmail.com>,
-        =?utf-8?B?a2l5aW4o5bC55LquKQ==?= <kiyin@tencent.com>,
-        Martin Schiller <ms@dev.tdt.de>
-Cc:     "security@kernel.org" <security@kernel.org>,
-        "linux-distros@vs.openwall.org" <linux-distros@vs.openwall.org>,
-        =?utf-8?B?aHVudGNoZW4o6ZmI6ZizKQ==?= <huntchen@tencent.com>,
-        =?utf-8?B?ZGFubnl3YW5nKOeOi+Wuhyk=?= <dannywang@tencent.com>,
-        "David S. Miller" <davem@davemloft.net>,
+        id S1727305AbgLAGwf convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Tue, 1 Dec 2020 01:52:35 -0500
+Received: from mxout70.expurgate.net ([194.37.255.70]:49155 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725859AbgLAGwf (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 1 Dec 2020 01:52:35 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kjzUk-0001qO-11; Tue, 01 Dec 2020 07:50:38 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kjzUi-0001cN-HL; Tue, 01 Dec 2020 07:50:36 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id 0A904240042;
+        Tue,  1 Dec 2020 07:50:36 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 5BFEC240040;
+        Tue,  1 Dec 2020 07:50:35 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id AA1D521CF2;
+        Tue,  1 Dec 2020 07:50:34 +0100 (CET)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Date:   Tue, 01 Dec 2020 07:50:34 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
+        =?UTF-8?Q?kiyin=28=E5=B0=B9?= =?UTF-8?Q?=E4=BA=AE=29?= 
+        <kiyin@tencent.com>, security@kernel.org,
+        linux-distros@vs.openwall.org,
+        =?UTF-8?Q?huntchen=28=E9=99=88=E9=98=B3?= =?UTF-8?Q?=29?= 
+        <huntchen@tencent.com>,
+        =?UTF-8?Q?dannywang=28?= =?UTF-8?Q?=E7=8E=8B=E5=AE=87=29?= 
+        <dannywang@tencent.com>, "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: [PATCH net] net/x25: prevent a couple of overflows
-Message-ID: <20201130100425.GB2789@kadam>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <61d3e7e75f704996bf312ef5d271bcea@tencent.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9820 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 suspectscore=0
- phishscore=0 mlxlogscore=999 adultscore=0 mlxscore=0 bulkscore=0
- spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011300063
-X-Proofpoint-Virus-Version: vendor=nai engine=6000 definitions=9820 signatures=668682
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 bulkscore=0
- clxscore=1011 mlxscore=0 spamscore=0 priorityscore=1501 mlxlogscore=999
- suspectscore=0 lowpriorityscore=0 phishscore=0 adultscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2009150000 definitions=main-2011300063
+Subject: Re: [PATCH net] net/x25: prevent a couple of overflows
+Organization: TDT AG
+In-Reply-To: <20201130100425.GB2789@kadam>
+References: <20201130100425.GB2789@kadam>
+Message-ID: <ecf3321f20cc4f6dcf02b5b73105da58@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.15
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+Content-Transfer-Encoding: 8BIT
+X-purgate-ID: 151534::1606805437-000013A4-180E347A/0/0
+X-purgate: clean
+X-purgate-type: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-From: "kiyin(尹亮)" <kiyin@tencent.com>
+On 2020-11-30 11:04, Dan Carpenter wrote:
+> From: "kiyin(尹亮)" <kiyin@tencent.com>
+> 
+> The .x25_addr[] address comes from the user and is not necessarily
+> NUL terminated.  This leads to a couple problems.  The first problem is
+> that the strlen() in x25_bind() can read beyond the end of the buffer.
+> 
+> The second problem is more subtle and could result in memory 
+> corruption.
+> The call tree is:
+>   x25_connect()
+>   --> x25_write_internal()
+>       --> x25_addr_aton()
+> 
+> The .x25_addr[] buffers are copied to the "addresses" buffer from
+> x25_write_internal() so it will lead to stack corruption.
+> 
+> The x25 protocol only allows 15 character addresses so putting a NUL
+> terminator as the 16th character is safe and obviously preferable to
+> reading out of bounds.
+> 
 
-The .x25_addr[] address comes from the user and is not necessarily
-NUL terminated.  This leads to a couple problems.  The first problem is
-that the strlen() in x25_bind() can read beyond the end of the buffer.
+OK, I see the potential danger. I'm just wondering what is the better
+approach here to counteract it:
+1. check if the string is terminated or exceeds the maximum allowed
+    length and report an error if necessary.
+2. always terminate the string at byte 15 as you suggested.
 
-The second problem is more subtle and could result in memory corruption.
-The call tree is:
-  x25_connect()
-  --> x25_write_internal()
-      --> x25_addr_aton()
-
-The .x25_addr[] buffers are copied to the "addresses" buffer from
-x25_write_internal() so it will lead to stack corruption.
-
-The x25 protocol only allows 15 character addresses so putting a NUL
-terminator as the 16th character is safe and obviously preferable to
-reading out of bounds.
-
-Signed-off-by: "kiyin(尹亮)" <kiyin@tencent.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
----
-
- net/x25/af_x25.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 0bbb283f23c9..3180f15942fe 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -686,6 +686,8 @@ static int x25_bind(struct socket *sock, struct sockaddr *uaddr, int addr_len)
- 		goto out;
- 	}
- 
-+	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
-+
- 	/* check for the null_x25_address */
- 	if (strcmp(addr->sx25_addr.x25_addr, null_x25_address.x25_addr)) {
- 
-@@ -779,6 +781,7 @@ static int x25_connect(struct socket *sock, struct sockaddr *uaddr,
- 		goto out;
- 
- 	rc = -ENETUNREACH;
-+	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
- 	rt = x25_get_route(&addr->sx25_addr);
- 	if (!rt)
- 		goto out;
--- 
-2.28.0
+> Signed-off-by: "kiyin(尹亮)" <kiyin@tencent.com>
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> ---
+> 
+>  net/x25/af_x25.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
+> index 0bbb283f23c9..3180f15942fe 100644
+> --- a/net/x25/af_x25.c
+> +++ b/net/x25/af_x25.c
+> @@ -686,6 +686,8 @@ static int x25_bind(struct socket *sock, struct
+> sockaddr *uaddr, int addr_len)
+>  		goto out;
+>  	}
+> 
+> +	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
+> +
+>  	/* check for the null_x25_address */
+>  	if (strcmp(addr->sx25_addr.x25_addr, null_x25_address.x25_addr)) {
+> 
+> @@ -779,6 +781,7 @@ static int x25_connect(struct socket *sock, struct
+> sockaddr *uaddr,
+>  		goto out;
+> 
+>  	rc = -ENETUNREACH;
+> +	addr->sx25_addr.x25_addr[X25_ADDR_LEN - 1] = '\0';
+>  	rt = x25_get_route(&addr->sx25_addr);
+>  	if (!rt)
+>  		goto out;
