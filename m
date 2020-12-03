@@ -2,122 +2,71 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D4CD2CB8DC
-	for <lists+linux-x25@lfdr.de>; Wed,  2 Dec 2020 10:30:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 12BA22CCB9F
+	for <lists+linux-x25@lfdr.de>; Thu,  3 Dec 2020 02:28:27 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729354AbgLBJ3Q convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-x25@lfdr.de>); Wed, 2 Dec 2020 04:29:16 -0500
-Received: from mxout70.expurgate.net ([91.198.224.70]:31681 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728074AbgLBJ3Q (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 2 Dec 2020 04:29:16 -0500
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kkOPy-000URj-0z; Wed, 02 Dec 2020 10:27:22 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1kkOPw-00095f-SN; Wed, 02 Dec 2020 10:27:20 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 95E66240041;
-        Wed,  2 Dec 2020 10:27:20 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id E3305240040;
-        Wed,  2 Dec 2020 10:27:19 +0100 (CET)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id 7B5C1200C5;
-        Wed,  2 Dec 2020 10:27:18 +0100 (CET)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Date:   Wed, 02 Dec 2020 10:27:18 +0100
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
+        id S1727769AbgLCB2L (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 2 Dec 2020 20:28:11 -0500
+Received: from mail.kernel.org ([198.145.29.99]:37286 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726681AbgLCB2L (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Wed, 2 Dec 2020 20:28:11 -0500
+Date:   Wed, 2 Dec 2020 17:27:28 -0800
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1606958850;
+        bh=NWkqSZZ3ZS7bYCRKGHHjz3mlOO7zls+THqz0Y/Q51Q0=;
+        h=From:To:Cc:Subject:In-Reply-To:References:From;
+        b=MNtOcI6WV8EHJGBU7QUuJXEWVoVTyE2klWVjhX2Q5oABIV+cYxP3hsL8l2UuThLxR
+         iaIY6ZMhn2cRjZkUPUPPa6CuBgONYKwyBro5FORhXJiTMoe2wSzocfRlTXBDVYdGB0
+         erWjz5cJSNmNHvbSaX6XJP/hO15aK8FBK1kXajq4RRMwOrRzOYsHq7yE/NWRYLkpHk
+         3ICSzx3ZzUSkTRhpC8HOmA9o1csI23PZegqZxwRl2GAJRmU9XAqZflCibCudH2mZQl
+         sIvJuuBMSMKU2fC/ZQuQYbOJ6xvxHdqNpg3AomjhWilmPFIOpx3P6KkhkKK+HCZscf
+         o7jkVk5OsQt0A==
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     Martin Schiller <ms@dev.tdt.de>
+Cc:     Dan Carpenter <dan.carpenter@oracle.com>,
+        "David S. Miller" <davem@davemloft.net>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org, Andrew Hendry <andrew.hendry@gmail.com>,
-        =?UTF-8?Q?kiyin=28=E5=B0=B9=E4=BA=AE?= =?UTF-8?Q?=29?= 
-        <kiyin@tencent.com>, security@kernel.org,
-        linux-distros@vs.openwall.org,
-        =?UTF-8?Q?huntchen=28=E9=99=88=E9=98=B3?= =?UTF-8?Q?=29?= 
+        "=?UTF-8?B?a2l5aW4=?=( =?UTF-8?B?5bC55Lqu?=) " <kiyin@tencent.com>,
+        security@kernel.org, linux-distros@vs.openwall.org,
+        "=?UTF-8?B?aHVudGNoZW4=?=(=?UTF-8?B?6ZmI?= =?UTF-8?B?6Ziz?=) " 
         <huntchen@tencent.com>,
-        =?UTF-8?Q?dannywang=28?= =?UTF-8?Q?=E7=8E=8B=E5=AE=87=29?= 
+        "=?UTF-8?B?ZGFubnl3?= =?UTF-8?B?YW5n?=(=?UTF-8?B?546L5a6H?=) " 
         <dannywang@tencent.com>, kernel-janitors@vger.kernel.org
 Subject: Re: [PATCH net v2] net/x25: prevent a couple of overflows
-Organization: TDT AG
-In-Reply-To: <X8ZeAKm8FnFpN//B@mwanda>
+Message-ID: <20201202172728.43f387a3@kicinski-fedora-pc1c0hjn.DHCP.thefacebook.com>
+In-Reply-To: <41de2a35016a1eb9a188a71d11709f16@dev.tdt.de>
 References: <X8ZeAKm8FnFpN//B@mwanda>
-Message-ID: <41de2a35016a1eb9a188a71d11709f16@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.15
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-Content-Transfer-Encoding: 8BIT
-X-purgate-type: clean
-X-purgate: clean
-X-purgate-ID: 151534::1606901241-00016B9D-D8500775/0/0
+        <41de2a35016a1eb9a188a71d11709f16@dev.tdt.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2020-12-01 16:15, Dan Carpenter wrote:
-> The .x25_addr[] address comes from the user and is not necessarily
-> NUL terminated.  This leads to a couple problems.  The first problem is
-> that the strlen() in x25_bind() can read beyond the end of the buffer.
-> 
-> The second problem is more subtle and could result in memory 
-> corruption.
-> The call tree is:
->   x25_connect()
->   --> x25_write_internal()
->       --> x25_addr_aton()
-> 
-> The .x25_addr[] buffers are copied to the "addresses" buffer from
-> x25_write_internal() so it will lead to stack corruption.
-> 
-> Verify that the strings are NUL terminated and return -EINVAL if they
-> are not.
-> 
-> Reported-by: "kiyin(尹亮)" <kiyin@tencent.com>
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-> ---
-> The first patch put a NUL terminator on the end of the string and this
-> patch returns an error instead.  I don't have a strong preference, 
-> which
-> patch to go with.
-> 
->  net/x25/af_x25.c | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-> index 9232cdb42ad9..d41fffb2507b 100644
-> --- a/net/x25/af_x25.c
-> +++ b/net/x25/af_x25.c
-> @@ -675,7 +675,8 @@ static int x25_bind(struct socket *sock, struct
-> sockaddr *uaddr, int addr_len)
->  	int len, i, rc = 0;
-> 
->  	if (addr_len != sizeof(struct sockaddr_x25) ||
-> -	    addr->sx25_family != AF_X25) {
-> +	    addr->sx25_family != AF_X25 ||
-> +	    strnlen(addr->sx25_addr.x25_addr, X25_ADDR_LEN) == X25_ADDR_LEN) 
-> {
->  		rc = -EINVAL;
->  		goto out;
->  	}
-> @@ -769,7 +770,8 @@ static int x25_connect(struct socket *sock, struct
-> sockaddr *uaddr,
-> 
->  	rc = -EINVAL;
->  	if (addr_len != sizeof(struct sockaddr_x25) ||
-> -	    addr->sx25_family != AF_X25)
-> +	    addr->sx25_family != AF_X25 ||
-> +	    strnlen(addr->sx25_addr.x25_addr, X25_ADDR_LEN) == X25_ADDR_LEN)
->  		goto out;
-> 
->  	rc = -ENETUNREACH;
+On Wed, 02 Dec 2020 10:27:18 +0100 Martin Schiller wrote:
+> On 2020-12-01 16:15, Dan Carpenter wrote:
+> > The .x25_addr[] address comes from the user and is not necessarily
+> > NUL terminated.  This leads to a couple problems.  The first problem is
+> > that the strlen() in x25_bind() can read beyond the end of the buffer.
+> >=20
+> > The second problem is more subtle and could result in memory=20
+> > corruption.
+> > The call tree is:
+> >   x25_connect() =20
+> >   --> x25_write_internal()
+> >       --> x25_addr_aton() =20
+> >=20
+> > The .x25_addr[] buffers are copied to the "addresses" buffer from
+> > x25_write_internal() so it will lead to stack corruption.
+> >=20
+> > Verify that the strings are NUL terminated and return -EINVAL if they
+> > are not.
+> >=20
+> > Reported-by: "kiyin(=E5=B0=B9=E4=BA=AE)" <kiyin@tencent.com>
+> > Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+>=20
+> Acked-by: Martin Schiller <ms@dev.tdt.de>
 
-Acked-by: Martin Schiller <ms@dev.tdt.de>
+Applied, thanks!
