@@ -2,88 +2,77 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6D4F2D4B78
-	for <lists+linux-x25@lfdr.de>; Wed,  9 Dec 2020 21:19:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 71FB22D4CCE
+	for <lists+linux-x25@lfdr.de>; Wed,  9 Dec 2020 22:26:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388355AbgLIUR2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 9 Dec 2020 15:17:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33808 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388353AbgLIUR1 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 9 Dec 2020 15:17:27 -0500
-Received: from mail-pf1-x443.google.com (mail-pf1-x443.google.com [IPv6:2607:f8b0:4864:20::443])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2672CC0613CF;
-        Wed,  9 Dec 2020 12:16:47 -0800 (PST)
-Received: by mail-pf1-x443.google.com with SMTP id c79so1808353pfc.2;
-        Wed, 09 Dec 2020 12:16:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/Gb52rLFb1PoO6DXkpk5zljkzOIofHR52NXCKENCFa4=;
-        b=kehc2ECdte20dcviA2sV5xZ+n4UnvafAMyDlCabErXP1uJWSICsH9t++c5icoDpNi9
-         6rZYh6ltHdQLf9Z6mllOQPSis08jMwvjqG0QjbvByKrqo8TcDZJ2XNbLtGNS5cQnniRi
-         /atttUalbx6kjjwpQN4oePMgYOjEd5LpRKl84ht2vGfJJ5dRs3s4I1HeEXpdw+EHzWqR
-         qfGOGSILO+68813rMDjYYMziIlDf1u0T83ZarRi9dGEGvbAyn4yPvbt9aYo33trQtowm
-         VSo+R5xDwBzItoPz4G+0/LJYePQjW0TSk1d6RZN9khZD2/LOySBAAsbbRWiL5JwscLpM
-         cJKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/Gb52rLFb1PoO6DXkpk5zljkzOIofHR52NXCKENCFa4=;
-        b=EnFVIpRczONx4Uj2H0mqBoRiv/SrWCirGqPLGE6jPH595xrUCtcYQKC0VKMA0vWGcH
-         yakUBYpIseb8/4WnSRqZFn4lzhdD4jbb2BYlXQgZPezU2AVqgM28qAUT+Rn+lAA/63o6
-         EIFrgDfY+K3fyngyamLWOnlZU9mT82MXQOcUf3T7qg8Rh/5qBjqPQcStRdMNmGoR3+M6
-         5eC101epyiW2YyQxfgK8wUDAYeIIOqoNEWWlPSCAj3062K3tiAGo8kixjal076F3cEkk
-         BM9JuVSTjav8asU6LHb2nXemFjd0ZbLsjNl4C5c/8QkAtyc88TGbp1fZNhRmmOUakL/t
-         v9Kg==
-X-Gm-Message-State: AOAM530ZiPdbGBoAUjtRAAQO7PVa7NC9TxXMdRDIulTV6b7RBEqspe+Z
-        4RBEoQvbQt1rRDXHLFl4hOsyPVyWI44dxyUdJdg=
-X-Google-Smtp-Source: ABdhPJz/aOF4GeS39n75c1q1nNxSyZ9i0t1HDZUpqvPZbEXooO6+WxHvYOXA1hAynAphTeORR8rwu4IuMtheOB4YnoM=
-X-Received: by 2002:a17:90b:1987:: with SMTP id mv7mr3776215pjb.66.1607545006673;
- Wed, 09 Dec 2020 12:16:46 -0800 (PST)
-MIME-Version: 1.0
-References: <20201209081604.464084-1-xie.he.0141@gmail.com>
- <7aed2f12bd42013e2d975280a3242136@dev.tdt.de> <dde53213f7e297690e054d01d815957f@dev.tdt.de>
-In-Reply-To: <dde53213f7e297690e054d01d815957f@dev.tdt.de>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Wed, 9 Dec 2020 12:16:35 -0800
-Message-ID: <CAJht_EPk4uzA+QeL0_nHBhNoaro48ieF1vTwxQihk5_D66GTEA@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: x25: Fix handling of Restart Request and
- Restart Confirmation
-To:     Martin Schiller <ms@dev.tdt.de>
-Cc:     "David S. Miller" <davem@davemloft.net>,
+        id S2387924AbgLIV0i convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Wed, 9 Dec 2020 16:26:38 -0500
+Received: from eu-smtp-delivery-151.mimecast.com ([185.58.86.151]:23507 "EHLO
+        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727208AbgLIV0h (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 9 Dec 2020 16:26:37 -0500
+Received: from AcuMS.aculab.com (156.67.243.126 [156.67.243.126]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-10-FRqOu4oLPtGhG-jw1oU_BA-1; Wed, 09 Dec 2020 21:21:54 +0000
+X-MC-Unique: FRqOu4oLPtGhG-jw1oU_BA-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:43c:695e:880f:8750) with Microsoft SMTP
+ Server (TLS) id 15.0.1347.2; Wed, 9 Dec 2020 21:21:54 +0000
+Received: from AcuMS.Aculab.com ([fe80::43c:695e:880f:8750]) by
+ AcuMS.aculab.com ([fe80::43c:695e:880f:8750%12]) with mapi id 15.00.1347.000;
+ Wed, 9 Dec 2020 21:21:54 +0000
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Xie He' <xie.he.0141@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Martin Schiller <ms@dev.tdt.de>
+Subject: RE: [PATCH net-next] net: x25: Remove unimplemented X.25-over-LLC
+ code stubs
+Thread-Topic: [PATCH net-next] net: x25: Remove unimplemented X.25-over-LLC
+ code stubs
+Thread-Index: AQHWzdxRX1QgNEu/LUu372JTopy8S6nvRYJA
+Date:   Wed, 9 Dec 2020 21:21:53 +0000
+Message-ID: <801dc0320e484bf7a5048c0cddac12af@AcuMS.aculab.com>
+References: <20201209033346.83742-1-xie.he.0141@gmail.com>
+In-Reply-To: <20201209033346.83742-1-xie.he.0141@gmail.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
+MIME-Version: 1.0
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 2:31 AM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> >> 1. When the x25 module gets loaded, layer 2 may already be running and
-> >> connected. In this case, although we are in X25_LINK_STATE_0, we still
-> >> need to handle the Restart Request received, rather than ignore it.
-> >
-> > Hmm... I've never loaded the X.25 module after the interface is UP, but
-> > in this case we really have to fix it.
-> >
->
-> This seems to be a regression caused by moving the Layer2 link handling
-> into the lapb driver, which wasn't intended in my original patchset.
->
-> I also have another patch on my todo list which aims orphan packet
-> handling in the x25_receive_data() function. Maybe it is better to catch
-> the whole thing there.
+From: Xie He
+> Sent: 09 December 2020 03:34
+> 
+> According to the X.25 documentation, there was a plan to implement
+> X.25-over-802.2-LLC. It never finished but left various code stubs in the
+> X.25 code. At this time it is unlikely that it would ever finish so it
+> may be better to remove those code stubs.
 
-OK..
+I always wondered about running Class 2 transport directly over LLC2
+(rather than Class 4 over LLC1).
+But the only LLC2 user was netbios - and microsoft's LLC2 was broken.
+Not to mention the window probing needed to handle systems that
+said they supported a window of (IIRC) 15 but would discard the
+5th back to back frame.
 
-Currently it's not clear to me what your future patches would be.
-Maybe we can first have this patch applied? Because based on the
-current code I think this patch is necessary. When you are ready to
-submit your patches, you can replace my code and we can discuss
-further.
+	David
+
+-
+Registered Address Lakeside, Bramley Road, Mount Farm, Milton Keynes, MK1 1PT, UK
+Registration No: 1397386 (Wales)
+
