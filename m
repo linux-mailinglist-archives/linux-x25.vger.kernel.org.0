@@ -2,86 +2,92 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 138222D3E62
-	for <lists+linux-x25@lfdr.de>; Wed,  9 Dec 2020 10:20:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 5317E2D3F06
+	for <lists+linux-x25@lfdr.de>; Wed,  9 Dec 2020 10:44:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728682AbgLIJST (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 9 Dec 2020 04:18:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726044AbgLIJSP (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 9 Dec 2020 04:18:15 -0500
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33917C0617A6;
-        Wed,  9 Dec 2020 01:17:35 -0800 (PST)
-Received: by mail-pj1-x1043.google.com with SMTP id f14so540804pju.4;
-        Wed, 09 Dec 2020 01:17:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=i2g8fi2sxo+IYXz2d5FDftsnAsDKdKjxlec5gNvekGY=;
-        b=V6/jPHRRgiTymHfuMZyb/AiGMPLMq+CJU0v27LXBnECGFfDkcLWpUWzuJXZptEj92B
-         kLleVEeTmpKMCxuM8yxikC5Eb6kxkos7EbpTdLM/aMHiWnydV1WdV3H9pj2LdkMNY5Ma
-         OhwXxVniM2lO1tXypIYpCRMTpX7L2uan0DOdds81TrHybMVcOePo1PmZ42e3zjiDM2Oq
-         cNjinS5DydvEKhlN03NSvTQ4qFMLilhKTMyuRsjSPY2CvhWqiX5qfOl72dVtMBNpmknx
-         CK19ZEaD7LOaGhSoPouHVLzwmbEBJYCrFXA8VXeNfU7dbWsoxEYxYIA+zEFa5DC5LF+Z
-         HzOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=i2g8fi2sxo+IYXz2d5FDftsnAsDKdKjxlec5gNvekGY=;
-        b=IyCLI5q779av7zWaEe4IX8obSWm5FHpClYHEfPSixWHLxMGh9s1lR6gTGORgTNMNPp
-         w97eJM0Qwf67HGod8m/LFN3WHGNKtbJTuQ6G5Ekx0QrV1AB7eg+QurazYSEQKP4LwlK8
-         XGEMwt7+GskHPf0czzG/SgaA4g458NuqzlAVKixvCF6gRYdZbjDo8r5IQpnRJA+zYvqN
-         qOz7PeMZtdsBgCSAjX5tOcpiGvLnvFFzZTgKF5ltaeFtwx62atep8Mge3KQmQ1GBdp9/
-         5QwpBh/8o9sSyG/8asDxbYgHb8aPVrqpiz+EZEL/0cBVCXVbso+6kzvGtH2JerdIoDGJ
-         MHtQ==
-X-Gm-Message-State: AOAM5309bp7roXWpNzXhB98iFcsnpu048twjivyvDM55kINC63ZMpyQN
-        QqlhMk8kzIzepReU37Wu+jTCwW+TJJFof+nD6Bk=
-X-Google-Smtp-Source: ABdhPJydnttj2HP+zryV972A1lZBqSE8aPXL4ogf/X4ErYcEWyz7giGIZGF0j9NUg92kj7u4adoUYYJFL22VLxjqDcQ=
-X-Received: by 2002:a17:90a:6ac5:: with SMTP id b5mr1380925pjm.210.1607505454793;
- Wed, 09 Dec 2020 01:17:34 -0800 (PST)
+        id S1728978AbgLIJmz (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 9 Dec 2020 04:42:55 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:30637 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728509AbgLIJmz (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 9 Dec 2020 04:42:55 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kmvy1-000Ksk-Tg; Wed, 09 Dec 2020 10:41:01 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kmvy1-000XDP-1s; Wed, 09 Dec 2020 10:41:01 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id 961A5240041;
+        Wed,  9 Dec 2020 10:41:00 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 18B8A240040;
+        Wed,  9 Dec 2020 10:41:00 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id B4BE020897;
+        Wed,  9 Dec 2020 10:40:59 +0100 (CET)
 MIME-Version: 1.0
-References: <20201126063557.1283-1-ms@dev.tdt.de> <20201126063557.1283-5-ms@dev.tdt.de>
- <CAJht_EMZqcPdE5n3Vp+jJa1sVk9+vbwd-Gbi8Xqy19bEdbNNuA@mail.gmail.com>
-In-Reply-To: <CAJht_EMZqcPdE5n3Vp+jJa1sVk9+vbwd-Gbi8Xqy19bEdbNNuA@mail.gmail.com>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Wed, 9 Dec 2020 01:17:23 -0800
-Message-ID: <CAJht_ENukJrnh6m8FLrHBwnKKyZpzk6uGWhS4_eUCyDzrCG3eA@mail.gmail.com>
-Subject: Re: [PATCH net-next v7 4/5] net/x25: fix restart request/confirm handling
-To:     Martin Schiller <ms@dev.tdt.de>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 09 Dec 2020 10:40:59 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Xie He <xie.he.0141@gmail.com>
 Cc:     Andrew Hendry <andrew.hendry@gmail.com>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Linux X25 <linux-x25@vger.kernel.org>,
         Linux Kernel Network Developers <netdev@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH net-next v7 4/5] net/x25: fix restart request/confirm
+ handling
+Organization: TDT AG
+In-Reply-To: <CAJht_ENukJrnh6m8FLrHBwnKKyZpzk6uGWhS4_eUCyDzrCG3eA@mail.gmail.com>
+References: <20201126063557.1283-1-ms@dev.tdt.de>
+ <20201126063557.1283-5-ms@dev.tdt.de>
+ <CAJht_EMZqcPdE5n3Vp+jJa1sVk9+vbwd-Gbi8Xqy19bEdbNNuA@mail.gmail.com>
+ <CAJht_ENukJrnh6m8FLrHBwnKKyZpzk6uGWhS4_eUCyDzrCG3eA@mail.gmail.com>
+Message-ID: <3e314d2786857cbd5aaee8b83a0e6daa@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.15
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-type: clean
+X-purgate: clean
+X-purgate-ID: 151534::1607506861-00001F6B-18FBB75D/0/0
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 1:01 AM Xie He <xie.he.0141@gmail.com> wrote:
->
-> On Wed, Nov 25, 2020 at 10:36 PM Martin Schiller <ms@dev.tdt.de> wrote:
-> >
-> >         switch (nb->state) {
-> >         case X25_LINK_STATE_0:
-> > -               nb->state = X25_LINK_STATE_2;
-> > -               break;
-> >         case X25_LINK_STATE_1:
-> >                 x25_transmit_restart_request(nb);
-> >                 nb->state = X25_LINK_STATE_2;
->
-> What is the reason for this change? Originally only the connecting
-> side will transmit a Restart Request; the connected side will not and
-> will only wait for the Restart Request to come. Now both sides will
-> transmit Restart Requests at the same time. I think we should better
-> avoid collision situations like this.
+On 2020-12-09 10:17, Xie He wrote:
+> On Wed, Dec 9, 2020 at 1:01 AM Xie He <xie.he.0141@gmail.com> wrote:
+>> 
+>> On Wed, Nov 25, 2020 at 10:36 PM Martin Schiller <ms@dev.tdt.de> 
+>> wrote:
+>> >
+>> >         switch (nb->state) {
+>> >         case X25_LINK_STATE_0:
+>> > -               nb->state = X25_LINK_STATE_2;
+>> > -               break;
+>> >         case X25_LINK_STATE_1:
+>> >                 x25_transmit_restart_request(nb);
+>> >                 nb->state = X25_LINK_STATE_2;
+>> 
+>> What is the reason for this change? Originally only the connecting
+>> side will transmit a Restart Request; the connected side will not and
+>> will only wait for the Restart Request to come. Now both sides will
+>> transmit Restart Requests at the same time. I think we should better
+>> avoid collision situations like this.
+> 
+> Oh. I see. Because in other patches we are giving L2 the ability to
+> connect by itself, both sides can now appear here to be the
+> "connected" side. So we can't make the "connected" side wait as we did
+> before.
 
-Oh. I see. Because in other patches we are giving L2 the ability to
-connect by itself, both sides can now appear here to be the
-"connected" side. So we can't make the "connected" side wait as we did
-before.
+Right.
+By the way: A "Restart Collision" is in practice a very common event to
+establish the Layer 3.
