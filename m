@@ -2,82 +2,116 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2AA7D2D576C
-	for <lists+linux-x25@lfdr.de>; Thu, 10 Dec 2020 10:43:00 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C9F62D5811
+	for <lists+linux-x25@lfdr.de>; Thu, 10 Dec 2020 11:19:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731916AbgLJJlf (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 10 Dec 2020 04:41:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44408 "EHLO
+        id S1727759AbgLJKSB (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 10 Dec 2020 05:18:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727036AbgLJJlc (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 10 Dec 2020 04:41:32 -0500
-Received: from mail-pg1-x542.google.com (mail-pg1-x542.google.com [IPv6:2607:f8b0:4864:20::542])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 320C9C0613D6;
-        Thu, 10 Dec 2020 01:40:52 -0800 (PST)
-Received: by mail-pg1-x542.google.com with SMTP id o4so3729004pgj.0;
-        Thu, 10 Dec 2020 01:40:52 -0800 (PST)
+        with ESMTP id S1726489AbgLJKSA (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 10 Dec 2020 05:18:00 -0500
+Received: from mail-pf1-x441.google.com (mail-pf1-x441.google.com [IPv6:2607:f8b0:4864:20::441])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2D5FC0613CF;
+        Thu, 10 Dec 2020 02:17:20 -0800 (PST)
+Received: by mail-pf1-x441.google.com with SMTP id w6so3622869pfu.1;
+        Thu, 10 Dec 2020 02:17:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4wACi7c+y84hFlcOFDDjJ1mfg6gJ3+Zeyx/hwXEAMNU=;
-        b=hJHsvvU/+uBIFX6TLQB40KT17anRRYSMu4q+h9i6CGgJUtcvGs8/l2Dy+eDmBoEFZ4
-         pWKWCQGfBTdhFGKjGBfCHNHX1vgxY59IfxFVg1MHIebHR3SPRvy6Jg5NYUG0MIGYqdFx
-         VL+D9RRYsdt0aXZPv1uiKd7o6uVr8rZPxzq+w4t4Nkt0WpHUYxlRWoCDnR0q4k/jJrqz
-         DJ74T5HbAPcRjvbcVzQwb4iS5qjIx/F84LFOnCQkHX0noBBjoAKuh7pW1bCmHBV33FGG
-         STMKGJbHQ92uZ2qXQ+pXHlwWlKJd/eU/NvvybgpfHU34/GsaervI4S720y1ZY7e1Xw5T
-         CWVQ==
+        bh=F1GNlk+sMt03zW3RJz1MQRTqkMVaVyhGe/dSlf7Cqn4=;
+        b=pIY+tLvtWWNfOAXPaSavrpTgFYmDboG6IC8Pppte6rzX0gQ8GPCAH4ZgKv5h5uBQYG
+         gvaEcy3wF9hdBPqwShxn/oORarKmYqVW7SeU73zjrLCnisgdJKUlNk+mxx8GhrUpXpkQ
+         3tqMjcvy15ECZImd81vCbh3OI7f7B5MibU+mUH2TvQsZ0orhfq+KTmNfvHOOA5IOphoV
+         UiBX74wWV2bKL3/z7hYKlXN+rrAQuvq3rV7z5oR05QJXKBb/jtYX2LIePEZkgqRgdEvR
+         D6V6LKPEp+f76yOYs/NuXKOogYLS6fHHy9NYBc7FelEMpup5invXi/hUFq77lKhYUX0q
+         73kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4wACi7c+y84hFlcOFDDjJ1mfg6gJ3+Zeyx/hwXEAMNU=;
-        b=Vbq4565sPSREyJffeOQ3Sodx8KY1A3v5FzrtezX65ltSFklQIG1OLT2OYGe07Jh5vQ
-         T9yakaFeGaJqwOiQlEAq10pt2indb3Pz1iiZKRdTXAED+r0qq8jm1o2FxeFsTqjW9QHd
-         gRD8Qt/1wT9KlPUM/dDb9KF2aCFgAq4kPnj3NpGkpTKjYdXIeO6CF5b3MikEbFi2LslE
-         JYjMcND8vHk6suVAu7EIHpG4A0KqUldW2QuVX5/v4pCJysuccblkNU65NNtubsOPLKJ5
-         e0U6FmM+tyQEfCBP0HUHrY7EDvm+QuC3jl0dE47qK8tfHc18hT6pD5r7A1jQv0GXeXky
-         sfTg==
-X-Gm-Message-State: AOAM530/vriWmpCY5dgZY13JUQ8GLEZRKH5+xGjcAcv3Givqe6c7baRf
-        Pw9KXeNd/SqOILh2WQ09XA8M8Cmnksnw5R7A6MTcccsT
-X-Google-Smtp-Source: ABdhPJxHsWCOKgYVexWN3dQZ8W2TMDI6UaYW1T+HYEkZsFldN8WubM99OsXSlBmb+nDjIXtxLzHD0Ej/7Oafo/JKLBM=
-X-Received: by 2002:a17:90a:c085:: with SMTP id o5mr2025373pjs.210.1607593251874;
- Thu, 10 Dec 2020 01:40:51 -0800 (PST)
+        bh=F1GNlk+sMt03zW3RJz1MQRTqkMVaVyhGe/dSlf7Cqn4=;
+        b=Zfz7d1vFlu1chIjvJPhqTETmfQypBd3zc/BbYXcuI3OR/Bjt02LssXCSvQ57q/pire
+         jW6tHczZTq0pJ99Vmv+2rjfeDLvRdR8OFtF5pkVOi1VdLWYq3mF7XUiWVyApk2iqTKA/
+         701wZmC0+c83Gc2qJUb8SIC8KC/pZVvb3omyfu7ay7hGkX6XdBCS+tLXauGY74k2P/Uf
+         4qVwg4e+XqZj/cMCnsMsoR/VRqn7jFOmPsyC3tU6aQl7g8DS93dSsCTCwmCp3buEjHH4
+         Mg5VCvmcsHz3O6QJtqKCIN2QaYpOsDj3hBbx933FsZNLhj0/xZ4Q23I/coam+msUn6N2
+         Huig==
+X-Gm-Message-State: AOAM533HYUOEdFVV1wFfEpQy4YOZFiZr48VKxHMPod8OdW7D/XELfYVc
+        DI4Qu9k29g5DthnR2pUm7+Mxxftv/vxyn2oU2lQ=
+X-Google-Smtp-Source: ABdhPJz5VphjndpowVyThCko817PLagCO8ZMN3OGxx5tp7Ctt7Riay98gM8Rn6Q/PdQpQusBYvhFSLs1r97UgiL6WGQ=
+X-Received: by 2002:a63:d312:: with SMTP id b18mr6003383pgg.233.1607595440348;
+ Thu, 10 Dec 2020 02:17:20 -0800 (PST)
 MIME-Version: 1.0
-References: <20201209081604.464084-1-xie.he.0141@gmail.com>
- <7aed2f12bd42013e2d975280a3242136@dev.tdt.de> <dde53213f7e297690e054d01d815957f@dev.tdt.de>
- <CAJht_EPk4uzA+QeL0_nHBhNoaro48ieF1vTwxQihk5_D66GTEA@mail.gmail.com> <8e15d185cabc9294958b13f5cff389aa@dev.tdt.de>
-In-Reply-To: <8e15d185cabc9294958b13f5cff389aa@dev.tdt.de>
+References: <20201209033346.83742-1-xie.he.0141@gmail.com> <801dc0320e484bf7a5048c0cddac12af@AcuMS.aculab.com>
+ <CAJht_EMQFtR_-QH=QMHt9+cLcNO6LHBSy2fy=mgbic+=JUsR-Q@mail.gmail.com> <3e7fb08afd624399a7f689c2b507a01e@AcuMS.aculab.com>
+In-Reply-To: <3e7fb08afd624399a7f689c2b507a01e@AcuMS.aculab.com>
 From:   Xie He <xie.he.0141@gmail.com>
-Date:   Thu, 10 Dec 2020 01:40:41 -0800
-Message-ID: <CAJht_EOD9QbCi=AkPRqoT2Hzweb65OTpxkoCeUNm9WUrnyw_8w@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: x25: Fix handling of Restart Request and
- Restart Confirmation
-To:     Martin Schiller <ms@dev.tdt.de>
+Date:   Thu, 10 Dec 2020 02:17:09 -0800
+Message-ID: <CAJht_EMqO8cS3BSnqHA=ROqbkpum8JB_FjzRgPuW=up+e4bO1w@mail.gmail.com>
+Subject: Re: [PATCH net-next] net: x25: Remove unimplemented X.25-over-LLC
+ code stubs
+To:     David Laight <David.Laight@aculab.com>
 Cc:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
+        "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Martin Schiller <ms@dev.tdt.de>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, Dec 9, 2020 at 10:35 PM Martin Schiller <ms@dev.tdt.de> wrote:
+On Thu, Dec 10, 2020 at 1:14 AM David Laight <David.Laight@aculab.com> wrote:
 >
-> Yes, that's also the reason why I already acked this patch. We can
-> solve this later a little bit cleaner if necessary.
+> > To me, LLC1 and LLC2 are to Ethernet what UDP and TCP are to IP
+> > networks. I think we can use LLC1 and LLC2 wherever UDP and TCP can be
+> > used, as long as we are in the same LAN and are willing to use MAC
+> > addresses as the addresses.
 >
-> My patch that takes care of the orphaned packets in x25_receive_data()
-> has again a dependency on other patches, especially the patch to
-> configure the neighbor parameters (DCE/DTE, number of channels etc.),
-> which I already sent before but still have to revise.
->
-> Unfortunately I have only limited time for this topic, so I am not as
-> fast as some people would wish. Sorry for that.
+> Except that you don't have any where near enough 'ports' so you need
+> something to demultiplex messages to different applications.
 
-OK. Thanks! I appreciate your work! Code needs to have specialist
-developers like you to keep it alive and evolving.
+Yes, LLC only has 256 "ports" compared to more than 60000 for UDP/TCP.
 
-I understand you have limited time. Please take your time. Thanks!
+> We (ICL) always ran class 4 transport (which does error recovery)
+> directly over LLC1 using MAC address (a NUL byte for the network layer).
+> This requires a bridged network and globally unique MAC addresses.
+> Sending out an LLC reflect packet to the broadcast MAC address used to
+> generate a couple of thousand responses (many would get discarded
+> because the bridges got overloaded).
+
+Wow, You have a really big LAN!
+
+> > X.25 layer 3 certainly can also run over LLC2.
+>
+> You don't need X.25 layer 3.
+> X.25 layer 2 does error recovery over a point-to-point link.
+> X.25 layer 3 does switching between machines.
+> Class 2 transport does multiplexing over a reliable lower layer.
+> So you normally need all three.
+
+Yes, I was just saying X.25 layer 3 can run over any reliable
+point-to-point links, including X.25 layer 2, LLC2 and TCP.
+
+> However LLC2 gives you a reliable connection between two machines
+> (selected by MAC address).
+> So you should be able to run Class 2 transport (well one of its
+> 4 variants!) directly over LL2.
+
+Yes.
+
+> The advantage over Class 4 transport over LLC1 is that there is
+> only one set of retransmit buffers (etc) regardless of the number
+> of connections.
+
+Right. But nowadays we have big enough memories for many buffers, so
+it may be preferable to make connections operate independent of each
+other. This way one lost frame wouldn't affect all connections. This
+is also why HTTP3 moved to QUIC instead of using TCP.
+
+> But this is all 30 year old history...
+
+Haha, we are talking about really old technologies.
