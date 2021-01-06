@@ -2,71 +2,86 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1947C2E9FA3
-	for <lists+linux-x25@lfdr.de>; Mon,  4 Jan 2021 22:51:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06B3F2EBA87
+	for <lists+linux-x25@lfdr.de>; Wed,  6 Jan 2021 08:36:22 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726148AbhADVut (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 4 Jan 2021 16:50:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:42236 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726021AbhADVut (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Mon, 4 Jan 2021 16:50:49 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id CF7082225E;
-        Mon,  4 Jan 2021 21:50:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1609797008;
-        bh=ktLasPF5LL+xB2S/z9EYKk/ANhzEOT2Nf8DBtMLtWA0=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=X9rjNaXl/h3uKSt29dhMvZkMqdzS3nv51t1zei1JuoJmQXCBewd7lSZy7WpT7x1Qa
-         x9A8V6MzNS9Cn2jMKVUeEgqot/ei1XrAFbC8tjOewsRb1ui+1f5t60pSFLl1ZIVAJi
-         pvu3L2M2+WDUpuN6UdUcEVbCBpFJ3SN2FTGchD/o9x1y+Ud83kq8Zy8o6pHDgW2aEL
-         5jjtQvRHIYPsGAfN+ZRwBKo12CIsvYcJW/D/K8lJOFMHf02B04GEHELd+9di6J0AYV
-         /XPkAlM6sq4fffMvKT8O+E7Tvmnaaezh3AjbdOcECc26FVpl0TXJ1KgvNMPRFTPBHr
-         jggjMLEOO7EXQ==
-Received: from pdx-korg-docbuild-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-1.ci.codeaurora.org (Postfix) with ESMTP id BCD7C600F6;
-        Mon,  4 Jan 2021 21:50:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S1725843AbhAFHez (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 6 Jan 2021 02:34:55 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:46357 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbhAFHez (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 6 Jan 2021 02:34:55 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kx3Jb-000Abi-8Q; Wed, 06 Jan 2021 08:33:07 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1kx3Ja-000AbP-KA; Wed, 06 Jan 2021 08:33:06 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id B03F8240041;
+        Wed,  6 Jan 2021 08:33:05 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 2B578240040;
+        Wed,  6 Jan 2021 08:33:05 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id A498C20046;
+        Wed,  6 Jan 2021 08:33:04 +0100 (CET)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net: lapb: Decrease the refcount of "struct lapb_cb" in
- lapb_device_event
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <160979700876.8172.3140864000017286214.git-patchwork-notify@kernel.org>
-Date:   Mon, 04 Jan 2021 21:50:08 +0000
-References: <20201231174331.64539-1-xie.he.0141@gmail.com>
-In-Reply-To: <20201231174331.64539-1-xie.he.0141@gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 06 Jan 2021 08:33:04 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
 To:     Xie He <xie.he.0141@gmail.com>
-Cc:     davem@davemloft.net, kuba@kernel.org, linux-x25@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ms@dev.tdt.de
+Cc:     Sasha Levin <sashal@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>, stable@vger.kernel.org,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>
+Subject: Re: [PATCH AUTOSEL 5.4 075/130] net/lapb: fix t1 timer handling for
+ LAPB_STATE_0
+Organization: TDT AG
+In-Reply-To: <CAJht_EOXf4Z3G-rq92hb_YvJEsHtDy15FE7WuthqDQsPY039QQ@mail.gmail.com>
+References: <20201223021813.2791612-75-sashal@kernel.org>
+ <20201223170124.5963-1-xie.he.0141@gmail.com>
+ <CAJht_EOXf4Z3G-rq92hb_YvJEsHtDy15FE7WuthqDQsPY039QQ@mail.gmail.com>
+Message-ID: <70be903f2be49e243b5a28cf565c07a8@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.15
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-ID: 151534::1609918387-0001A85E-4872F59B/0/0
+X-purgate: clean
+X-purgate-type: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (refs/heads/master):
-
-On Thu, 31 Dec 2020 09:43:31 -0800 you wrote:
-> In lapb_device_event, lapb_devtostruct is called to get a reference to
-> an object of "struct lapb_cb". lapb_devtostruct increases the refcount
-> of the object and returns a pointer to it. However, we didn't decrease
-> the refcount after we finished using the pointer. This patch fixes this
-> problem.
+On 2020-12-24 10:49, Xie He wrote:
+> On Wed, Dec 23, 2020 at 9:01 AM Xie He <xie.he.0141@gmail.com> wrote:
+>> 
+>> I don't think this patch is suitable for stable branches. This patch 
+>> is
+>> part of a patch series that changes the lapb module from "establishing 
+>> the
+>> L2 connection only when needed by L3", to "establishing the L2 
+>> connection
+>> automatically whenever we are able to". This is a behavioral change. 
+>> It
+>> should be seen as a new feature. It is not a bug fix.
 > 
-> Fixes: a4989fa91110 ("net/lapb: support netdev events")
-> Cc: Martin Schiller <ms@dev.tdt.de>
-> Signed-off-by: Xie He <xie.he.0141@gmail.com>
+> Applying this patch without other patches in the same series will also
+> introduce problems, because this patch relies on part of the changes
+> in the subsequent patch in the same series to be correct.
 > 
-> [...]
+> Hi Martin,
+> 
+> It's better that we avoid using words like "fix" in non-bug-fix
+> patches, and make every patch work on its own without subsequent
+> patches. Otherwise we'll make people confused.
 
-Here is the summary with links:
-  - [net] net: lapb: Decrease the refcount of "struct lapb_cb" in lapb_device_event
-    https://git.kernel.org/netdev/net/c/b40f97b91a3b
-
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Yes, you are right.
