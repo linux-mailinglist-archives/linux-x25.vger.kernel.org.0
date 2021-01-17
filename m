@@ -2,60 +2,60 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45EC72F9175
-	for <lists+linux-x25@lfdr.de>; Sun, 17 Jan 2021 09:51:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B28B2F9600
+	for <lists+linux-x25@lfdr.de>; Sun, 17 Jan 2021 23:48:54 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbhAQItU (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 17 Jan 2021 03:49:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60534 "EHLO
+        id S1729422AbhAQWsi (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sun, 17 Jan 2021 17:48:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728030AbhAQIJK (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 17 Jan 2021 03:09:10 -0500
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C91F0C061573;
-        Sun, 17 Jan 2021 00:08:24 -0800 (PST)
-Received: by mail-pf1-x436.google.com with SMTP id m6so8330129pfk.1;
-        Sun, 17 Jan 2021 00:08:24 -0800 (PST)
+        with ESMTP id S1726298AbhAQWsh (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sun, 17 Jan 2021 17:48:37 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE52DC061573;
+        Sun, 17 Jan 2021 14:47:56 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id g15so4220919pjd.2;
+        Sun, 17 Jan 2021 14:47:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=obnZR0NyV+B7lkaH0Nw+SIxRwBgzDZBrRGSyQNYyqF4=;
-        b=ejYLM1ndmWurwe076eG8EGGkdxWecZCUr2RbOqzLqnTM01YKGT1RYofleCAtF2+3ms
-         JVNerc58NRVu9W5SqOvRzi3sAxUqdqUqzpyfIze9ENNclGlKpZBA9sUilkmMxeNCkq8L
-         nHxJGp4lKbFDsbHpaI9HQq7xGjKHwxtZxO+DP8M3DItGOMfeB2VQ7mv/D58ClRADnwC2
-         Jy4TAZ8o0ClZSj42shXRF+wzNJJY34Rjznbu4lkz20bfnaT/K8f+0ECyGGXmt60XIMfd
-         3uEQORS+WDwTCrOlwmUjR/s9goxc6zTxeIXGEyHuEEyjPzwoTikUie5sxiZOext78nXC
-         2D8w==
+        bh=/2hbi2dKwVl31NeiC0aTSjst7es3pRpjrzEtDyhBGs4=;
+        b=tt++JfGFwId8s2GP2L4EAUAuYmqxzm1AEekBQB1+WZyFizrB5C7LV7pot+FLneUCnd
+         Xicp67fc4pT/EPYTNSwShPmUd37Daa1VWQyC3tIMoco0IcuYXQ8/Df5LUDn1tmet05Vu
+         hRKb1rKORQxhHl+pc7d5L7lR8f+IKpF5H3lWQMVdQgP8il263VjGIU6YN5NQNMlCvwJR
+         lN2AEQTFlgABN6kCQIb7WjGomX1cux+b0rYr/FAt5ocw64S45luWU6R3ppRojUNbw8FD
+         4icqk5Bc4Cj72ovwNbYCo/4kSi6PvA+xjsddmhdokZBHz/bvVCDOoCC7J4HHHaeFfsIh
+         4VKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=obnZR0NyV+B7lkaH0Nw+SIxRwBgzDZBrRGSyQNYyqF4=;
-        b=OvFJhOKuUEGxAyZxDEPaL5srlHVa5PFHwNxKD2ja/ZWKk2gHN+1joxsFv6snISBC+j
-         43Dc9CDZpVFOa8mUbjPCSy/VbVsPfQFIchy5VzmBzCyRtgUFNA/yLmZv06LTXw0W41rm
-         fsMX9wyrPRz/KR9xxV3ebpDF4Yi3A/XhgVD4cC1rzMIOegncYX9HZxmjqhISrNOuLBdK
-         81sDWcuhVphjasI2v4FEjWjDTQNU/hLLxMO3B1g+fJN5pj+Ps9CPLgYvj4rVVQON3OdQ
-         iNK7EocQwj8hk56j3Ym/f2YHdHRzW/3HSSnVctfGTgUdDpZhHe0uB4xEtQS6I9iKFx0h
-         lUhw==
-X-Gm-Message-State: AOAM531ocjbozgy/wfvgZ0qsd/PHJFasseTbajUbmUvW1DK5eThegkfK
-        KKIhThik8kcU38/PeqTLv6X/dWzDogw=
-X-Google-Smtp-Source: ABdhPJxGv/KkGSl3zhNdF/S54a/Bxrdpg9qBPCsCcVnEbVy9rJvtCrKwuhhp/O+Ya/m1SlqW4Amf5Q==
-X-Received: by 2002:a62:e213:0:b029:19e:59d3:a76a with SMTP id a19-20020a62e2130000b029019e59d3a76amr20967860pfi.53.1610870904227;
-        Sun, 17 Jan 2021 00:08:24 -0800 (PST)
-Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:b827:9276:e0ac:7060])
-        by smtp.gmail.com with ESMTPSA id j17sm12145855pfh.183.2021.01.17.00.08.22
+        bh=/2hbi2dKwVl31NeiC0aTSjst7es3pRpjrzEtDyhBGs4=;
+        b=P/DHSYiXo/a3xTZIlzNhU882IECr1aFzRaEk1Oc1vtG3Myb5O/tzAGGrfA3OBx7oPX
+         EnZcB9LFa8ji+3U3gJzQoKKT+YjRi16qFTyNbFSJyQVS4k2sBdUCjuW5RT4RLB5kRlgW
+         PbT5SaZXPOlW+5AcURZSpadVLHKZY7KMdjArIUH7yZW4NHx880SfMzN12uVjC8LRdn5j
+         29x5Oz17ZE01kELih79dvizgL8GzFfoJmQs2kLO0RN1/WW36IOSVvQV24jqy6aPnWhcl
+         6gHXV4XMwo6Z9hH03K/UZ58w9wR1ZztSsPmq83ydkGs4aJKME5jZBN74VqUkcN+lc6fF
+         RJiA==
+X-Gm-Message-State: AOAM532pYrbaaEFdCaSTHocVpiyIgdVcMD8Kn6I0m9YJvm2gb+2jeMzO
+        LfRpGv1dO82pZ7Z79z8enDk=
+X-Google-Smtp-Source: ABdhPJzaIQ0RWrFBEtpJpWqdly5221YaZ8cLWBpB5oET8V4tX0Yb9AicinIt6cvyfCOeP7I6ug071Q==
+X-Received: by 2002:a17:902:e887:b029:de:7863:19b0 with SMTP id w7-20020a170902e887b02900de786319b0mr12604455plg.42.1610923676205;
+        Sun, 17 Jan 2021 14:47:56 -0800 (PST)
+Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:c3c5:f7f3:3393:2c9d])
+        by smtp.gmail.com with ESMTPSA id x15sm13593068pfa.80.2021.01.17.14.47.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 17 Jan 2021 00:08:23 -0800 (PST)
+        Sun, 17 Jan 2021 14:47:55 -0800 (PST)
 From:   Xie He <xie.he.0141@gmail.com>
 To:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         Martin Schiller <ms@dev.tdt.de>
 Cc:     Xie He <xie.he.0141@gmail.com>
-Subject: [PATCH net] net: lapb: Add locking to the lapb module
-Date:   Sun, 17 Jan 2021 00:08:16 -0800
-Message-Id: <20210117080816.22475-1-xie.he.0141@gmail.com>
+Subject: [PATCH net v2] net: lapb: Add locking to the lapb module
+Date:   Sun, 17 Jan 2021 14:47:50 -0800
+Message-Id: <20210117224750.6572-1-xie.he.0141@gmail.com>
 X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -82,17 +82,17 @@ to "del_timer_sync" to make sure all running timers have exited.
 
 4. In lapb_device_event, replace the "lapb_disconnect_request" call with
 the content of "lapb_disconnect_request", to avoid trying to hold the
-lock twice. When doing this, "lapb_start_t1timer" is removed because
-I don't think it's necessary to start the timer when "NETDEV_GOING_DOWN".
+lock twice. When I do this, I removed "lapb_start_t1timer" because I
+don't think it's necessary to start the timer when "NETDEV_GOING_DOWN".
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: Martin Schiller <ms@dev.tdt.de>
 Signed-off-by: Xie He <xie.he.0141@gmail.com>
 ---
  include/net/lapb.h    |  2 ++
- net/lapb/lapb_iface.c | 54 +++++++++++++++++++++++++++++++++++++++----
- net/lapb/lapb_timer.c | 30 ++++++++++++++++++++----
- 3 files changed, 78 insertions(+), 8 deletions(-)
+ net/lapb/lapb_iface.c | 56 +++++++++++++++++++++++++++++++++++++++----
+ net/lapb/lapb_timer.c | 30 +++++++++++++++++++----
+ 3 files changed, 80 insertions(+), 8 deletions(-)
 
 diff --git a/include/net/lapb.h b/include/net/lapb.h
 index ccc3d1f020b0..eee73442a1ba 100644
@@ -115,7 +115,7 @@ index ccc3d1f020b0..eee73442a1ba 100644
  };
  
 diff --git a/net/lapb/lapb_iface.c b/net/lapb/lapb_iface.c
-index 40961889e9c0..ad6197381d05 100644
+index 40961889e9c0..45f332607685 100644
 --- a/net/lapb/lapb_iface.c
 +++ b/net/lapb/lapb_iface.c
 @@ -122,6 +122,8 @@ static struct lapb_cb *lapb_create_cb(void)
@@ -251,7 +251,7 @@ index 40961889e9c0..ad6197381d05 100644
  	switch (event) {
  	case NETDEV_UP:
  		lapb_dbg(0, "(%p) Interface up: %s\n", dev, dev->name);
-@@ -453,8 +476,30 @@ static int lapb_device_event(struct notifier_block *this, unsigned long event,
+@@ -453,8 +476,32 @@ static int lapb_device_event(struct notifier_block *this, unsigned long event,
  		}
  		break;
  	case NETDEV_GOING_DOWN:
@@ -264,7 +264,8 @@ index 40961889e9c0..ad6197381d05 100644
 +		case LAPB_STATE_1:
 +			lapb_dbg(1, "(%p) S1 TX DISC(1)\n", lapb->dev);
 +			lapb_dbg(0, "(%p) S1 -> S0\n", lapb->dev);
-+			lapb_send_control(lapb, LAPB_DISC, LAPB_POLLON, LAPB_COMMAND);
++			lapb_send_control(lapb, LAPB_DISC, LAPB_POLLON,
++					  LAPB_COMMAND);
 +			lapb->state = LAPB_STATE_0;
 +			break;
 +
@@ -274,7 +275,8 @@ index 40961889e9c0..ad6197381d05 100644
 +		default:
 +			lapb_clear_queues(lapb);
 +			lapb->n2count = 0;
-+			lapb_send_control(lapb, LAPB_DISC, LAPB_POLLON, LAPB_COMMAND);
++			lapb_send_control(lapb, LAPB_DISC, LAPB_POLLON,
++					  LAPB_COMMAND);
 +			lapb_stop_t2timer(lapb);
 +			lapb->state = LAPB_STATE_2;
 +			lapb_dbg(1, "(%p) S3 DISC(1)\n", lapb->dev);
@@ -284,7 +286,7 @@ index 40961889e9c0..ad6197381d05 100644
  		break;
  	case NETDEV_DOWN:
  		lapb_dbg(0, "(%p) Interface down: %s\n", dev, dev->name);
-@@ -489,6 +534,7 @@ static int lapb_device_event(struct notifier_block *this, unsigned long event,
+@@ -489,6 +536,7 @@ static int lapb_device_event(struct notifier_block *this, unsigned long event,
  		break;
  	}
  
