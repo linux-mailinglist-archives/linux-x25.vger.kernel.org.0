@@ -2,99 +2,115 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3AD2306534
-	for <lists+linux-x25@lfdr.de>; Wed, 27 Jan 2021 21:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 962B4306DB9
+	for <lists+linux-x25@lfdr.de>; Thu, 28 Jan 2021 07:42:36 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232905AbhA0Ubo (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 27 Jan 2021 15:31:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233238AbhA0UaX (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 27 Jan 2021 15:30:23 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63D41C06174A;
-        Wed, 27 Jan 2021 12:29:43 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id e9so1690754plh.3;
-        Wed, 27 Jan 2021 12:29:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=35nce9wUdGps1xFNE+LJWAtds0eN6VprBugB5bMnyd4=;
-        b=lc9qa04WTv0m3c/3XhNlf7uDFlWXVko6oHEt3W5ZOc7fHSaDKbtZ68UbdT4Tc/5/Oc
-         yyk+MkwlyYN8ZFDLTWHgZcIQHop2n8EmepZG23sNKQrG+JYzWUm8728P25A1iZ/zcy+t
-         vD4hxI/jiBWYfvMgGIXVJ9RPVrbaqUxOx16nXJqWyANmiJeyvvQZPGhkO4vkKQz6wMRV
-         heAbzQs9/EnqBMQ6vC1aBk2gjPS0tTyKWPMmF30xznDpB7PnrtydWfmjINUnTUXT9W3x
-         9L5VO6zli5WtQIeLuAtl3pkGTlE1pik/uKVxFFcij2Qpyeagse7GDi5OgHuHR6L6Ey51
-         bfBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=35nce9wUdGps1xFNE+LJWAtds0eN6VprBugB5bMnyd4=;
-        b=oXVpQwyNVXjx4tcagCS8Jq542489+Ic2z8O7SKp2QAAFQyNMtZNu5cS2AS0/rf1088
-         h+Ml0vPO6uyDTTHVY72OkVFJM/F8fmt9elTYVgAx/P3qPp5dx+61Zc4NJyf/hpuj5qpm
-         DVEIO5ZggbyiO0rDxC5hskGULry5rlzkE5wWBcZ8jyYre8/9fUxlSNA5VHk0LjBDJAHp
-         WNnsOBSf9/C6x+r8/rTMsILb5psAf6ICqtc6/JnVnkw2bGkgeESKJD+0kgYHr5Ya5+Zb
-         4cOQZLTgOW3yCma4dAEZyNUhyhO+G8haNSwPtRuEvKq9KAQiguiMLpEmC4y9wjSlfydc
-         i9tw==
-X-Gm-Message-State: AOAM531gcrAahfJQUZYRNlt5Q8wgCdCeXxWRcoRsPx0Wpjnr0Auc5uEc
-        sK3yEoAhlcSCCdySKHDH/JPX2oARBCCenFMKXxw=
-X-Google-Smtp-Source: ABdhPJxEi3uD5rET0PDQTKx6E4iOY3SwYwOFQfmoAC68fdLXTbDKCkktMTASlHWeX+NrtO+A9y2MnK9ScP7jXhgTnjk=
-X-Received: by 2002:a17:90a:5403:: with SMTP id z3mr7616166pjh.198.1611779383014;
- Wed, 27 Jan 2021 12:29:43 -0800 (PST)
+        id S229462AbhA1Glh (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 28 Jan 2021 01:41:37 -0500
+Received: from mxout70.expurgate.net ([194.37.255.70]:54363 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229578AbhA1Glh (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 28 Jan 2021 01:41:37 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1l50xy-00009M-56; Thu, 28 Jan 2021 07:39:42 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1l50xx-000094-1D; Thu, 28 Jan 2021 07:39:41 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id E9BF6240041;
+        Thu, 28 Jan 2021 07:39:39 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 5D5D2240040;
+        Thu, 28 Jan 2021 07:39:39 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id CAB7121C58;
+        Thu, 28 Jan 2021 07:39:38 +0100 (CET)
 MIME-Version: 1.0
-References: <20210127090747.364951-1-xie.he.0141@gmail.com> <77971dffcff441c3ad3d257825dc214b@AcuMS.aculab.com>
-In-Reply-To: <77971dffcff441c3ad3d257825dc214b@AcuMS.aculab.com>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Wed, 27 Jan 2021 12:29:32 -0800
-Message-ID: <CAJht_ENmxCBk=h68CN55qySMAiYhcgS0AtVzo6RvS5xf_6EkRw@mail.gmail.com>
-Subject: Re: [PATCH net] net: hdlc_x25: Use qdisc to queue outgoing LAPB frames
-To:     David Laight <David.Laight@aculab.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        "linux-x25@vger.kernel.org" <linux-x25@vger.kernel.org>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        Martin Schiller <ms@dev.tdt.de>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 28 Jan 2021 07:39:38 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Xie He <xie.he.0141@gmail.com>
+Cc:     David Laight <David.Laight@aculab.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         Krzysztof Halasa <khc@pm.waw.pl>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH net] net: hdlc_x25: Use qdisc to queue outgoing LAPB
+ frames
+Organization: TDT AG
+In-Reply-To: <CAJht_ENmxCBk=h68CN55qySMAiYhcgS0AtVzo6RvS5xf_6EkRw@mail.gmail.com>
+References: <20210127090747.364951-1-xie.he.0141@gmail.com>
+ <77971dffcff441c3ad3d257825dc214b@AcuMS.aculab.com>
+ <CAJht_ENmxCBk=h68CN55qySMAiYhcgS0AtVzo6RvS5xf_6EkRw@mail.gmail.com>
+Message-ID: <2b14439178ff54e991c45a9a1574243e@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.16
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
+        autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-ID: 151534::1611815981-00004C0A-619C0A3A/0/0
+X-purgate: clean
+X-purgate-type: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, Jan 27, 2021 at 2:14 AM David Laight <David.Laight@aculab.com> wrote:
->
-> If I read this correctly it adds a (potentially big) queue between the
-> LAPB code that adds the sequence numbers to the frames and the hardware
-> that actually sends them.
+On 2021-01-27 21:29, Xie He wrote:
+> On Wed, Jan 27, 2021 at 2:14 AM David Laight <David.Laight@aculab.com> 
+> wrote:
+>> 
+>> If I read this correctly it adds a (potentially big) queue between the
+>> LAPB code that adds the sequence numbers to the frames and the 
+>> hardware
+>> that actually sends them.
+> 
+> Yes. The actual number of outgoing LAPB frames being queued depends on
+> how long the hardware driver stays in the TX busy state, and is
+> limited by the LAPB sending window.
+> 
+>> IIRC [1] there is a general expectation that the NR in a transmitted 
+>> frame
+>> will be the same as the last received NS unless acks are being delayed
+>> for flow control reasons.
+>> 
+>> You definitely want to be able to ack a received frame while 
+>> transmitting
+>> back-to-back I-frames.
+>> 
+>> This really means that you only want 2 frames in the hardware driver.
+>> The one being transmitted and the next one - so it gets sent with a
+>> shared flag.
+>> There is no point sending an RR unless the hardware link is actually 
+>> idle.
+> 
+> If I understand correctly, what you mean is that the frames sent on
+> the wire should reflect the most up-to-date status of what is received
+> from the wire, so queueing outgoing LAPB frames is not appropriate.
+> 
+> But this would require us to deal with the "TX busy" issue in the LAPB
+> module. This is (as I said) not easy to do. I currently can't think of
+> a good way of doing this.
+> 
+> Instead, we can think of the TX queue as part of the "wire". We can
+> think of the wire as long and having a little higher latency. I
+> believe the LAPB protocol has no problem in handling long wires.
+> 
+> What do you think?
 
-Yes. The actual number of outgoing LAPB frames being queued depends on
-how long the hardware driver stays in the TX busy state, and is
-limited by the LAPB sending window.
+David: Can you please elaborate on your concerns a little bit more?
 
-> IIRC [1] there is a general expectation that the NR in a transmitted frame
-> will be the same as the last received NS unless acks are being delayed
-> for flow control reasons.
->
-> You definitely want to be able to ack a received frame while transmitting
-> back-to-back I-frames.
->
-> This really means that you only want 2 frames in the hardware driver.
-> The one being transmitted and the next one - so it gets sent with a
-> shared flag.
-> There is no point sending an RR unless the hardware link is actually idle.
+I think Xie's approach is not bad at all. LAPB (L2) has no idea about L1
+(apart from the link state) and sends as many packets as possible, which
+of course we should not discard. The remaining window determines how
+many packets are put into this queue.
+Since we can't send anything over the line due to the TX Busy state, the
+remote station (due to lack of ACKs) will also stop sending anything
+at some point.
 
-If I understand correctly, what you mean is that the frames sent on
-the wire should reflect the most up-to-date status of what is received
-from the wire, so queueing outgoing LAPB frames is not appropriate.
-
-But this would require us to deal with the "TX busy" issue in the LAPB
-module. This is (as I said) not easy to do. I currently can't think of
-a good way of doing this.
-
-Instead, we can think of the TX queue as part of the "wire". We can
-think of the wire as long and having a little higher latency. I
-believe the LAPB protocol has no problem in handling long wires.
-
-What do you think?
+When the link goes down, all buffers/queues must be cleared.
