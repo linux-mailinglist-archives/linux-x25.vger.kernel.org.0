@@ -2,125 +2,99 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DF80307F24
-	for <lists+linux-x25@lfdr.de>; Thu, 28 Jan 2021 21:09:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id DDD7A3080CD
+	for <lists+linux-x25@lfdr.de>; Thu, 28 Jan 2021 22:54:48 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231354AbhA1UGv (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 28 Jan 2021 15:06:51 -0500
-Received: from mail.kernel.org ([198.145.29.99]:55192 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231470AbhA1UEC (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Thu, 28 Jan 2021 15:04:02 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ECCFF64E36;
-        Thu, 28 Jan 2021 19:47:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1611863221;
-        bh=H6v8ZXXV2Uym43MsLOBYTQXBG2B+5yMYkUpZPMWn644=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=AWdLNwASDJjkawvi33IHgk2Zd43mbPji3juUCNIX4wOLf/YIWLq/ohWIu74Bdp56c
-         k8WDDTuMUgrR9CQc7KWw5qZaVGtMi+F1V+H/Y4eBiitIXngFAvga3kq0T+jAKErfqM
-         t2JjcA1OmZ11Je5t/wXUm4DaWXCgdRYsZhJ9xXHA4pFWKg2kdGkjkXl8V7igYVckCQ
-         /OT0MGwzNLGKOPSnagKaBtaN3KLRHHeOyT88a4VJru6albHvmMZCFnSv7SPHF5h0YK
-         whBdhho3ffywPJY1RAy/bjgn/GSiOzU8GRlNJ6QOsNHO1FKpULm8PFPbjz+HhVYK6V
-         yQCAhFD8f9EtA==
-Date:   Thu, 28 Jan 2021 11:46:59 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     "David S. Miller" <davem@davemloft.net>, linux-x25@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Martin Schiller <ms@dev.tdt.de>,
-        Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: [PATCH net] net: hdlc_x25: Use qdisc to queue outgoing LAPB
- frames
-Message-ID: <20210128114659.2d81a85f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210127090747.364951-1-xie.he.0141@gmail.com>
-References: <20210127090747.364951-1-xie.he.0141@gmail.com>
+        id S231531AbhA1Vx4 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 28 Jan 2021 16:53:56 -0500
+Received: from spe8-2.ucebox.co.za ([197.242.156.207]:39142 "EHLO
+        spe8-2.ucebox.co.za" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231403AbhA1Vxw (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 28 Jan 2021 16:53:52 -0500
+X-Greylist: delayed 6124 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Jan 2021 16:53:45 EST
+Received: from cornucopia.aserv.co.za ([154.0.175.203])
+        by spe2.ucebox.co.za with esmtps (TLSv1.2:AES128-GCM-SHA256:128)
+        (Exim 4.92)
+        (envelope-from <manornutgrovemanor@gmail.com>)
+        id 1l5Bno-0001H8-2W; Thu, 28 Jan 2021 20:14:25 +0200
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by cornucopia.aserv.co.za (Postfix) with ESMTPA id 2C01EC1250;
+        Thu, 28 Jan 2021 20:12:38 +0200 (SAST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Thu, 28 Jan 2021 20:12:38 +0200
+From:   Nut Grove Manor <manornutgrovemanor@gmail.com>
+To:     undisclosed-recipients:;
+Subject: Invitation To Quote
+User-Agent: Roundcube Webmail/1.4.1
+Message-ID: <bc9a5f43f3caae762f95ca676f59aca0@gmail.com>
+X-Sender: manornutgrovemanor@gmail.com
+X-Originating-IP: 154.0.175.203
+X-Afrihost-Domain: pesci.aserv.co.za
+X-Afrihost-Username: 154.0.175.203
+Authentication-Results: ucebox.co.za; auth=pass smtp.auth=154.0.175.203@pesci.aserv.co.za
+X-Afrihost-Outgoing-Class: unsure
+X-Afrihost-Outgoing-Evidence: Combined (0.71)
+X-Recommended-Action: accept
+X-Filter-ID: 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
+X-Report-Abuse-To: spam@spe1.ucebox.co.za
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Wed, 27 Jan 2021 01:07:47 -0800 Xie He wrote:
-> An HDLC hardware driver may call netif_stop_queue to temporarily stop
-> the TX queue when the hardware is busy sending a frame, and after the
-> hardware has finished sending the frame, call netif_wake_queue to
-> resume the TX queue.
-> 
-> However, the LAPB module doesn't know about this. Whether or not the
-> hardware driver has stopped the TX queue, the LAPB module still feeds
-> outgoing frames to the hardware driver for transmission. This can cause
-> frames to be dropped by the hardware driver.
-> 
-> It's not easy to fix this issue in the LAPB module. We can indeed let the
-> LAPB module check whether the TX queue has been stopped before feeding
-> each frame to the hardware driver, but when the hardware driver resumes
-> the TX queue, it's not easy to immediately notify the LAPB module and ask
-> it to resume transmission.
-> 
-> Instead, we can fix this issue at the hdlc_x25 layer, by using qdisc TX
-> queues to queue outgoing LAPB frames. The qdisc TX queue will then
-> automatically be controlled by netif_stop_queue and netif_wake_queue.
+Good Day Sir
 
-Noob question - could you point at or provide a quick guide to layering
-here? I take there is only one netdev, and something maintains an
-internal queue which is not stopped when HW driver stops the qdisc?
+We are please to invite you/your company to quote the following item
+listed
+below:
 
-> This way, when sending, we will use the qdisc queue to queue and send
-> the data twice: once as the L3 packet and then (after processed by the
-> LAPB module) as an LAPB (L2) frame. This does not make the logic of the
-> code messy, because when receiving, data are already "received" on the
-> device twice: once as an LAPB (L2) frame and then (after processed by
-> the LAPB module) as the L3 packet.
-> 
-> Some more details about the code change:
-> 
-> 1. dev_queue_xmit_nit is removed because we already have it when we send
-> the skb through the qdisc TX queue (in xmit_one).
-> 
-> 2. hdlc_type_trans is replaced by assigning skb->dev and skb->protocol
-> directly. skb_reset_mac_header in hdlc_type_trans is no longer necessary
-> because it will be called in __dev_queue_xmit.
+Product/Model No: TM9653 PRESSURE REGULATOR
+Product Name:MEKO
+Qty. 30 units
 
-Sounds like we're optimizing to prevent drops, and this was not
-reported from production, rather thru code inspection. Ergo I think
-net-next will be more appropriate here, unless Martin disagrees.
+Compulsory,Kindly send your quotation
+for immediate approval.
 
-> diff --git a/drivers/net/wan/hdlc_x25.c b/drivers/net/wan/hdlc_x25.c
-> index bb164805804e..b7f2823bf100 100644
-> --- a/drivers/net/wan/hdlc_x25.c
-> +++ b/drivers/net/wan/hdlc_x25.c
-> @@ -89,15 +89,10 @@ static int x25_data_indication(struct net_device *dev, struct sk_buff *skb)
->  
->  static void x25_data_transmit(struct net_device *dev, struct sk_buff *skb)
->  {
-> -	hdlc_device *hdlc = dev_to_hdlc(dev);
-> -
-> +	skb->dev = dev;
-> +	skb->protocol = htons(ETH_P_HDLC);
->  	skb_reset_network_header(skb);
-> -	skb->protocol = hdlc_type_trans(skb, dev);
-> -
-> -	if (dev_nit_active(dev))
-> -		dev_queue_xmit_nit(skb, dev);
-> -
-> -	hdlc->xmit(skb, dev); /* Ignore return value :-( */
-> +	dev_queue_xmit(skb);
->  }
->  
->  
-> @@ -106,6 +101,12 @@ static netdev_tx_t x25_xmit(struct sk_buff *skb, struct net_device *dev)
->  {
->  	int result;
->  
-> +	if (skb->protocol == htons(ETH_P_HDLC)) {
-> +		hdlc_device *hdlc = dev_to_hdlc(dev);
-> +
-> +		return hdlc->xmit(skb, dev);
-> +	}
-> +
->  	/* There should be a pseudo header of 1 byte added by upper layers.
->  	 * Check to make sure it is there before reading it.
->  	 */
-
+Kind Regards,
+Albert Bourla
+PFIZER B.V Supply Chain Manager
+Tel: +31(0)208080 880
+ADDRESS: Rivium Westlaan 142, 2909 LD
+Capelle aan den IJssel, Netherlands
