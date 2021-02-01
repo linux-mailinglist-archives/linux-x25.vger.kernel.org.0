@@ -2,134 +2,110 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F84530A443
-	for <lists+linux-x25@lfdr.de>; Mon,  1 Feb 2021 10:21:29 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id AEBD530A4FC
+	for <lists+linux-x25@lfdr.de>; Mon,  1 Feb 2021 11:09:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230080AbhBAJU0 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 1 Feb 2021 04:20:26 -0500
-Received: from mxout70.expurgate.net ([194.37.255.70]:60653 "EHLO
+        id S232985AbhBAKH5 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 1 Feb 2021 05:07:57 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:13925 "EHLO
         mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232758AbhBAJUT (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 1 Feb 2021 04:20:19 -0500
+        with ESMTP id S233026AbhBAKHN (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 1 Feb 2021 05:07:13 -0500
 Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.90)
+        by relay.expurgate.net with smtp (Exim 4.92)
         (envelope-from <ms@dev.tdt.de>)
-        id 1l6VLl-0004xN-M0; Mon, 01 Feb 2021 10:18:25 +0100
+        id 1l6W5A-000FbA-30; Mon, 01 Feb 2021 11:05:20 +0100
 Received: from [195.243.126.94] (helo=securemail.tdt.de)
         by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90)
+        (Exim 4.92)
         (envelope-from <ms@dev.tdt.de>)
-        id 1l6VLk-0002MG-Ia; Mon, 01 Feb 2021 10:18:24 +0100
+        id 1l6W59-000MEB-9l; Mon, 01 Feb 2021 11:05:19 +0100
 Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 2426C240041;
-        Mon,  1 Feb 2021 10:18:24 +0100 (CET)
+        by securemail.tdt.de (Postfix) with ESMTP id B9319240041;
+        Mon,  1 Feb 2021 11:05:18 +0100 (CET)
 Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 97CDE240040;
-        Mon,  1 Feb 2021 10:18:23 +0100 (CET)
+        by securemail.tdt.de (Postfix) with ESMTP id 410C1240040;
+        Mon,  1 Feb 2021 11:05:18 +0100 (CET)
 Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id 264DB200AA;
-        Mon,  1 Feb 2021 10:18:23 +0100 (CET)
+        by mail.dev.tdt.de (Postfix) with ESMTP id 894E8202DE;
+        Mon,  1 Feb 2021 11:05:16 +0100 (CET)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 01 Feb 2021 10:18:23 +0100
+Date:   Mon, 01 Feb 2021 11:05:16 +0100
 From:   Martin Schiller <ms@dev.tdt.de>
 To:     Xie He <xie.he.0141@gmail.com>
-Cc:     Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Krzysztof Halasa <khc@pm.waw.pl>
-Subject: Re: [PATCH net] net: hdlc_x25: Use qdisc to queue outgoing LAPB
- frames
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net] net: lapb: Copy the skb before sending a packet
 Organization: TDT AG
-In-Reply-To: <CAJht_EMQVaKFx7Wjj75F2xVBTCdpmho64wP0bfX6RhFnzNXAZA@mail.gmail.com>
-References: <20210127090747.364951-1-xie.he.0141@gmail.com>
- <20210128114659.2d81a85f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAJht_EOSB-m--Ombr6wLMFq4mPy8UTpsBri2CPsaRTU-aks7Uw@mail.gmail.com>
- <3f67b285671aaa4b7903733455a730e1@dev.tdt.de>
- <20210129173650.7c0b7cda@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAJht_EPMtn5E-Y312vPQfH2AwDAi+j1OP4zzpg+AUKf46XE1Yw@mail.gmail.com>
- <20210130111618.335b6945@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAJht_EMQVaKFx7Wjj75F2xVBTCdpmho64wP0bfX6RhFnzNXAZA@mail.gmail.com>
-Message-ID: <36a6c0769c57cd6835d32cc0fb95bca6@dev.tdt.de>
+In-Reply-To: <20210201055706.415842-1-xie.he.0141@gmail.com>
+References: <20210201055706.415842-1-xie.he.0141@gmail.com>
+Message-ID: <204c18e95caf2ae84fb567dd4be0c3ac@dev.tdt.de>
 X-Sender: ms@dev.tdt.de
 User-Agent: Roundcube Webmail/1.3.16
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED autolearn=ham
-        autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.2
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-X-purgate-ID: 151534::1612171105-0000A9C4-B60B7990/0/0
 X-purgate-type: clean
+X-purgate-ID: 151534::1612173919-00007CCF-2A7DB75F/0/0
 X-purgate: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2021-01-31 04:16, Xie He wrote:
-> On Sat, Jan 30, 2021 at 11:16 AM Jakub Kicinski <kuba@kernel.org> 
-> wrote:
->> 
->> Sounds like too much afford for a sub-optimal workaround.
->> The qdisc semantics are borken in the proposed scheme (double
->> counting packets) - both in term of statistics and if user decides
->> to add a policer, filter etc.
+On 2021-02-01 06:57, Xie He wrote:
+> When sending a packet, we will prepend it with an LAPB header.
+> This modifies the shared parts of a cloned skb, so we should copy the
+> skb rather than just clone it, before we prepend the header.
 > 
-> Hmm...
+> In "Documentation/networking/driver.rst" (the 2nd point), it states
+> that drivers shouldn't modify the shared parts of a cloned skb when
+> transmitting.
 > 
-> Another solution might be creating another virtual device on top of
-> the HDLC device (similar to what "hdlc_fr.c" does), so that we can
-> first queue L3 packets in the virtual device's qdisc queue, and then
-> queue the L2 frames in the actual HDLC device's qdisc queue. This way
-> we can avoid the same outgoing data being queued to qdisc twice. But
-> this would significantly change the way the user uses the hdlc_x25
-> driver.
-> 
->> Another worry is that something may just inject a packet with
->> skb->protocol == ETH_P_HDLC but unexpected structure (IDK if
->> that's a real concern).
-> 
-> This might not be a problem. Ethernet devices also allow the user to
-> inject raw frames with user constructed headers. "hdlc_fr.c" also
-> allows the user to bypass the virtual circuit interfaces and inject
-> raw frames directly on the HDLC interface. I think the receiving side
-> should be able to recognize and drop invalid frames.
-> 
->> It may be better to teach LAPB to stop / start the internal queue.
->> The lower level drivers just needs to call LAPB instead of making
->> the start/wake calls directly to the stack, and LAPB can call the
->> stack. Would that not work?
-> 
-> I think this is a good solution. But this requires changing a lot of
-> code. The HDLC subsystem needs to be changed to allow HDLC Hardware
-> Drivers to ask HDLC Protocol Drivers (like hdlc_x25.c) to stop/wake
-> the TX queue. The hdlc_x25.c driver can then ask the LAPB module to
-> stop/wake the queue.
-> 
-> So this means new APIs need to be added to both the HDLC subsystem and
-> the LAPB module, and a number of HDLC Hardware Drivers need to be
-> changed to call the new API of the HDLC subsystem.
-> 
-> Martin, do you have any suggestions?
+> The "dev_queue_xmit_nit" function in "net/core/dev.c", which is called
+> when an skb is being sent, clones the skb and sents the clone to
+> AF_PACKET sockets. Because the LAPB drivers first remove a 1-byte
+> pseudo-header before handing over the skb to us, if we don't copy the
+> skb before prepending the LAPB header, the first byte of the packets
+> received on AF_PACKET sockets can be corrupted.
 
-I have thought about this issue again.
+What kind of packages do you mean are corrupted?
+ETH_P_X25 or ETH_P_HDLC?
 
-I also have to say that I have never noticed any problems in this area
-before.
+I have also sent a patch here in the past that addressed corrupted
+ETH_P_X25 frames on an AF_PACKET socket:
 
-So again for (my) understanding:
-When a hardware driver calls netif_stop_queue, the frames sent from
-layer 3 (X.25) with dev_queue_xmit are queued and not passed "directly"
-to x25_xmit of the hdlc_x25 driver.
+https://lkml.org/lkml/2020/1/13/388
 
-So nothing is added to the write_queue anymore (except possibly
-un-acked-frames by lapb_requeue_frames).
+Unfortunately I could not track and describe exactly where the problem
+was.
 
-Shouldn't it actually be sufficient to check for netif_queue_stopped in
-lapb_kick and then do "nothing" if necessary?
+I just wonder when/where is the logically correct place to copy the skb.
+Shouldn't it be copied before removing the pseudo header (as I did in my
+patch)?
 
-As soon as the hardware driver calls netif_wake_queue, the whole thing
-should just continue running.
-
-Or am I missing something?
+> 
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Cc: Martin Schiller <ms@dev.tdt.de>
+> Signed-off-by: Xie He <xie.he.0141@gmail.com>
+> ---
+>  net/lapb/lapb_out.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/net/lapb/lapb_out.c b/net/lapb/lapb_out.c
+> index 7a4d0715d1c3..a966d29c772d 100644
+> --- a/net/lapb/lapb_out.c
+> +++ b/net/lapb/lapb_out.c
+> @@ -82,7 +82,8 @@ void lapb_kick(struct lapb_cb *lapb)
+>  		skb = skb_dequeue(&lapb->write_queue);
+> 
+>  		do {
+> -			if ((skbn = skb_clone(skb, GFP_ATOMIC)) == NULL) {
+> +			skbn = skb_copy(skb, GFP_ATOMIC);
+> +			if (!skbn) {
+>  				skb_queue_head(&lapb->write_queue, skb);
+>  				break;
+>  			}
