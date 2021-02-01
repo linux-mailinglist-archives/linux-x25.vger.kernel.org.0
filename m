@@ -2,71 +2,64 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 839C53102B6
-	for <lists+linux-x25@lfdr.de>; Fri,  5 Feb 2021 03:21:55 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EA2EF3111B9
+	for <lists+linux-x25@lfdr.de>; Fri,  5 Feb 2021 21:01:39 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbhBECUt (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 4 Feb 2021 21:20:49 -0500
-Received: from mail.kernel.org ([198.145.29.99]:43678 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229751AbhBECUr (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Thu, 4 Feb 2021 21:20:47 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id BF81464F3D;
-        Fri,  5 Feb 2021 02:20:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612491606;
-        bh=5RHPyIgg4HyVNRlVUr4A99jTZaL46a+/MeHKeYOW/H8=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=RCJYAbaumqVIo9QvqYTE+Fpz9fjDPIWVxuodO8Lhc5DZcg8DA57BXWhGfryHddQfn
-         OEL69QacMbPrlzLL0cAGBC2nGet11mRadV9NZ/M1t1K3xLYG33WjcX8gWgxm5q8xOB
-         s9svkfdFG/hXBB/nhJeX61pJl78OkUoexeARH3vkdOxq89XM0zrVRTn06faCeMTXqF
-         OSMUadvSaMJx8CWS4PqGrxsR5I9va//Y0GZ9EBDIYzjJAMi5EsWdGAijhTWGLiHfp+
-         b8ZRuQwUhakEd62iUtYfhTC2Gr7uzQyGot52SxLKJx8nIID9vlIRwgoT5toM8suNPN
-         IjIV3q1itBsWw==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id B6FFD609F2;
-        Fri,  5 Feb 2021 02:20:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S233641AbhBESR4 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 5 Feb 2021 13:17:56 -0500
+Received: from [20.39.40.203] ([20.39.40.203]:55697 "EHLO optinix.in"
+        rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+        id S233183AbhBEPTk (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Fri, 5 Feb 2021 10:19:40 -0500
+dkim-signature: v=1; a=rsa-sha256; d=digitalsol.in; s=dkim;
+        c=relaxed/relaxed; q=dns/txt; h=From:Reply-To:Subject:Date:Message-ID:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=wK2neTcOXNiSQ+RBxrnFed+mRrGUU/ndLGEgvo8IMCc=;
+        b=JFt3cjfr2gf0oZFNAIkKMxcz4dJD/YGkc0fGvOoSd3DydZ6om7JzTU837vBFVq1NIPU0D2QA5BLHZXE1+7cBmkJlbZjYCUFmJkkaBVbP88e4KHnDVRcctmBLIZ1pL5VerRqjcciKkL4DSuyXFJlGk3Z0CRoskvUoLBM7ZhpxLeqIU2BKsbHQXJZ1h2qHQhaHiD+VrGx+bGKjZzbhmRvwLDQIByq6jRcjht5MzYCcxpzOzp/k+Dev9dQj7B
+        WId68CyP4XonlI4wIMRo1xiGfUtKZ+P3cZo2ejPWBjr+ynq3dK3OxibTTEKfmOc5W1zmJFMAPQ+ZKxsa3M4d1PiYxHmg==
+Received: from User (Unknown [52.231.31.5])
+        by optinix.in with ESMTP
+        ; Mon, 1 Feb 2021 08:50:14 +0000
+Message-ID: <D474448D-A325-42CC-A881-8334C6C84BA7@optinix.in>
+Reply-To: <ms.reem@yandex.com>
+From:   "Ms. Reem" <support@digitalsol.in>
+Subject: Re:read
+Date:   Mon, 1 Feb 2021 08:50:13 -0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net: hdlc_x25: Return meaningful error code in x25_open
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <161249160674.1910.18013606879384884718.git-patchwork-notify@kernel.org>
-Date:   Fri, 05 Feb 2021 02:20:06 +0000
-References: <20210203071541.86138-1-xie.he.0141@gmail.com>
-In-Reply-To: <20210203071541.86138-1-xie.he.0141@gmail.com>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     davem@davemloft.net, kuba@kernel.org, linux-x25@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ms@dev.tdt.de, khc@pm.waw.pl
+Content-Type: text/plain;
+        charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+To:     unlisted-recipients:; (no To-header on input)
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+Hello,
 
-This patch was applied to netdev/net.git (refs/heads/master):
+My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
+and Petroleum" also "Minister of State for International Cooperation"
+in UAE. I write to you on behalf of my other "three (3) colleagues"
+who has approved me to solicit for your "partnership in claiming of
+{us$47=Million}" from a Financial Home in Cambodia on their behalf and
+for our "Mutual Benefits".
 
-On Tue,  2 Feb 2021 23:15:41 -0800 you wrote:
-> It's not meaningful to pass on LAPB error codes to HDLC code or other
-> parts of the system, because they will not understand the error codes.
-> 
-> Instead, use system-wide recognizable error codes.
-> 
-> Fixes: f362e5fe0f1f ("wan/hdlc_x25: make lapb params configurable")
-> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-> Cc: Martin Schiller <ms@dev.tdt.de>
-> Signed-off-by: Xie He <xie.he.0141@gmail.com>
-> 
-> [...]
+The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
+deal with Cambodian/Vietnam Government within 2013/2014, however, we
+don't want our government to know about the fund. If this proposal
+interests you, let me know, by sending me an email and I will send to
+you detailed information on how this business would be successfully
+transacted. Be informed that nobody knows about the secret of this
+fund except us, and we know how to carry out the entire transaction.
+So I am compelled to ask, that you will stand on our behalf and
+receive this fund into any account that is solely controlled by you.
 
-Here is the summary with links:
-  - [net] net: hdlc_x25: Return meaningful error code in x25_open
-    https://git.kernel.org/netdev/net/c/81b8be68ef8e
+We will compensate you with 15% of the total amount involved as
+gratification for being our partner in this transaction. Reply to:
+ms.reem@yandex.com
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+Regards,
+Ms. Reem.
 
