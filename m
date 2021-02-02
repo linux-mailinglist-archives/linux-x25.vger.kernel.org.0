@@ -2,72 +2,68 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B7EA30C652
-	for <lists+linux-x25@lfdr.de>; Tue,  2 Feb 2021 17:46:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C3DA530C698
+	for <lists+linux-x25@lfdr.de>; Tue,  2 Feb 2021 17:54:46 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236789AbhBBQoZ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 2 Feb 2021 11:44:25 -0500
-Received: from mail.kernel.org ([198.145.29.99]:33620 "EHLO mail.kernel.org"
+        id S236429AbhBBQwr (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 2 Feb 2021 11:52:47 -0500
+Received: from mail.kernel.org ([198.145.29.99]:35496 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236745AbhBBQmW (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Tue, 2 Feb 2021 11:42:22 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B1FBB64F64;
-        Tue,  2 Feb 2021 16:41:41 +0000 (UTC)
+        id S236879AbhBBQut (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Tue, 2 Feb 2021 11:50:49 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPS id 6680C64F8C;
+        Tue,  2 Feb 2021 16:50:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612284102;
-        bh=L71Awcg/HF6WOIMSygGKnyNZDF81guEDZR3Xldfh3NA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=t/lvXoPoVfVH2sMKx9lhcgnIVnDuG8zHsBYJnBELL8MsYb3fYw8jDBY5avGdq6/bF
-         iXVk+/LgiRNoAPxO8rOn1PqxfISapICLFR1AdqPH+vW1oQ7Jz0mHy1HYKNUrXfwbLe
-         sg/2IxwDzoABo+UlXJu4qcCcIsjC8UVEp3RZip06hSasUCrRG8Xy8CTIgyt2CN17TC
-         8xE82v0SkQ0O6vEchROia2UtCKHFyLXf9zLCIqpdvXv62LsfWFD/ShiszEZlJZs5ah
-         cn/cNa/RyBM7GJqTSWHWEWrDWeDDGcz0G5vvfn3UqGECINpa3XLEbe23y+CH9/u5fF
-         jkTlhB2+8MW9g==
-Date:   Tue, 2 Feb 2021 08:41:40 -0800
-From:   Jakub Kicinski <kuba@kernel.org>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     Julian Wiedmann <jwi@linux.ibm.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Martin Schiller <ms@dev.tdt.de>
-Subject: Re: [PATCH net] net: lapb: Copy the skb before sending a packet
-Message-ID: <20210202084140.642a9cc1@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <CAJht_ENcz1A+C8=tJ_wP8kQby4OuyWirJC+c+-ngg5D54dpHNg@mail.gmail.com>
-References: <20210201055706.415842-1-xie.he.0141@gmail.com>
-        <4d1988d9-6439-ae37-697c-d2b970450498@linux.ibm.com>
-        <CAJht_EOw4d9h7LqOsXpucADV5=gAGws-fKj5q7BdH2+h0Yv9Vg@mail.gmail.com>
-        <20210201204224.4872ce23@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-        <CAJht_ENcz1A+C8=tJ_wP8kQby4OuyWirJC+c+-ngg5D54dpHNg@mail.gmail.com>
+        s=k20201202; t=1612284607;
+        bh=1pyS1O/tfQWwIdEuctiuv1WSn/cICDq2gO6ZI5MLyZA=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=qt+bYOoaif+OB/INxcPDne0PeMVbxxORuDpNI16pbNOCCU4a5tZO5vvLS03z5jveX
+         G+Bafubjefm+jxrIXV/LLBvJJ1dlbTE/zFrmH+gWJFNTYiOvPr2acASlyDvPfizQdx
+         ozHjlJ/igtTdoamKzZ7Zap5VGKntlfdpGdyx3jpH/uesYIftYG3HEx+LYDWtOkx+1E
+         MRLqH2573UW9iEKCNpmiUdHQlggyORBwu29gY6WZNCpqMWmJ4Av/0ghsw2pSGkdq1y
+         W3tkKlIEWlxIT5dxLb3T2AjEN8vvJ9Kr5EZ7dksAAzxzMZ70lGVHX311Lna1tmYlK8
+         euCa+Je5VO2Uw==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 5ECD3609D9;
+        Tue,  2 Feb 2021 16:50:07 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net: lapb: Copy the skb before sending a packet
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <161228460738.23213.13014448307375459803.git-patchwork-notify@kernel.org>
+Date:   Tue, 02 Feb 2021 16:50:07 +0000
+References: <20210201055706.415842-1-xie.he.0141@gmail.com>
+In-Reply-To: <20210201055706.415842-1-xie.he.0141@gmail.com>
+To:     Xie He <xie.he.0141@gmail.com>
+Cc:     davem@davemloft.net, kuba@kernel.org, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ms@dev.tdt.de
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Mon, 1 Feb 2021 22:25:17 -0800 Xie He wrote:
-> On Mon, Feb 1, 2021 at 8:42 PM Jakub Kicinski <kuba@kernel.org> wrote:
-> >
-> > On Mon, 1 Feb 2021 08:14:31 -0800 Xie He wrote:  
-> > > On Mon, Feb 1, 2021 at 6:10 AM Julian Wiedmann <jwi@linux.ibm.com> wrote:  
->  [...]  
-> > >
-> > > Calling "skb_cow_head" before we call "skb_clone" would indeed solve
-> > > the problem of writes to our clones affecting clones in other parts of
-> > > the system. But since we are still writing to the skb after
-> > > "skb_clone", it'd still be better to replace "skb_clone" with
-> > > "skb_copy" to avoid interference between our own clones.  
-> >
-> > Why call skb_cow_head() before skb_clone()? skb_cow_head should be
-> > called before the data in skb head is modified. I'm assuming you're only
-> > modifying "front" of the frame, right? skb_cow_head() should do nicely
-> > in that case.  
-> 
-> The modification happens after skb_clone. If we call skb_cow_head
-> after skb_clone (before the modification), then skb_cow_head would
-> always see that the skb is a clone and would always copy it. Therefore
-> skb_clone + skb_cow_head is equivalent to skb_copy.
+Hello:
 
-You're right. I thought cow_head is a little more clever.
+This patch was applied to netdev/net.git (refs/heads/master):
+
+On Sun, 31 Jan 2021 21:57:06 -0800 you wrote:
+> When sending a packet, we will prepend it with an LAPB header.
+> This modifies the shared parts of a cloned skb, so we should copy the
+> skb rather than just clone it, before we prepend the header.
+> 
+> In "Documentation/networking/driver.rst" (the 2nd point), it states
+> that drivers shouldn't modify the shared parts of a cloned skb when
+> transmitting.
+> 
+> [...]
+
+Here is the summary with links:
+  - [net] net: lapb: Copy the skb before sending a packet
+    https://git.kernel.org/netdev/net/c/88c7a9fd9bdd
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
