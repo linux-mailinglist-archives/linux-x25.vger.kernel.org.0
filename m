@@ -2,68 +2,108 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C3DA530C698
-	for <lists+linux-x25@lfdr.de>; Tue,  2 Feb 2021 17:54:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 18E0130D3F9
+	for <lists+linux-x25@lfdr.de>; Wed,  3 Feb 2021 08:17:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236429AbhBBQwr (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 2 Feb 2021 11:52:47 -0500
-Received: from mail.kernel.org ([198.145.29.99]:35496 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236879AbhBBQut (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Tue, 2 Feb 2021 11:50:49 -0500
-Received: by mail.kernel.org (Postfix) with ESMTPS id 6680C64F8C;
-        Tue,  2 Feb 2021 16:50:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1612284607;
-        bh=1pyS1O/tfQWwIdEuctiuv1WSn/cICDq2gO6ZI5MLyZA=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=qt+bYOoaif+OB/INxcPDne0PeMVbxxORuDpNI16pbNOCCU4a5tZO5vvLS03z5jveX
-         G+Bafubjefm+jxrIXV/LLBvJJ1dlbTE/zFrmH+gWJFNTYiOvPr2acASlyDvPfizQdx
-         ozHjlJ/igtTdoamKzZ7Zap5VGKntlfdpGdyx3jpH/uesYIftYG3HEx+LYDWtOkx+1E
-         MRLqH2573UW9iEKCNpmiUdHQlggyORBwu29gY6WZNCpqMWmJ4Av/0ghsw2pSGkdq1y
-         W3tkKlIEWlxIT5dxLb3T2AjEN8vvJ9Kr5EZ7dksAAzxzMZ70lGVHX311Lna1tmYlK8
-         euCa+Je5VO2Uw==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 5ECD3609D9;
-        Tue,  2 Feb 2021 16:50:07 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S231620AbhBCHQ2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 3 Feb 2021 02:16:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46482 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231654AbhBCHQ0 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 3 Feb 2021 02:16:26 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC665C061573;
+        Tue,  2 Feb 2021 23:15:46 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id s23so15421028pgh.11;
+        Tue, 02 Feb 2021 23:15:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vCplaxx+G/WjU4K1QFLVkvqSzFQBK1Dh3zZTYlV1r9g=;
+        b=H7MtAneniyH/4SWxkj4bIPDg7tNEFkIJmh/URu3iGiyAFYphZBpJdujnazu09VQck3
+         6u0lD0VnvKZoXmgSzyJzLvqHluXddaEYyZAfF0MX2qNpGe09ihytlVR0eDbuLPdHh6iZ
+         ZSzh0CQ+Y1tKictzkI2yF1z9Y1VyiRMSpGFpKSgvfwu+APdWIVhy0pfkJ2O5BQ7P5n1D
+         haYaPd6W6xc3Kl7B91dBYReDPKHfMwzUn0UrcajujUffzjTk4tp8SKDKMj9Vx9ceITlg
+         OGiCea81wNVbm1Z3T2H6eizyc47z9id8x/EuOELUuD9QPU/fbWhhgr3yKxqIMkoHIS9C
+         j97w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vCplaxx+G/WjU4K1QFLVkvqSzFQBK1Dh3zZTYlV1r9g=;
+        b=lCurIech23kh6Zu7zTKkO/x78ZNSyVFU+0MiOLpzgVGFdIhwKG73/YpLzpcSI/KFA2
+         AiCliG09QK7/282jWOFzT68/T35Em2XA/2t8zBuYENFitSGNWQsGt8K7v6aI0oEJr+4N
+         QbaGGeZlkrS+j2Hbex2OJMI6smb6VvQZuNQw6gIYwIXvyNDptnOlKaEsAkWGO5krBbdb
+         thtoz65VTJEu3ox9IXnWRiqZqq3VnT8KRYdWoy7E1/SvxKvnvzVhcrthpeVG49320cYE
+         yzLqBd+OPeekOnkmiOV7W+mcy+t0vlzD5iM8X72ZUvXjI77KwUusf944QiJjzHqekHq2
+         X5Bg==
+X-Gm-Message-State: AOAM530FFAY/4jk3lXrMMq7+pB8I7TMQOuE6OsIK2AH6H6KwThVl1QCM
+        pLMvCEFKYdBs/UxtPX4uAfY=
+X-Google-Smtp-Source: ABdhPJxF+TLd/Rwb5SOiSykgs+fVTnABwuKomE9qt6YqvQv/LDVptKNkSrO9I7uzHmCXNUsFZqY6Ig==
+X-Received: by 2002:a63:a03:: with SMTP id 3mr2139589pgk.366.1612336546333;
+        Tue, 02 Feb 2021 23:15:46 -0800 (PST)
+Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:1828:42e5:bdb:81ad])
+        by smtp.gmail.com with ESMTPSA id b206sm1158252pfb.73.2021.02.02.23.15.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Feb 2021 23:15:45 -0800 (PST)
+From:   Xie He <xie.he.0141@gmail.com>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Martin Schiller <ms@dev.tdt.de>,
+        Krzysztof Halasa <khc@pm.waw.pl>
+Cc:     Xie He <xie.he.0141@gmail.com>
+Subject: [PATCH net] net: hdlc_x25: Return meaningful error code in x25_open
+Date:   Tue,  2 Feb 2021 23:15:41 -0800
+Message-Id: <20210203071541.86138-1-xie.he.0141@gmail.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net: lapb: Copy the skb before sending a packet
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <161228460738.23213.13014448307375459803.git-patchwork-notify@kernel.org>
-Date:   Tue, 02 Feb 2021 16:50:07 +0000
-References: <20210201055706.415842-1-xie.he.0141@gmail.com>
-In-Reply-To: <20210201055706.415842-1-xie.he.0141@gmail.com>
-To:     Xie He <xie.he.0141@gmail.com>
-Cc:     davem@davemloft.net, kuba@kernel.org, linux-x25@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org, ms@dev.tdt.de
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+It's not meaningful to pass on LAPB error codes to HDLC code or other
+parts of the system, because they will not understand the error codes.
 
-This patch was applied to netdev/net.git (refs/heads/master):
+Instead, use system-wide recognizable error codes.
 
-On Sun, 31 Jan 2021 21:57:06 -0800 you wrote:
-> When sending a packet, we will prepend it with an LAPB header.
-> This modifies the shared parts of a cloned skb, so we should copy the
-> skb rather than just clone it, before we prepend the header.
-> 
-> In "Documentation/networking/driver.rst" (the 2nd point), it states
-> that drivers shouldn't modify the shared parts of a cloned skb when
-> transmitting.
-> 
-> [...]
+Fixes: f362e5fe0f1f ("wan/hdlc_x25: make lapb params configurable")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: Martin Schiller <ms@dev.tdt.de>
+Signed-off-by: Xie He <xie.he.0141@gmail.com>
+---
+ drivers/net/wan/hdlc_x25.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-Here is the summary with links:
-  - [net] net: lapb: Copy the skb before sending a packet
-    https://git.kernel.org/netdev/net/c/88c7a9fd9bdd
-
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+diff --git a/drivers/net/wan/hdlc_x25.c b/drivers/net/wan/hdlc_x25.c
+index bb164805804e..4aaa6388b9ee 100644
+--- a/drivers/net/wan/hdlc_x25.c
++++ b/drivers/net/wan/hdlc_x25.c
+@@ -169,11 +169,11 @@ static int x25_open(struct net_device *dev)
+ 
+ 	result = lapb_register(dev, &cb);
+ 	if (result != LAPB_OK)
+-		return result;
++		return -ENOMEM;
+ 
+ 	result = lapb_getparms(dev, &params);
+ 	if (result != LAPB_OK)
+-		return result;
++		return -EINVAL;
+ 
+ 	if (state(hdlc)->settings.dce)
+ 		params.mode = params.mode | LAPB_DCE;
+@@ -188,7 +188,7 @@ static int x25_open(struct net_device *dev)
+ 
+ 	result = lapb_setparms(dev, &params);
+ 	if (result != LAPB_OK)
+-		return result;
++		return -EINVAL;
+ 
+ 	return 0;
+ }
+-- 
+2.27.0
 
