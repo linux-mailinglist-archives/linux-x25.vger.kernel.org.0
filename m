@@ -2,68 +2,104 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E476930DB4C
-	for <lists+linux-x25@lfdr.de>; Wed,  3 Feb 2021 14:30:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id E9E0A30EC6C
+	for <lists+linux-x25@lfdr.de>; Thu,  4 Feb 2021 07:23:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231940AbhBCN2J (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 3 Feb 2021 08:28:09 -0500
-Received: from 198-20-226-115.unifiedlayer.com ([198.20.226.115]:51174 "EHLO
-        198-20-226-115.unifiedlayer.com" rhost-flags-OK-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S231886AbhBCN2C (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 3 Feb 2021 08:28:02 -0500
-X-Greylist: delayed 21682 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Feb 2021 08:27:03 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=carnivalassure.com.bd; s=default; h=Content-Transfer-Encoding:Content-Type:
-        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=miRpAdBSO5eDo01VDX+EK9bqGCmqMjXHS3kO16T6iWw=; b=oR9DBi73zWrpNptVGG8joD1q3D
-        a2vFVnixMQAUcmehD6fgJOQ9JP9N27NiM2NuC8HmaSTuyc4tIbd8kMLlSjPNy8b19j5i4Yecn4k41
-        d2L53GGQ3KAYNm9cTjTcF00G/e0wgveF66KZo4CFoHY+VyQWZpnDvHs7YXjdM1k0LGC10SnlZJnOf
-        hyfuxn41TeLbFp37bqri+jK8o3wb0VHiGKRxBfijUx18MCanoqvAna1IaS7ccBxFfbvZdTXygBXlc
-        j3LFBSU0eQazmqTdBY+jvtCMEdlAV/WbBykAUBZA45AnMWlIO1A8LzPVfVBXCEwNqNeODasQNIR6+
-        B0GfR5SA==;
-Received: from [127.0.0.1] (port=46664 helo=dot.dotlines.com.sg)
-        by dot.dotlines.com.sg with esmtpa (Exim 4.93)
-        (envelope-from <noreply@carnivalassure.com.bd>)
-        id 1l7CVp-0005bM-9S; Wed, 03 Feb 2021 01:23:41 -0600
+        id S232299AbhBDGWV (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 4 Feb 2021 01:22:21 -0500
+Received: from mxout70.expurgate.net ([91.198.224.70]:16352 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232203AbhBDGWU (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 4 Feb 2021 01:22:20 -0500
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1l7Y0A-000RV0-7O; Thu, 04 Feb 2021 07:20:26 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1l7Y09-000UEa-BK; Thu, 04 Feb 2021 07:20:25 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id 9D5DD240041;
+        Thu,  4 Feb 2021 07:20:24 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 1C8A0240040;
+        Thu,  4 Feb 2021 07:20:24 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id 75B34207B3;
+        Thu,  4 Feb 2021 07:20:23 +0100 (CET)
 MIME-Version: 1.0
-Date:   Wed, 03 Feb 2021 01:23:40 -0600
-From:   Francois Pinault <noreply@carnivalassure.com.bd>
-To:     undisclosed-recipients:;
-Subject: Hello/Hallo
-Organization: Donation
-Reply-To: francoispinault1936@outlook.com
-Mail-Reply-To: francoispinault1936@outlook.com
-Message-ID: <02cc13f2661d3cb7582fa6695be089c9@carnivalassure.com.bd>
-X-Sender: noreply@carnivalassure.com.bd
-User-Agent: Roundcube Webmail/1.3.15
-Content-Type: text/plain; charset=UTF-8;
+Content-Type: text/plain; charset=US-ASCII;
  format=flowed
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - dot.dotlines.com.sg
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - carnivalassure.com.bd
-X-Get-Message-Sender-Via: dot.dotlines.com.sg: authenticated_id: noreply@carnivalassure.com.bd
-X-Authenticated-Sender: dot.dotlines.com.sg: noreply@carnivalassure.com.bd
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 04 Feb 2021 07:20:23 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
+To:     Xie He <xie.he.0141@gmail.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Krzysztof Halasa <khc@pm.waw.pl>
+Subject: Re: [PATCH net] net: hdlc_x25: Return meaningful error code in
+ x25_open
+Organization: TDT AG
+In-Reply-To: <20210203071541.86138-1-xie.he.0141@gmail.com>
+References: <20210203071541.86138-1-xie.he.0141@gmail.com>
+Message-ID: <352fd651d4fd98e46f7c58fc05eea4e7@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.16
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate: clean
+X-purgate-ID: 151534::1612419625-0001A85E-BA6645A4/0/0
+X-purgate-type: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
+On 2021-02-03 08:15, Xie He wrote:
+> It's not meaningful to pass on LAPB error codes to HDLC code or other
+> parts of the system, because they will not understand the error codes.
+> 
+> Instead, use system-wide recognizable error codes.
+> 
+> Fixes: f362e5fe0f1f ("wan/hdlc_x25: make lapb params configurable")
+> Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+> Cc: Martin Schiller <ms@dev.tdt.de>
+> Signed-off-by: Xie He <xie.he.0141@gmail.com>
+> ---
+>  drivers/net/wan/hdlc_x25.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/net/wan/hdlc_x25.c b/drivers/net/wan/hdlc_x25.c
+> index bb164805804e..4aaa6388b9ee 100644
+> --- a/drivers/net/wan/hdlc_x25.c
+> +++ b/drivers/net/wan/hdlc_x25.c
+> @@ -169,11 +169,11 @@ static int x25_open(struct net_device *dev)
+> 
+>  	result = lapb_register(dev, &cb);
+>  	if (result != LAPB_OK)
+> -		return result;
+> +		return -ENOMEM;
+> 
+>  	result = lapb_getparms(dev, &params);
+>  	if (result != LAPB_OK)
+> -		return result;
+> +		return -EINVAL;
+> 
+>  	if (state(hdlc)->settings.dce)
+>  		params.mode = params.mode | LAPB_DCE;
+> @@ -188,7 +188,7 @@ static int x25_open(struct net_device *dev)
+> 
+>  	result = lapb_setparms(dev, &params);
+>  	if (result != LAPB_OK)
+> -		return result;
+> +		return -EINVAL;
+> 
+>  	return 0;
+>  }
 
+Thanks for fixing this.
 
--- 
-Hallo, ich bin Herr Francois Pinault, ich habe Ihnen gespendet. Sie 
-können mein Profil auf Wikipedia, Google oder Forbes überprüfen.
-
-Für Ihren Spendenanspruch und weitere Informationen kontaktieren Sie 
-mich umgehend unter francoispinault1936@outlook.com
-
-Mit freundlichen Grüßen,
-Herr Francois Pinault
+Acked-by: Martin Schiller <ms@dev.tdt.de>
