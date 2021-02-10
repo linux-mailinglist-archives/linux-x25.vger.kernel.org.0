@@ -2,51 +2,51 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12831316A8F
-	for <lists+linux-x25@lfdr.de>; Wed, 10 Feb 2021 16:57:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B733C316CF6
+	for <lists+linux-x25@lfdr.de>; Wed, 10 Feb 2021 18:38:51 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231878AbhBJP5F (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 10 Feb 2021 10:57:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60308 "EHLO
+        id S231984AbhBJRiO (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 10 Feb 2021 12:38:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbhBJP5D (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 10 Feb 2021 10:57:03 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C87FC061756;
-        Wed, 10 Feb 2021 07:56:23 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id c11so1512463pfp.10;
-        Wed, 10 Feb 2021 07:56:23 -0800 (PST)
+        with ESMTP id S232854AbhBJRhJ (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 10 Feb 2021 12:37:09 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB1EC061788;
+        Wed, 10 Feb 2021 09:35:37 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id nm1so1507092pjb.3;
+        Wed, 10 Feb 2021 09:35:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=McQRFsxOcI8aHwHC0zjblj7atjYGCgUIoXv69mIC1Q4=;
-        b=YQgJ3cij+gOOioVvpKXjQqCFsFuVNYsWtI5SZO2XC8tJJGo4lxjRC0G+3GuzoTmteE
-         9wJ5M1nbWfqon52DmLiXjr6ZQgm9aYaimKuBJwxd+gv74MeYNHpyex93K1c4oqnL1pEj
-         vXwPVsck7bclSEx2JTNdX6FQ7uFxYJXGT52+PGAg/gvg92ggCVp2MEw7LX4fp6oDf/LT
-         hNwJfxYof8e/xPsF24GiNm3//MY4Hy+m40Da7/8P/CnSZ/jxk5QhAL6aaAwgPS2/No9l
-         W4APuHb/YAS37hyuPdfDaGR/WcCSbNi3maXql05N4fF5QtN3ykfVsB42A/O9TUF7HpIo
-         29eA==
+        bh=0zXiWXS+ItGfo45/5tHO26C3RlXyNypOLSac5INY45I=;
+        b=u53EBIGpvxNsrbvvNljPgLTSlplNxHyMG9jF80LzjhnHVJflgqqlOg+CUhtYTh+lzf
+         zOQrP1EJoJQ5f5hdFuES3Hfnhs/2SHyi6/wGVjgvPgSWjqza+xC61xhb9o+mbvel3tb5
+         C4pXFbtwmpsfEct+H+ndkf6KtBZ/XGJyJgHxTJkzN+tsyPbehAGcRSfcSP2cwYj1JXN8
+         10H+K0wl8cnjjez5THzXIbQpLu3Q7s/dnQrCN7PZ5LIfchm9T7WiTLqta3z2MhbZmtP1
+         deRtaRf3ZhWNl3c/ckg9aunMZs34fJiGzymsFiSI9kgwTgM5SOOeIYhlUL9kOAjz8ZlT
+         O1+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=McQRFsxOcI8aHwHC0zjblj7atjYGCgUIoXv69mIC1Q4=;
-        b=Rxmi2/2nyIkI2lGr+xnNuwSvbfXumy98hVKi8TRWUrQbKek1XhFGyzhJa6kJpmAVGz
-         Sm3+A0v/a7K8GBERNMuKATy4N6TA1/BAyiZrQBRxohJcbYhXF7J92OPnVAlMcS2cqCc4
-         P1IIGfsVAX/cztbteLPhBJ8a+PJl4YX2hs21FyJrp6gM+r1+IKwi/8nVCBJA0519vctX
-         fZw8Ws2T+il40wfdQ46XpMUn4RU5OFw7zBAOoV1RJV8sC6ZzL7JVTWj3CGKK6C8PEdEP
-         VZevXZY7bfRIB87EytZsDnGCNfa5E706AlP31zs439WrdQgvrDnoqKFjoHdGQ6b8bkse
-         9hQQ==
-X-Gm-Message-State: AOAM533m1N1oOIaEnrm8pklygIaoQsKCxPD3S8f8PmdNSElYondLqsyg
-        gbCK1reaU3lZ4zA2fx/fOz8=
-X-Google-Smtp-Source: ABdhPJwp4r/Cjuh2T6+N5kPz9EUYqrp3xdSXNE/SH3Ebur2+M/+RVQJI7xx1+2hzvyY1sI30fvuEag==
-X-Received: by 2002:a63:214e:: with SMTP id s14mr3680116pgm.101.1612972582469;
-        Wed, 10 Feb 2021 07:56:22 -0800 (PST)
-Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:8209:ec67:2f9:2f8c])
-        by smtp.gmail.com with ESMTPSA id p12sm2535081pju.35.2021.02.10.07.56.21
+        bh=0zXiWXS+ItGfo45/5tHO26C3RlXyNypOLSac5INY45I=;
+        b=XkmkZ9k61Xu6nyG93329fObuhpJ9DD3Z8GFtaA2xIsBfh3tGhcIDy5hWPaByYJXQXX
+         z4ccxONTRCNIrYd8GEcEsveLwiM1MUxum86/oFrcOoQvId1f0zQjJJfZIhMDkoMoei3C
+         CYOUpGeUK2tTlpCdgU9UA067RMCL9cffdl8yWMw92zMntZJuN6eW4EcnbZ29/9e54UWY
+         DPVrhnSnf9etupdFn8Oh8LkJT2amOD1C/2QhBLA/3o2EKINlkdyAbhzt8kzWi9OrkWVz
+         GOotk5jLAWSm61x8Nsl6kKhXsK7txVFpHFOKyVk4QfrlKR9lnkAbRA9NF5NYjv6Bw/qr
+         9RJg==
+X-Gm-Message-State: AOAM532Yx0XpAaRkyXGJ9y1Ck28eWxudk+7AB2Xk02fehYbHC61GxPTA
+        CmDO03vWJ39arRGy1mqYx5I=
+X-Google-Smtp-Source: ABdhPJzynwql63LfUWTwIyIvZQX98AgIn2YoRE18JzOg0kx1gVXMa9N4h+4MafoK4FXbLnn4vlbEEg==
+X-Received: by 2002:a17:90a:e2ca:: with SMTP id fr10mr8153pjb.118.1612978537532;
+        Wed, 10 Feb 2021 09:35:37 -0800 (PST)
+Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:7081:cb2d:3ff7:9803])
+        by smtp.gmail.com with ESMTPSA id lw4sm2678040pjb.16.2021.02.10.09.35.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Feb 2021 07:56:22 -0800 (PST)
+        Wed, 10 Feb 2021 09:35:37 -0800 (PST)
 From:   Xie He <xie.he.0141@gmail.com>
 To:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
@@ -54,9 +54,9 @@ To:     "David S. Miller" <davem@davemloft.net>,
         Martin Schiller <ms@dev.tdt.de>,
         Krzysztof Halasa <khc@pm.waw.pl>
 Cc:     Xie He <xie.he.0141@gmail.com>
-Subject: [PATCH net-next RFC] net: hdlc_x25: Queue outgoing LAPB frames
-Date:   Wed, 10 Feb 2021 07:56:10 -0800
-Message-Id: <20210210155610.13753-1-xie.he.0141@gmail.com>
+Subject: [PATCH net-next RFC v2] net: hdlc_x25: Queue outgoing LAPB frames
+Date:   Wed, 10 Feb 2021 09:35:32 -0800
+Message-Id: <20210210173532.370914-1-xie.he.0141@gmail.com>
 X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -97,11 +97,16 @@ outgoing (L3) packets will not be affected by these calls.
 Cc: Martin Schiller <ms@dev.tdt.de>
 Signed-off-by: Xie He <xie.he.0141@gmail.com>
 ---
- drivers/net/wan/hdlc_x25.c | 156 ++++++++++++++++++++++++++++++-------
- 1 file changed, 127 insertions(+), 29 deletions(-)
+
+Change from RFC v1:
+Properly initialize state(hdlc)->x25_dev and state(hdlc)->x25_dev_lock.
+
+---
+ drivers/net/wan/hdlc_x25.c | 158 ++++++++++++++++++++++++++++++-------
+ 1 file changed, 129 insertions(+), 29 deletions(-)
 
 diff --git a/drivers/net/wan/hdlc_x25.c b/drivers/net/wan/hdlc_x25.c
-index bb164805804e..f21aaee364e2 100644
+index bb164805804e..2a7b3c3d0c05 100644
 --- a/drivers/net/wan/hdlc_x25.c
 +++ b/drivers/net/wan/hdlc_x25.c
 @@ -23,6 +23,13 @@
@@ -324,9 +329,12 @@ index bb164805804e..f21aaee364e2 100644
  	.module		= THIS_MODULE,
  };
  
-@@ -299,15 +406,6 @@ static int x25_ioctl(struct net_device *dev, struct ifreq *ifr)
+@@ -298,16 +405,9 @@ static int x25_ioctl(struct net_device *dev, struct ifreq *ifr)
+ 			return result;
  
  		memcpy(&state(hdlc)->settings, &new_settings, size);
++		state(hdlc)->x25_dev = NULL;
++		spin_lock_init(&state(hdlc)->x25_dev_lock);
  
 -		/* There's no header_ops so hard_header_len should be 0. */
 -		dev->hard_header_len = 0;
