@@ -2,57 +2,30 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D80031EF60
-	for <lists+linux-x25@lfdr.de>; Thu, 18 Feb 2021 20:12:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 61BA831F09B
+	for <lists+linux-x25@lfdr.de>; Thu, 18 Feb 2021 21:01:12 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232746AbhBRTLg (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 18 Feb 2021 14:11:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58036 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234461AbhBRRhq (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 18 Feb 2021 12:37:46 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BC91C0613D6;
-        Thu, 18 Feb 2021 09:37:05 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id 75so1551465pgf.13;
-        Thu, 18 Feb 2021 09:37:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Xmf6pTNe7mQQ+6NHgcE8bVS8WWzHYXysNcfphF1I+24=;
-        b=Y/8D/DbfQgqs+GHwMjEuxhzZCU1naE54M6ECflXmCALxpIV0AXdNrz2eQRDpXtFki5
-         URJgtKjb+/zCNsyyRv0sKQ0oom1VGKhXLAcENdEsQUj2CslkwXOWuuTg77O8rgBXUsSI
-         E4Xchs1spLREWPvvEip4Oi5pDq7yhTMQNsRiN3apzSRM1/4DTDz/tIktS4oZbFyc0P6P
-         S2eThA6pR6nCXcCgq2GMoJNSAlJb5h+v7ae7/diE2HF8Zbp2e1E/S3iNJihZ+3tvY30c
-         WRSxxvxRC5rdr4NUsysZfIRYrmF+YZfEb+g5w9TUPRZERGZjnj6SCn9FcUl+PG6LWKsv
-         AHjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Xmf6pTNe7mQQ+6NHgcE8bVS8WWzHYXysNcfphF1I+24=;
-        b=OSMp6MJeHwIzmpHgJECGsySokMsDqPAHE8bnaG6c3GeN9qcT61Gc0sfeGU0oelEHZO
-         xiqb8F6TlsIk/ZF5TLoY6XE67qsC+9iCm+SiEHgcEFDvLwjKS/8Hr2FCcdkeXHiRkzhr
-         Tg2fpQ4tP/fY4DrsCrGUaMhX/oR+6+8gmY57EA6KFts+GutgNFGkCJYwgnjW0kngQhwC
-         KhM+jqqeWKJJKiES9U8YcZQ2Jnz8sPyEdlmlRUE1RchaeWM24xlD4xrZwQHw/nnM+m7a
-         IAb/GwPRyuisu+01pNHRYaF6Jllt2MpurDFFVQhInDRKwMzNTMycRNgvYVeUwcmWvPu+
-         mA6w==
-X-Gm-Message-State: AOAM530mq2/kNzZO7XIimp/LbA6Q2HpFRdiBel98mV0xiuhuWrIbn84F
-        wmYMx8IJoqKB77VhsZdBY/5xhkrXJszfFoZ2tIHQiCGr
-X-Google-Smtp-Source: ABdhPJy4lZs5G/uRY3utOJ/evT/TjcNbVyBZZnGu2g4ZS/e5JLu4FJZrG5lr3f0fi0KTZHNrPiA6ykLIfp5gBvcV464=
-X-Received: by 2002:a05:6a00:7c7:b029:1de:80cd:46b8 with SMTP id
- n7-20020a056a0007c7b02901de80cd46b8mr5427816pfu.63.1613669825077; Thu, 18 Feb
- 2021 09:37:05 -0800 (PST)
-MIME-Version: 1.0
-References: <20210216201813.60394-1-xie.he.0141@gmail.com> <YC4sB9OCl5mm3JAw@unreal>
- <CAJht_EN2ZO8r-dpou5M4kkg3o3J5mHvM7NdjS8nigRCGyih7mg@mail.gmail.com> <YC5DVTHHd6OOs459@unreal>
-In-Reply-To: <YC5DVTHHd6OOs459@unreal>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Thu, 18 Feb 2021 09:36:54 -0800
-Message-ID: <CAJht_EOhu+Wsv91yDS5dEt+YgSmGsBnkz=igeTLibenAgR=Tew@mail.gmail.com>
-Subject: Re: [PATCH net-next RFC v4] net: hdlc_x25: Queue outgoing LAPB frames
-To:     Leon Romanovsky <leon@kernel.org>
+        id S231248AbhBRT6T (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 18 Feb 2021 14:58:19 -0500
+Received: from mail.kernel.org ([198.145.29.99]:38132 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231790AbhBRT4B (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Thu, 18 Feb 2021 14:56:01 -0500
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 19A9260238;
+        Thu, 18 Feb 2021 19:55:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1613678115;
+        bh=oGsSE+76wvfx4Nguhyl57l1C40S6Roq7FT74S76ZX3I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n3jvY6awlpjUR2knNqGRq/0lFPTJ56DCEvwXeuxvIyhDlYtbwaAHsgpkfCjbCp8Sj
+         3tGMRcjHoe+pY316qprOQb1a7Hb/qRcKBj1lIMMNUB9qkaYyIfXOg0k6Na0I3cxWJE
+         AsnAo8XujvgZyCU8blZUbzX/1x9Hb21cpg+Ag+pDHd9mSkrvtHmRhxq6pnxKiDzxWp
+         ugMWNprObdSbkqmQbihl6bnNRHxYhg++fbUwblL2rM126nDG+Sw/v/9XYUANvHPh+2
+         LMk8a1ZjCUQBjWWc7UmkJ3lcHjwbpOlu0QQI0TCIrrvFIHKUjozvn4tjh7yWodyH8s
+         783xhFY6j2FJA==
+Date:   Thu, 18 Feb 2021 21:55:10 +0200
+From:   Leon Romanovsky <leon@kernel.org>
+To:     Xie He <xie.he.0141@gmail.com>
 Cc:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Linux X25 <linux-x25@vger.kernel.org>,
@@ -61,31 +34,34 @@ Cc:     "David S. Miller" <davem@davemloft.net>,
         Martin Schiller <ms@dev.tdt.de>,
         Krzysztof Halasa <khc@pm.waw.pl>,
         Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH net-next RFC v4] net: hdlc_x25: Queue outgoing LAPB frames
+Message-ID: <YC7GHgYfGmL2wVRR@unreal>
+References: <20210216201813.60394-1-xie.he.0141@gmail.com>
+ <YC4sB9OCl5mm3JAw@unreal>
+ <CAJht_EN2ZO8r-dpou5M4kkg3o3J5mHvM7NdjS8nigRCGyih7mg@mail.gmail.com>
+ <YC5DVTHHd6OOs459@unreal>
+ <CAJht_EOhu+Wsv91yDS5dEt+YgSmGsBnkz=igeTLibenAgR=Tew@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJht_EOhu+Wsv91yDS5dEt+YgSmGsBnkz=igeTLibenAgR=Tew@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Thu, Feb 18, 2021 at 2:37 AM Leon Romanovsky <leon@kernel.org> wrote:
+On Thu, Feb 18, 2021 at 09:36:54AM -0800, Xie He wrote:
+> On Thu, Feb 18, 2021 at 2:37 AM Leon Romanovsky <leon@kernel.org> wrote:
+> >
+> > It is not me who didn't explain, it is you who didn't want to write clear
+> > comment that describes the headroom size without need of "3 - 1".
 >
-> It is not me who didn't explain, it is you who didn't want to write clear
-> comment that describes the headroom size without need of "3 - 1".
+> Why do I need to write unnecessary comments when "3 - 1" and the
+> current comment already explains everything?
 
-Why do I need to write unnecessary comments when "3 - 1" and the
-current comment already explains everything?
+This is how we write code, we use defines instead of constant numbers,
+comments to describe tricky parts and assign already preprocessed result.
 
-> So in current situation, you added two things: comment and assignment.
-> Both of them aren't serve their goals.
+There is nothing I can do If you don't like or don't want to use Linux kernel
+style.
 
-Why?
-
-> Your comment doesn't explain
-> enough and needs extra help
-
-Why? My comment already explains everything.
-
-> and your assignment is useless without
-> comment.
-
-My assignment is already very clear with my current comment. My
-comment explains very clearly what this assignment means.
+Thanks
