@@ -2,103 +2,65 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C807321274
-	for <lists+linux-x25@lfdr.de>; Mon, 22 Feb 2021 09:59:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C73A03226E3
+	for <lists+linux-x25@lfdr.de>; Tue, 23 Feb 2021 09:09:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229886AbhBVI5z (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 22 Feb 2021 03:57:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44182 "EHLO
+        id S231960AbhBWIIq (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 23 Feb 2021 03:08:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229953AbhBVI5r (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 22 Feb 2021 03:57:47 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B93C061574;
-        Mon, 22 Feb 2021 00:57:07 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id n10so9815028pgl.10;
-        Mon, 22 Feb 2021 00:57:07 -0800 (PST)
+        with ESMTP id S232193AbhBWIHG (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 23 Feb 2021 03:07:06 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36FFC06121F
+        for <linux-x25@vger.kernel.org>; Tue, 23 Feb 2021 00:06:00 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id t9so1269476pjl.5
+        for <linux-x25@vger.kernel.org>; Tue, 23 Feb 2021 00:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=asA/ItuewNg3IaZAJfPBjAM64gPw1m4pIHql4x7Kuio=;
-        b=IWTV9+HGz0K2zdIVzHNUcTh6DWCQ3j1Wny8OfWn7zXAKSXh9LTxGlBLqxgYe/nQHQT
-         ugNg+KPj7JloYQIiJjOsC1THr2+DX8oPRU1FrBdE4LPsGYVpr733MCBBw0pR0TcjSKbG
-         Qv1EooV7Nl0lE+srKk6wuEo3ctOfOvubtJyU0pK+4iz4ESjLttuijI3t2w8OxQgzyyVC
-         EMwgaPxr6umSDdLr0oq8bOZpGv+X5mrqaXk1hDynpBR5xQrPw0P2JrpEjuVG26HIK7Yb
-         XK0kB3RTIv3MHZELpzMusTykJGAbnJC3h5+LOVkvWZh/ZBlXminZ8dbH4A/SwjYxAqIE
-         2f/A==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=rjFLgW1OULBXQlh3JS0FsFrrUu6RfNW+e5SQFjA5Djs=;
+        b=m9GlBnix8rT0CGVWTqw3LJc5ak7PX3fp/nKfnNSrsuDs0LhHsEMQRfOVdjVEFmHts9
+         exZ4jIcAyu+ITkynCVmLNYCb3eoyqaJyaXVXcSATXP9LXgyPkWcICf4KrxE8HvBv72ey
+         tUH4CgyK2cLX1uTkClOQnoRY5gflHaxqy1GVSzi1V7mG0ThYf5hxqz6GENGxu2My8I7+
+         24PwMVXvI8321mOmNihgW1KCzwAQGCEi5JzlpV+Zk0O342yw7Kwa8yzI+0UAGvofRLb+
+         pHlkqVZjiH/PpS9zJA9pym8NcDJZ6KVpUq4wazeXjwOaGEL1If0rRgZHR+Ra5pyyBprB
+         Q2pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=asA/ItuewNg3IaZAJfPBjAM64gPw1m4pIHql4x7Kuio=;
-        b=q6JTdKl8Txx4IttCRVbeEVeoz6Eq9xE7LOkNrQJUFwi12TbjAw3Hw8uLAgFkOL+JOV
-         4kf0DikrylLy/BRHCNV0laRqzsBey8mUeUKP3O0s3WjDi3l45pA1oAysXpOe6ebcrcu1
-         vfWRkXjM6otMXvdSk+TfZBCA1h1WaXZxkLpNsiNL7gtF4CWHM0WoDlkgdF36M+boxUXU
-         yd4anCMre7a2xt3pAzo/rbWzv2jcRc8a4QCS9g01EvFMMI7nSneuy8b4sppajUkiJ5AK
-         Lm7D7nWWY9Ot8uz33As/z0ncJWsdaJjz9mEXkOkcdNBgVZB+8zMMEBK+P8/1KaET+sE9
-         EqTw==
-X-Gm-Message-State: AOAM530LHZDT5PqKtfKfe62cWpL6dFOD10rjLEHzv8xyAzxSrGjxGDR3
-        55xsc/BqEloktnIo7dPg6vWEAk6UEC+TuZxwfvM=
-X-Google-Smtp-Source: ABdhPJyFar9hcVrJw5G6ESx551HbJp+wWd1Ee9awynL0SbxLrNk71STdxQuORgAGTEhKmOtcAIJxfy8ptPZYJm8MMmk=
-X-Received: by 2002:aa7:9ad2:0:b029:1e5:f0e6:2fcd with SMTP id
- x18-20020aa79ad20000b02901e5f0e62fcdmr21221070pfp.4.1613984226945; Mon, 22
- Feb 2021 00:57:06 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=rjFLgW1OULBXQlh3JS0FsFrrUu6RfNW+e5SQFjA5Djs=;
+        b=hSgjTOlAaVFTJq3fIQX5OJT+LXFrVtLCkhnyw43rVtpbPfa457zLe2YiEcJ6av+zuS
+         QU9CbV1m6PfIEyOAT1x3WlXUWd9MV6B6I+xRuxohWmugtCJ+F+eX+7y7SdiXGLBYpYWb
+         NJrDgsX+JMxYF8Qbnq3u7V8N0HYMhSrG/INgRJ/0e/wA9GdgVg8KBqXYpGucb4uxiO2c
+         Rhwv1figSU+D0bFuXtU2d4SGwmspWfLy3CubvBChWDciLgD7T+Ip2s6Pn/l+EicvofNg
+         U929wmMpPPYWvzC7S9v1dUiTdEykS1S2Ymv3TP1EZtLT16VUfslgg/RA3WFIpjD+p8uJ
+         TSog==
+X-Gm-Message-State: AOAM5301pxKY80+aIAetS5JzIxjQaX28Emb97U7HvvvVJ+KoufrTG58d
+        5S6XMCsKR6p8+B+VpsDAEaK3NrTRRsJK4NHuvs4=
+X-Google-Smtp-Source: ABdhPJyx6EoHnEBYvJlBofPoagwYHx+1M677wa3Y0G081C+c8TzUMk5XUb3v1Pqax+FyhYdvrU3AVAdIDPQlSHKOC+k=
+X-Received: by 2002:a17:902:b941:b029:e3:1628:97b7 with SMTP id
+ h1-20020a170902b941b02900e3162897b7mr26318331pls.60.1614067560345; Tue, 23
+ Feb 2021 00:06:00 -0800 (PST)
 MIME-Version: 1.0
-References: <20210216201813.60394-1-xie.he.0141@gmail.com> <YC4sB9OCl5mm3JAw@unreal>
- <CAJht_EN2ZO8r-dpou5M4kkg3o3J5mHvM7NdjS8nigRCGyih7mg@mail.gmail.com>
- <YC5DVTHHd6OOs459@unreal> <CAJht_EOhu+Wsv91yDS5dEt+YgSmGsBnkz=igeTLibenAgR=Tew@mail.gmail.com>
- <YC7GHgYfGmL2wVRR@unreal> <CAJht_EPZ7rVFd-XD6EQD2VJTDtmZZv0HuZvii+7=yhFgVz68VQ@mail.gmail.com>
- <CAJht_EPPMhB0JTtjWtMcGbRYNiZwJeMLWSC5hS6WhWuw5FgZtg@mail.gmail.com>
- <20210219103948.6644e61f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <CAJht_EOru3pW6AHN4QVjiaERpLSfg-0G0ZEaqU_hkhX1acv0HQ@mail.gmail.com> <906d8114f1965965749f1890680f2547@dev.tdt.de>
-In-Reply-To: <906d8114f1965965749f1890680f2547@dev.tdt.de>
-From:   Xie He <xie.he.0141@gmail.com>
-Date:   Mon, 22 Feb 2021 00:56:56 -0800
-Message-ID: <CAJht_EPBJhhdCBoon=WMuPBk-sxaeYOq3veOpAd2jq5kFqQHBg@mail.gmail.com>
-Subject: Re: [PATCH net-next RFC v4] net: hdlc_x25: Queue outgoing LAPB frames
-To:     Martin Schiller <ms@dev.tdt.de>
-Cc:     Jakub Kicinski <kuba@kernel.org>,
-        Leon Romanovsky <leon@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Linux X25 <linux-x25@vger.kernel.org>,
-        Linux Kernel Network Developers <netdev@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Krzysztof Halasa <khc@pm.waw.pl>,
-        Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
+Received: by 2002:a05:6a10:4753:0:0:0:0 with HTTP; Tue, 23 Feb 2021 00:05:59
+ -0800 (PST)
+Reply-To: abdwabbomaddahm@gmail.com
+From:   AbdWabbo Maddah <ffoundationcoca@gmail.com>
+Date:   Tue, 23 Feb 2021 09:05:59 +0100
+Message-ID: <CAJHqv60eoXVSPOQK6+DpWywMjNpiHRuQnkrO-qscO3QNHdCWmQ@mail.gmail.com>
+Subject: DID YOU RECEIVE MY MAIL?
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Sun, Feb 21, 2021 at 11:14 PM Martin Schiller <ms@dev.tdt.de> wrote:
->
-> I'm not really happy with this change because it breaks compatibility.
-> We then suddenly have 2 interfaces; the X.25 routings are to be set via
-> the "new" hdlc<x>_x25 interfaces instead of the hdlc<x> interfaces.
->
-> I currently just don't have a nicer solution to fix this queueing
-> problem either. On the other hand, since the many years we have been
-> using the current state, I have never noticed any problems with
-> discarded frames. So it might be more a theoretical problem than a
-> practical one.
+-- 
+Dear,
+I had sent you a mail but i don't think you received it that's why am
+writing you again.It is important you get back to me as soon as you
+can.
 
-This problem becomes very serious when we use AF_PACKET sockets,
-because the majority of frames would be dropped by the hardware
-driver, which significantly impacts transmission speed. What I am
-really doing is to enable adequate support for AF_PACKET sockets,
-allowing users to use the bare (raw) LAPB protocol. If we take this
-into consideration, this problem is no longer just a theoretical
-problem, but a real practical issue.
-
-If we don't want to break backward compatibility, there is another option:
-We can create a new API for the HDLC subsystem for stopping/restarting
-the TX queue, and replace all HDLC hardware drivers' netif_stop_queue
-and netif_wake_queue calls with calls to this new API. This new API
-would then call hdlc_x25 to stop/restart its internal queue.
-
-But this option would require modifying all HDLC hardware drivers'
-code, and frankly, not all HDLC hardware drivers' developers care
-about running X.25 protocols on their hardware. So this would cause
-both hardware driver instabilities and confusion for hardware driver
-developers.
+AbdWabbo Maddah
