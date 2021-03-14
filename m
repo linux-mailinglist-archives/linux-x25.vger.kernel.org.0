@@ -2,111 +2,67 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCDD1339FF3
-	for <lists+linux-x25@lfdr.de>; Sat, 13 Mar 2021 19:36:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 49B0F33A248
+	for <lists+linux-x25@lfdr.de>; Sun, 14 Mar 2021 03:01:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234357AbhCMSgT convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-x25@lfdr.de>); Sat, 13 Mar 2021 13:36:19 -0500
-Received: from smtp.econet.co.zw ([77.246.51.158]:65277 "EHLO
-        ironportDMZ.econet.co.zw" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S234286AbhCMSf6 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sat, 13 Mar 2021 13:35:58 -0500
-X-Greylist: delayed 472 seconds by postgrey-1.27 at vger.kernel.org; Sat, 13 Mar 2021 13:35:46 EST
-IronPort-SDR: 2VH7uDjPUxuRF84kGIuoHHaISSCuqZi+ufUVCFmh+/0u/DCFCtj5VFDT1b4h9dNnVvA6flspH+
- 3h9rw6M4gXRTOO/x00E/RP0IaZ5bJ/VFJjak29BaaBMRsZ8SomhBLF6NshxP1CgwykLJQtbFhT
- f57yb5yFlreJnhCu99okX5fHlhFOs37BIGqeR55agFxRF7WOiDsNKvGtFuzjle44yqE/60PUcB
- eSRuIQK9gCbtZaBXI6W4OKIxrnCmM+n1gcMJCNZUjbl9kcbsSMLo+94gqXFyBTYwkpasFfSfmL
- xM0=
-IronPort-HdrOrdr: A9a23:z3onBKxoaNoCa6u/wVCbKrPwgr1zdoIgy1knxilNYDZSddGVkN
- 3roe8S0gX6hC1UdHYrn92BP6foewK+ybde544NMbC+GDT3oWfAFuFfxKbr3jGIIUPD38FH06
- MIScRDIfnRKXQ/ssrg+gm/FL8boeWv1Kyzn+/RwzNMYGhRGsddxjx0AAqaDUF6LTMubfFSKL
- Om6tNDt36cfx0sA/iTPXUZQ/PF4+TCiZOOW29/Ozcc9AKMgTm0gYSULzGk2H4lIkpy6IZn1V
- Lgmwz9opy5s/ehygLNvlWjiqh+qZ/EwttHCNfksLlwFhzcziKpYIhGfpHqhkFTnMifrG8wkN
- /WowoxVv4DiU/sQg==
-X-IronPort-AV: E=Sophos;i="5.81,245,1610402400"; 
-   d="scan'208";a="3444522"
-Received: from unknown (HELO WVALE-MB-SVR-05.econetzw.local) ([192.168.101.173])
-  by ironportLAN.econet.co.zw with ESMTP; 13 Mar 2021 20:27:52 +0200
-Received: from WVALE-CAS-SVR-9.econetzw.local (192.168.101.184) by
- WVALE-MB-SVR-05.econetzw.local (192.168.101.173) with Microsoft SMTP Server
- (TLS) id 15.0.1473.3; Sat, 13 Mar 2021 20:27:48 +0200
-Received: from User (165.231.148.189) by WVALE-CAS-SVR-9.econetzw.local
- (10.10.11.230) with Microsoft SMTP Server id 15.0.1473.3 via Frontend
- Transport; Sat, 13 Mar 2021 20:27:59 +0200
-Reply-To: <r19772744@daum.net>
-From:   "Reem E. A" <chawora@econet.co.zw>
-Subject: Re:
-Date:   Sat, 13 Mar 2021 18:27:46 -0800
+        id S233188AbhCNCA2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sat, 13 Mar 2021 21:00:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233594AbhCNCAF (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sat, 13 Mar 2021 21:00:05 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A2FC061574;
+        Sat, 13 Mar 2021 18:00:05 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id q5so5680927pgk.5;
+        Sat, 13 Mar 2021 18:00:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qs2UgpNHrs9qIOZOqKSGGqFmmr2tm9Rf+HF/JQPX6rg=;
+        b=JCANjpJP+PSwE6nrZCgLfG3qg7hPxPu7DbwxIQaDZt6QwRdc5nCYjCsoWGwtP1nHjN
+         DwHK78zzo0uKy2y71O2YeKHGMHtHivAvry5Ci45KJKMF+Y5sbLmnvzNZo2gAvVPEMUwl
+         U9brCTm0M5h7qzmQEK0cz+iELqKbOii8x0xr9BDHLSC+ptdXxLhLuRSILTUrJJ5QIoPy
+         5jR6kL2f5hNVgVYFUDmqGEVOP6iTNkSntTlN0dqaLo/6Xzo5qQBnSWsKstt4mDfaPQ8M
+         xjM7c6598kE4VR89Dg9jWgWXpK9eVqCjnNYcK4xyVeZgDWREdzuO7nPs/2qBjLfqDong
+         0lNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qs2UgpNHrs9qIOZOqKSGGqFmmr2tm9Rf+HF/JQPX6rg=;
+        b=FWRdTvk09Yg90Bz0YCd0ovvOUwfl+TjhWG5rMeEA3E/hsyz+JT//iSjXgddwKrrbtm
+         k8RiwdYPkYhykjSIeUnZVFXEuYuw5vmXQ0cyQcTRn+IkhNT2duaczqozbQaGrylbYisG
+         2GoMuvhKnyskzJS/HxvlsS2A/2/9unTF7ImmOn09EPePmgfaAajPm9F5pwZqY2bkJkqU
+         Q2ISTUlPHw9sZewl3xV3WLXhy4gZ35BRD419lRbhr+OjdiNDFKWpuynXVvqTG8gdLfq1
+         Bswi36jhKQJT0mbvaGyEp4lTBvxoOZlJaEs+WGoAyGQE1IvhCvdAP93xEtGgQm7rPZ2V
+         IIVw==
+X-Gm-Message-State: AOAM531iKmnqaNbkv6P4NJX1BL4BkGLTvaQokZpXKw3Q+h+TX+9oVOqz
+        XRrFUPE0l5NpTPEnDbKva59N3LUwxBsl+/ZA/wraLE2T
+X-Google-Smtp-Source: ABdhPJwtzByi22xHUluOzkCy53Fqneo/9ax19XO3BoAWTJrwEhm8ACoDiyZsi/Z/2rZk3NOoAFbDhNBhbB3FsdS/Sdg=
+X-Received: by 2002:a62:e10f:0:b029:1f5:42b6:7113 with SMTP id
+ q15-20020a62e10f0000b02901f542b67113mr4929157pfh.63.1615687204977; Sat, 13
+ Mar 2021 18:00:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 8BIT
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <96f8ff6fe77b4507830ab5cf78a93340@WVALE-CAS-SVR-9.econetzw.local>
-To:     Undisclosed recipients:;
+References: <20210311072311.2969-1-xie.he.0141@gmail.com>
+In-Reply-To: <20210311072311.2969-1-xie.he.0141@gmail.com>
+From:   Xie He <xie.he.0141@gmail.com>
+Date:   Sat, 13 Mar 2021 17:59:54 -0800
+Message-ID: <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
+Subject: Re: [PATCH net] net: lapbether: Prevent racing when checking whether
+ the netif is running
+To:     Martin Schiller <ms@dev.tdt.de>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello,
+Hi Martin,
 
-My name is Ms. Reem Ebrahim Al-Hashimi, I am the "Minister of state
-and Petroleum" also "Minister of State for International Cooperation"
-in UAE. I write to you on behalf of my other "three (2) colleagues"
-who has approved me to solicit for your "partnership in claiming of
-{us$47=Million}" from a Financial Home on their behalf and
-for our "Mutual Benefits".
-
-The Fund {us$47=Million} is our share from the (over-invoiced) Oil/Gas
-deal with Turkish Government within 2013/2014, however, we
-don't want our government to know about the fund. If this proposal
-interests you, let me know, by sending me an email and I will send to
-you detailed information on how this business would be successfully
-transacted. Be informed that nobody knows about the secret of this
-fund except us, and we know how to carry out the entire transaction.
-So I am compelled to ask, that you will stand on our behalf and
-receive this fund into any account that is solely controlled by you.
-
-We will compensate you with 15% of the total amount involved as
-gratification for being our partner in this transaction. Reply to:
-reem.alhashimi@yandex.com
-
-Regards,
-Ms. Reem.
-This mail was sent through Econet Wireless, a Global telecoms leader.
-
-DISCLAIMER
-
-The information in this message is confidential and is legally privileged. It is intended solely for the addressee. Access to this message by anyone else is unauthorized. If received in error please accept our apologies and notify the sender immediately. You must also delete the original message from your machine. If you are not the intended recipient, any use, disclosure, copying, distribution or action taken in reliance of it, is prohibited and may be unlawful. The information, attachments, opinions or advice contained in this email are not the views or opinions of Econet Wireless, its subsidiaries or affiliates. Econet Wireless therefore accepts no liability for claims, losses, or damages arising from the inaccuracy, incorrectness, or lack of integrity of such information.
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/AgileBanner.png]
-WORK ISN'T A PLACE
-IT'S WHAT WE DO
-________________________________
-
-
-
-
-
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/telephone.png]
-
-
-
-
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/email.png]
-
-<mailto:>
-
-
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/location.png]
-
-
-
-
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/website.png]
-
-www.econet.co.zw<https://www.econet.co.zw>
-
-
-[https://mail.econet.co.zw/OWA/auth/current/themes/resources/Agile/inspired.jpg]
+Could you ack? Thanks!
