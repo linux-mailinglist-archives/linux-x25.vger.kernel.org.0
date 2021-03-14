@@ -2,60 +2,60 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D42FE33A42A
-	for <lists+linux-x25@lfdr.de>; Sun, 14 Mar 2021 11:32:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 01D0133A488
+	for <lists+linux-x25@lfdr.de>; Sun, 14 Mar 2021 12:21:50 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234904AbhCNKba (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 14 Mar 2021 06:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59236 "EHLO
+        id S235029AbhCNLVR (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sun, 14 Mar 2021 07:21:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230265AbhCNKbQ (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 14 Mar 2021 06:31:16 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50A21C061574;
-        Sun, 14 Mar 2021 03:31:16 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id u18so13888125plc.12;
-        Sun, 14 Mar 2021 03:31:16 -0700 (PDT)
+        with ESMTP id S234904AbhCNLVI (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sun, 14 Mar 2021 07:21:08 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFEB9C061574;
+        Sun, 14 Mar 2021 04:21:07 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id s21so7324481pjq.1;
+        Sun, 14 Mar 2021 04:21:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sGsgx5lItdpsm8V+9ERiYzuHPqJCAN3gYhOnOr9sdcw=;
-        b=OqMC6mJdcDBX+Nq9dTpDAQ0gw5q8HqOYtNpRyYJ6OWIw7Wd5Nc/9QFCOEy4VLAQi0E
-         Nl15WAEnoz59uw9aQDwQajdOhLIMHq8MyXuwjqGm+Ubx+dHHUHIkGUrd2KlBOR1OgXtP
-         8N+bJKTjpvnthdthIziiKkjus39Ku2upwodilcQGfePlR3pyoNtmRBJkvoSqSdFhxMmh
-         f3BQ2k8Tz80EsFZRZ3xGXICefJyPrvVCE8me7AmHQjViCvFp2ZIvMlAA6UT3R1DY6NrK
-         H589QGALYBNCmcj8KitVlEuRxrRWM2TPmZxANir9QSX1NfPQEawHTCBH56x5Tmc2Ad2K
-         PT/g==
+        bh=PPVao1AHhEvdFq9PUk1U5Ula5rKqEXhakDYfJk3USYw=;
+        b=jN5Ph6okeJzmxcfgrkWZCOiJqQ+apMPw5qBNEIb+2pJhWddRWQr4loM/yMWyAt4s8I
+         2+LTO5Qa56CzgbXjneAGe45KpjROK8mTAmWEf4lV7ZwwMP3LDq+R91ZCWnRXno3Np6mU
+         vz8Xn7mw3gqo3FvrGjOMPqZWrM/KfGXSvKLfmoAVKQYbDs9x+mq8AzKUmL+jdw1ozic0
+         EJadfT/NflcY4mEuxR/h8hngbFFc7exxEyU+HnWhzWKElupKXUzmikJ+nAk253fig/F1
+         kA+iTjxdc9Qn0QNsWBdlo9eqOyLY9w6M5PfULtdbRShciOylBpj8HMa50d0qBT/q/M8K
+         np5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=sGsgx5lItdpsm8V+9ERiYzuHPqJCAN3gYhOnOr9sdcw=;
-        b=A06wjhGvqJj2KmJIqJWCjJ7gK/HkJlXv3VxB86O51w2wVHig2FrJiZft0YsCEPJyNM
-         O/vEqMiocn8rxalkpl4nS/CHaWDHkB3GuNwp5p2gsupdmVxDSCatCRuteqloNiVYVWrr
-         VCG/PerY+1fMKoZQLDWPO8uDxBV5TkD3xVZ3vgFW5yMU709bjglpDpYnR6pkbUDiOqVr
-         ZUalSN9CIAotUsXNHbrBwuqAaP3vT59j2D70CZWpNWQYojSUMP+f6uPvctqqYRLelneK
-         1reP0ETYH8AuJCwxDM4WVkmF2WMQTXoVZxjXuk/gu/B/Ntxo0rLSRiMbHXuX57oAOJq9
-         QwCQ==
-X-Gm-Message-State: AOAM5300v6VWpgvdt1xlDL/goI2ABgxD2G2pyDrTat4K1yleAFc1mt0n
-        Q6fdd5SwKDuI8qMXeYBZ6JA=
-X-Google-Smtp-Source: ABdhPJwS8CEInbp8+m1mgmKalGcQYqUiX3GhFgjcxEwHqtASkF7AP63sjO754btL6xuiTG3Sei4sYQ==
-X-Received: by 2002:a17:902:d4cb:b029:e5:f608:6d5e with SMTP id o11-20020a170902d4cbb02900e5f6086d5emr6534745plg.20.1615717871399;
-        Sun, 14 Mar 2021 03:31:11 -0700 (PDT)
+        bh=PPVao1AHhEvdFq9PUk1U5Ula5rKqEXhakDYfJk3USYw=;
+        b=SqBQcPayoX7xvEGPo/ears7PoxG8NNFk+pgQPx+LokD3jTILpHqLHknh4TGy4Wlybq
+         82Z4QBcP6Z142Sna+oc0I5LnMRTzpv7ENx1aT6boflB80vigq3PT4hhN0f6/oHrhc16e
+         BR1BJUwAeuGl5XcAviSSjjQDacSJxZdOBq9Jf6r8mI67kj4TZn2xxW5fEV3b6u7V9oXJ
+         UgvFJHeqmsP+OEZkuqRa0xlc+QHaByJK45C0BP4CVAcn7COwg0z3+4sl6Lp4Zs7EWOgn
+         xTdPYWOcqTyL72O3itrRiiXMrFy4aWSfX5LDnXu8Xe4YGxjmdBiyrhrQZe4T1Xa+grc0
+         VaHA==
+X-Gm-Message-State: AOAM530hT8J1U6FE2rYWhaa9X5MQ7rtxJp/iAgD4sxnVZWXioiQQikut
+        Zufyz1LPenof3C5RybwzzSDtpnTm+3E=
+X-Google-Smtp-Source: ABdhPJxX62N7vN6YZHADEIQkobDUyl4zF+Ij1TCDd2Qoq+wSvBwNUts9N67aLcAh7BMsZOB885ClWw==
+X-Received: by 2002:a17:902:c154:b029:e5:e7cf:9627 with SMTP id 20-20020a170902c154b02900e5e7cf9627mr6533477plj.68.1615720867238;
+        Sun, 14 Mar 2021 04:21:07 -0700 (PDT)
 Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:352e:895f:60e:9463])
-        by smtp.gmail.com with ESMTPSA id b3sm9993761pgd.48.2021.03.14.03.31.10
+        by smtp.gmail.com with ESMTPSA id x19sm10268860pfc.152.2021.03.14.04.21.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Mar 2021 03:31:11 -0700 (PDT)
+        Sun, 14 Mar 2021 04:21:06 -0700 (PDT)
 From:   Xie He <xie.he.0141@gmail.com>
 To:     Martin Schiller <ms@dev.tdt.de>, Krzysztof Halasa <khc@pm.waw.pl>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Xie He <xie.he.0141@gmail.com>
-Subject: [PATCH net] net: hdlc_x25: Prevent racing between "x25_close" and "x25_xmit"/"x25_rx"
-Date:   Sun, 14 Mar 2021 03:31:04 -0700
-Message-Id: <20210314103104.43679-1-xie.he.0141@gmail.com>
+Subject: [PATCH net v2] net: hdlc_x25: Prevent racing between "x25_close" and "x25_xmit"/"x25_rx"
+Date:   Sun, 14 Mar 2021 04:21:01 -0700
+Message-Id: <20210314112103.45242-1-xie.he.0141@gmail.com>
 X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -86,7 +86,13 @@ have full control over the TX queue, and the HDLC protocol drivers (like
 this driver) have no control. Controlling the queue here in the protocol
 driver may interfere with hardware drivers' control of the queue.
 
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Xie He <xie.he.0141@gmail.com>
+---
+
+Change from v1:
+Added a "Fixes" tag.
+
 ---
  drivers/net/wan/hdlc_x25.c | 42 +++++++++++++++++++++++++++++++++++++-
  1 file changed, 41 insertions(+), 1 deletion(-)
