@@ -2,95 +2,69 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BA8133C368
-	for <lists+linux-x25@lfdr.de>; Mon, 15 Mar 2021 18:07:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8400A33C6F4
+	for <lists+linux-x25@lfdr.de>; Mon, 15 Mar 2021 20:40:41 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234888AbhCORHP (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 15 Mar 2021 13:07:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57542 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235174AbhCORG7 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 15 Mar 2021 13:06:59 -0400
-Received: from mail-ua1-x944.google.com (mail-ua1-x944.google.com [IPv6:2607:f8b0:4864:20::944])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FB4FC0613D8
-        for <linux-x25@vger.kernel.org>; Mon, 15 Mar 2021 10:06:59 -0700 (PDT)
-Received: by mail-ua1-x944.google.com with SMTP id c2so107283uaj.3
-        for <linux-x25@vger.kernel.org>; Mon, 15 Mar 2021 10:06:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=7Vrbe4gpVhb7cfcmpNanXi5E+OCzidx3VGMrGNR2bC4=;
-        b=IeztSHzwFXmZolftCfjFRG56pGeDsims74ZNrOy69DoxsYWGoDOf8BTYU1oihzpMjs
-         /UI0k2L0Qw3uMk8fxnCnza7S4kxuw+JHz2cJfu6pTZ0sITqTYvWJGTtVh2KwWkmjRaJy
-         oTsqALi8i98UbsZJ68pP2yxOMTP8DzeoQ8F9tJSRTRKzr7Z/qLAW+V3UqNTj4H1X6nI/
-         PmV4gS2F9+luv8LVHd613zQz/YI0VKn4OQSm+awZ9Ty028cbDK+a/CGJDynN7FOkoDYO
-         LOVsaPRK7onH069em311RQlabQWfJu0IClqpKWhZmgRyNcuRh2wyGe9w6vsdywtZEkI6
-         +lwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=7Vrbe4gpVhb7cfcmpNanXi5E+OCzidx3VGMrGNR2bC4=;
-        b=C5gBhHpdqzXDikVjVL5wU3bD4Ow5dUC8ZWy4tYD2eYet9xdSs5C5+eR3o9sn4PH/LY
-         lL5ufkjjgSs1xbkg29zr6fDKOjTQMvAhoTkhMoycTsxkvHiNusNV6riuFgwPuNjPHhL1
-         AT8rMOltSbJUbud9pAEGhglDsAJHGl3tZnfNX+Ta5dcDg2hpSi4lghgDU4KpoUIkIcqR
-         1MzgW1cbh/HyrAJbw0px5MtFdIQzlmfXjp4XTlGV9uWKt9WOla/fqCb6AwK/tqLuFrEy
-         O9K40xY+PjMsM0IlQUx87cG575ihGQoMUhow0BpPnb9DPpesuhCYN9puCDISzZAhQvJz
-         m/tw==
-X-Gm-Message-State: AOAM533kVPhqmNjyoJlXIcWh7JazJcxxeM5+mIuY0XoNteETBAGrpJul
-        MDO4/mzvM/h3VIqtw2QvBXdpuHWozDYk3mi8caw=
-X-Google-Smtp-Source: ABdhPJwEfkQ2Vj8T+Ow2okUm+JjAfQUJvyZL+X+WzN8tH7luDQmnBYiNeC3HSx9EJovMuQf3n7FVpZyzmlmraCcCLv0=
-X-Received: by 2002:ab0:32cf:: with SMTP id f15mr5321130uao.68.1615828018158;
- Mon, 15 Mar 2021 10:06:58 -0700 (PDT)
+        id S231769AbhCOTkJ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 15 Mar 2021 15:40:09 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41558 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232315AbhCOTkI (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Mon, 15 Mar 2021 15:40:08 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 2841C64DFD;
+        Mon, 15 Mar 2021 19:40:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1615837208;
+        bh=R6h91gj5vHVWc+MLmad2vahHrwu1cI9nPg/3KlKm1Ak=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=bgB4/GWfciXHLp6OVakDQlza2U7uGPeTnbrtwn4xtUpvwlVz3qFLLULd+obaT+nLr
+         vjkhLQNrXzZmC9WVzA3XIcVbObp3zrTJ1mzps2HU7iwQj3uN0MDn1r7cyUQUNQ4bpf
+         WUByKsTieYqGlu5TWo7AnFhG9q5fqz8DGM/deWDb3n/qB64uVNfvCozI6isDeGo0ez
+         E6AGIBGWY5H1t3efvNE6X1YJR/jDYakSbM/JvhEi1GEWzpX3Ad1jc4I4qfQVWgmsyK
+         GnMep7afF8Z5tmaz0SOdB1I7plO2SKUO2nGcXjdnEbQdd+XqK2QSKWJ3PNzLExeFL3
+         ADbGprf5CRXvQ==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 16ABA60A1A;
+        Mon, 15 Mar 2021 19:40:08 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Received: by 2002:ab0:2e8f:0:0:0:0:0 with HTTP; Mon, 15 Mar 2021 10:06:57
- -0700 (PDT)
-Reply-To: ezbtg22@gmail.com
-From:   "Mrs.E.Glenn" <mrganuserge654@gmail.com>
-Date:   Mon, 15 Mar 2021 10:06:57 -0700
-Message-ID: <CAH16wSN_QM_RAUGGsZ7LC8VTEKhCu3+VnJoNqqTumu2QA95yEg@mail.gmail.com>
-Subject: From Mrs.Glenn
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net v2] net: hdlc_x25: Prevent racing between "x25_close" and
+ "x25_xmit"/"x25_rx"
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <161583720808.23197.12484881848858187227.git-patchwork-notify@kernel.org>
+Date:   Mon, 15 Mar 2021 19:40:08 +0000
+References: <20210314112103.45242-1-xie.he.0141@gmail.com>
+In-Reply-To: <20210314112103.45242-1-xie.he.0141@gmail.com>
+To:     Xie He <xie.he.0141@gmail.com>
+Cc:     ms@dev.tdt.de, khc@pm.waw.pl, davem@davemloft.net, kuba@kernel.org,
+        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
--- 
-Dear Beloved,
+Hello:
 
-I am Mrs Elizabet Glenn from Israel. I am a missionary but right now
-in a hospital bed in Israel. I am 59 years and childless; my husband
-is dead. I was diagnosed with terminal cancer. And my doctor just
-predicted that I have but very limited time to live due to damages in
-my system and as a result of that I decided to dispose my 10.5 million
-US dollars to a God-fearing one for the continuation of charitable
-work. This is why I located you.
+This patch was applied to netdev/net.git (refs/heads/master):
 
-My guess about you may not be accurate because I came across your
-contact at the humanitarian calendar event of the year but I believe
-in God who divinely directed me to you for this solemn proposal of
-charitable work.
+On Sun, 14 Mar 2021 04:21:01 -0700 you wrote:
+> "x25_close" is called by "hdlc_close" in "hdlc.c", which is called by
+> hardware drivers' "ndo_stop" function.
+> "x25_xmit" is called by "hdlc_start_xmit" in "hdlc.c", which is hardware
+> drivers' "ndo_start_xmit" function.
+> "x25_rx" is called by "hdlc_rcv" in "hdlc.c", which receives HDLC frames
+> from "net/core/dev.c".
+> 
+> [...]
 
-Therefore I wholeheartedly wish to bequeath my fortune to you as a
-God-fearing person for the continuation of charitable work anywhere
-around the world.
+Here is the summary with links:
+  - [net,v2] net: hdlc_x25: Prevent racing between "x25_close" and "x25_xmit"/"x25_rx"
+    https://git.kernel.org/netdev/net/c/bf0ffea336b4
 
-I shall be going in for a surgery operations soonest and desire this
-money to be transferred to you as I do not wish to leave this money in
-the bank because bankers might misuse it for their own interest after
-my death.
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-As soon as I receive your quick reply assuring me that you will
-utilize the money as I instructed you for the benefit of the less
-privilege, I shall give you more details and also instruct my bank to
-release the money to you for the charity project. I hope you receive
-this mail in good health.
 
-Please contact me on this E-mail (ezbtg22@gmail.com) because I don t
-know what will be my situation in next minute,
-
-I am waiting for your reply.
-
-Yours sincerely,
-Mrs Elizabet Glenn.
