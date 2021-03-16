@@ -2,67 +2,74 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6268033D731
-	for <lists+linux-x25@lfdr.de>; Tue, 16 Mar 2021 16:19:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 06D6433D857
+	for <lists+linux-x25@lfdr.de>; Tue, 16 Mar 2021 16:56:01 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233829AbhCPPST (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 16 Mar 2021 11:18:19 -0400
-Received: from mxout70.expurgate.net ([194.37.255.70]:36427 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236259AbhCPPSL (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 16 Mar 2021 11:18:11 -0400
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.90)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1lMBSG-0005UI-Kj; Tue, 16 Mar 2021 16:17:56 +0100
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.90)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1lMBSF-0007b7-Lu; Tue, 16 Mar 2021 16:17:55 +0100
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id E40F9240041;
-        Tue, 16 Mar 2021 16:17:54 +0100 (CET)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 69D9F240040;
-        Tue, 16 Mar 2021 16:17:54 +0100 (CET)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id BD73620072;
-        Tue, 16 Mar 2021 16:17:53 +0100 (CET)
+        id S230506AbhCPPz2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 16 Mar 2021 11:55:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41772 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238233AbhCPPzL (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 16 Mar 2021 11:55:11 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2424C06174A;
+        Tue, 16 Mar 2021 08:55:09 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id f8so3638602plg.10;
+        Tue, 16 Mar 2021 08:55:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CBzNMbocqQsxjfYGQ1EhaQ7uFSjRE7ceXnc5NaxO654=;
+        b=dzYeJ1wT59wMMvs2pHK2ATQt++uhGR6mEwuyp6H838gqPrjAtdIn8X+UFolhukHeA8
+         caizWrUGEZqOdTqUFiWzGujq+dB3/3hDN0NoJcoinZxQTWZ4os+Akv36qyhFVSjtsLU2
+         H74inxcj/t1xEgHW+m3dduB4p+HWhaNA/P2am3AE7Wi/6Vl7MbN7EgXl41+y5r/Yo1E5
+         FH+TxtBOEvAe4mWVrhkkYj/LR2mS8C5yn5yh9KYsBvaFN5/occy7WT36l3e/9dSmk/sx
+         PpIBuz4gsWUext5EBRiig+47KKa/slOpmtyOHKmye6pvASAljooIt/epYNza3H609FHO
+         FZDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CBzNMbocqQsxjfYGQ1EhaQ7uFSjRE7ceXnc5NaxO654=;
+        b=NXQQ5ztFglsqpb5P/Tp5VcE6ZQW1jewJLB69W1JKh5ByoN6Ucwij/6wKTfL0nnsVVT
+         x6Vc3vztetR42HMtFFQ3DSURKlYoeYDMr72HNTtPH3Rck3aRo1PtmItgksx8viREU8fS
+         huzETDkRbf2H8Gs3TUxdIUhe7AWfxgVl0UGppyQFnR/lIINnSRya6ErTPPuZffgl2FlA
+         Wj0nKGwyt0hCnJgPNUE82oe7FLHaVEtMjxXOozoVh7Vm0FM/dttQFIqGX3dyhEdoOHmK
+         09e0JVoHborMq3lAo1vAiaWPPuClREbUVUr9Qw0c2qe6Hpr5XM465RijVoVvj8U0FOCs
+         +7Xw==
+X-Gm-Message-State: AOAM531xq0XKkMUR3NjLRAxukAzRugewo8NgBMeyHWjRAFwX6oR5kPf+
+        5FiUao/LgV5w0MU1KlwBPtoaNm/E2vPTd7qQc7o=
+X-Google-Smtp-Source: ABdhPJwNfzehECf4Y6hcy0GFboZ85XdYW6NRzzEnRsuM7ixoqnV09A48CrHjEoP1DwcrNXLtesjL6gxh9/g4DeAZETE=
+X-Received: by 2002:a17:90a:ea91:: with SMTP id h17mr345965pjz.66.1615910109592;
+ Tue, 16 Mar 2021 08:55:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 16 Mar 2021 16:17:53 +0100
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     Xie He <xie.he.0141@gmail.com>
+References: <20210311072311.2969-1-xie.he.0141@gmail.com> <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
+ <111a4642c8ae3c9e0d9f271fe7c54e86@dev.tdt.de>
+In-Reply-To: <111a4642c8ae3c9e0d9f271fe7c54e86@dev.tdt.de>
+From:   Xie He <xie.he.0141@gmail.com>
+Date:   Tue, 16 Mar 2021 08:54:58 -0700
+Message-ID: <CAJht_EOLKSv=0A86GafDWTG1sEFNJCmFBH5QsdOtx28GzPL_pQ@mail.gmail.com>
+Subject: Re: [PATCH net] net: lapbether: Prevent racing when checking whether
+ the netif is running
+To:     Martin Schiller <ms@dev.tdt.de>
 Cc:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Linux X25 <linux-x25@vger.kernel.org>,
         Linux Kernel Network Developers <netdev@vger.kernel.org>,
         LKML <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH net] net: lapbether: Prevent racing when checking whether
- the netif is running
-Organization: TDT AG
-In-Reply-To: <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
-References: <20210311072311.2969-1-xie.he.0141@gmail.com>
- <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
-Message-ID: <111a4642c8ae3c9e0d9f271fe7c54e86@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.16
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-X-purgate-type: clean
-X-purgate-ID: 151534::1615907876-00000E25-329F2CA6/0/0
-X-purgate: clean
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2021-03-14 02:59, Xie He wrote:
-> Hi Martin,
-> 
-> Could you ack? Thanks!
+On Tue, Mar 16, 2021 at 8:17 AM Martin Schiller <ms@dev.tdt.de> wrote:
+>
+> On 2021-03-14 02:59, Xie He wrote:
+> > Hi Martin,
+> >
+> > Could you ack? Thanks!
+>
+> Acked-by: Martin Schiller <ms@dev.tdt.de>
 
-Acked-by: Martin Schiller <ms@dev.tdt.de>
+Thank you!!
