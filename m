@@ -2,69 +2,67 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8400A33C6F4
-	for <lists+linux-x25@lfdr.de>; Mon, 15 Mar 2021 20:40:41 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 6268033D731
+	for <lists+linux-x25@lfdr.de>; Tue, 16 Mar 2021 16:19:06 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231769AbhCOTkJ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 15 Mar 2021 15:40:09 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41558 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232315AbhCOTkI (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Mon, 15 Mar 2021 15:40:08 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 2841C64DFD;
-        Mon, 15 Mar 2021 19:40:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1615837208;
-        bh=R6h91gj5vHVWc+MLmad2vahHrwu1cI9nPg/3KlKm1Ak=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=bgB4/GWfciXHLp6OVakDQlza2U7uGPeTnbrtwn4xtUpvwlVz3qFLLULd+obaT+nLr
-         vjkhLQNrXzZmC9WVzA3XIcVbObp3zrTJ1mzps2HU7iwQj3uN0MDn1r7cyUQUNQ4bpf
-         WUByKsTieYqGlu5TWo7AnFhG9q5fqz8DGM/deWDb3n/qB64uVNfvCozI6isDeGo0ez
-         E6AGIBGWY5H1t3efvNE6X1YJR/jDYakSbM/JvhEi1GEWzpX3Ad1jc4I4qfQVWgmsyK
-         GnMep7afF8Z5tmaz0SOdB1I7plO2SKUO2nGcXjdnEbQdd+XqK2QSKWJ3PNzLExeFL3
-         ADbGprf5CRXvQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 16ABA60A1A;
-        Mon, 15 Mar 2021 19:40:08 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S233829AbhCPPST (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 16 Mar 2021 11:18:19 -0400
+Received: from mxout70.expurgate.net ([194.37.255.70]:36427 "EHLO
+        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236259AbhCPPSL (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 16 Mar 2021 11:18:11 -0400
+Received: from [127.0.0.1] (helo=localhost)
+        by relay.expurgate.net with smtp (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1lMBSG-0005UI-Kj; Tue, 16 Mar 2021 16:17:56 +0100
+Received: from [195.243.126.94] (helo=securemail.tdt.de)
+        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90)
+        (envelope-from <ms@dev.tdt.de>)
+        id 1lMBSF-0007b7-Lu; Tue, 16 Mar 2021 16:17:55 +0100
+Received: from securemail.tdt.de (localhost [127.0.0.1])
+        by securemail.tdt.de (Postfix) with ESMTP id E40F9240041;
+        Tue, 16 Mar 2021 16:17:54 +0100 (CET)
+Received: from mail.dev.tdt.de (unknown [10.2.4.42])
+        by securemail.tdt.de (Postfix) with ESMTP id 69D9F240040;
+        Tue, 16 Mar 2021 16:17:54 +0100 (CET)
+Received: from mail.dev.tdt.de (localhost [IPv6:::1])
+        by mail.dev.tdt.de (Postfix) with ESMTP id BD73620072;
+        Tue, 16 Mar 2021 16:17:53 +0100 (CET)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net v2] net: hdlc_x25: Prevent racing between "x25_close" and
- "x25_xmit"/"x25_rx"
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <161583720808.23197.12484881848858187227.git-patchwork-notify@kernel.org>
-Date:   Mon, 15 Mar 2021 19:40:08 +0000
-References: <20210314112103.45242-1-xie.he.0141@gmail.com>
-In-Reply-To: <20210314112103.45242-1-xie.he.0141@gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 16 Mar 2021 16:17:53 +0100
+From:   Martin Schiller <ms@dev.tdt.de>
 To:     Xie He <xie.he.0141@gmail.com>
-Cc:     ms@dev.tdt.de, khc@pm.waw.pl, davem@davemloft.net, kuba@kernel.org,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Linux X25 <linux-x25@vger.kernel.org>,
+        Linux Kernel Network Developers <netdev@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH net] net: lapbether: Prevent racing when checking whether
+ the netif is running
+Organization: TDT AG
+In-Reply-To: <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
+References: <20210311072311.2969-1-xie.he.0141@gmail.com>
+ <CAJht_ENT6E4pekdTJ8YKntKdH94e-1H6Tf6iBr-=Vbxj5rCs+A@mail.gmail.com>
+Message-ID: <111a4642c8ae3c9e0d9f271fe7c54e86@dev.tdt.de>
+X-Sender: ms@dev.tdt.de
+User-Agent: Roundcube Webmail/1.3.16
+X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
+X-purgate-type: clean
+X-purgate-ID: 151534::1615907876-00000E25-329F2CA6/0/0
+X-purgate: clean
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (refs/heads/master):
-
-On Sun, 14 Mar 2021 04:21:01 -0700 you wrote:
-> "x25_close" is called by "hdlc_close" in "hdlc.c", which is called by
-> hardware drivers' "ndo_stop" function.
-> "x25_xmit" is called by "hdlc_start_xmit" in "hdlc.c", which is hardware
-> drivers' "ndo_start_xmit" function.
-> "x25_rx" is called by "hdlc_rcv" in "hdlc.c", which receives HDLC frames
-> from "net/core/dev.c".
+On 2021-03-14 02:59, Xie He wrote:
+> Hi Martin,
 > 
-> [...]
+> Could you ack? Thanks!
 
-Here is the summary with links:
-  - [net,v2] net: hdlc_x25: Prevent racing between "x25_close" and "x25_xmit"/"x25_rx"
-    https://git.kernel.org/netdev/net/c/bf0ffea336b4
-
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Acked-by: Martin Schiller <ms@dev.tdt.de>
