@@ -2,60 +2,60 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 791533431AE
-	for <lists+linux-x25@lfdr.de>; Sun, 21 Mar 2021 09:35:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A29F73431E3
+	for <lists+linux-x25@lfdr.de>; Sun, 21 Mar 2021 10:40:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbhCUHxg (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 21 Mar 2021 03:53:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49614 "EHLO
+        id S229826AbhCUJkK (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sun, 21 Mar 2021 05:40:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229784AbhCUHxU (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 21 Mar 2021 03:53:20 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F68EC061574;
-        Sun, 21 Mar 2021 00:53:20 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id b184so8857880pfa.11;
-        Sun, 21 Mar 2021 00:53:20 -0700 (PDT)
+        with ESMTP id S229784AbhCUJjn (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sun, 21 Mar 2021 05:39:43 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 741A1C061574;
+        Sun, 21 Mar 2021 02:39:42 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id f8so3243327pgi.9;
+        Sun, 21 Mar 2021 02:39:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=3YMMQWqv0WQD77AlOgo+glNplzrUfg5GTEMFWXwVjL0=;
-        b=IPuWVof6WPFXhMXb4yA4nsWGYwzZqcCkry3NLfhR26kRgj4egffTt3VhVVwXNM/Lhp
-         FsZB2Auj2IQUp78Tf5QMlDELd66RtrLS6vRdXEekT1zvlZgrJzSZkBtUy6v4xYRYJLr2
-         6g95gTJO/PEXmqbRYuPF5pYN9q9okPXdE05tNJ21iRSHztf1/vZxoXt/L9+LOgYT8JMq
-         N8MXglHLG+cYCgeYynBxMA13BjCoaJOQ1eUDDITTdo7p7N0PcVBOeQGOT18n1htK7Uv/
-         gsND702wGZZeiQNuQxitH0eUmE9pzdCpIZDTamvcWWFhCm64HI4uqq/iUiMYmrGBofOP
-         xEOA==
+        bh=qEB2xKGyehuWamIa0Nk18mP9k4IMt9ZA/EgpxbGM3UQ=;
+        b=EMZ2ysgpzNMMyWACMknvDReSa2qVfd3RqQ9XY0n7lit5nXc7V7CEvzEU2g26ywvzFY
+         NG3Wq7Xdpq+Y4GvAImmcUZ9j52FI6Jtesyq6xbRE6PhsG+wfGyWCC5sTu+y/QoIH+no6
+         RaYilyOLdo8p3WWhG+QAk3tj2CfE9j9HolQf0Y5RRW6N1ZyEbSkyVgvFVKHLIsIrxnBk
+         /525ZJkN6hKmTJVsZlw5DMsx5CYvqpELmzFJfd6thYdY6Y9B+NFjQzEAFwEmpELO89IE
+         snpmaPerSfSOPwIuO0G24dggUS2CSs7djc73RqylmSYbLWo2GYM9I4iMSQjca8ZJtaxl
+         Qj2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=3YMMQWqv0WQD77AlOgo+glNplzrUfg5GTEMFWXwVjL0=;
-        b=US4JX0xwzyPEFiMLUxa7cmqBNYNOQRjwuA78rvKHfwIUdMiIJfZ+kTtvuolOp9F1ND
-         hIGUmnDFqU9CpmNwxLF7BYjgQJZH9lFVOUfkz/LbP2S9Q6DBQ503ZxKXQW+TzGq1rAPu
-         G0otLholMpit4hvziC8CHOBobEM1bE/7ZGrsKycNpbOirvCT2ODL99iWE5MxF5roiWh3
-         EBE+mkEEP4K3NAuujbDmQScwLkNvew/YsaC0guKCz99atr7MksYkYDVfk94zVCNfm+9f
-         3rEqhpzdL54QDjpdiF0x7yw8KHKNZWIOz9Yl6Lh4JjGM7UigQ4IdXEf2Vhtl3x1eU+Ek
-         SUNQ==
-X-Gm-Message-State: AOAM532+t+0thfh19EBgI6rdfKhuWVgzoDEtho0V/PtorhAGiXWkQ5WU
-        UIfb3lux+JVkkuWwAEgorDiQmN83rmw=
-X-Google-Smtp-Source: ABdhPJxpXu9yd9ee4yv8NkLRu4PnXO6qVKQ2LZqJgqbiLGpOedn9cTPNtBq89itW8B3y8xKF9RVRTA==
-X-Received: by 2002:a62:38d7:0:b029:1fb:2382:57b0 with SMTP id f206-20020a6238d70000b02901fb238257b0mr16815430pfa.10.1616313199507;
-        Sun, 21 Mar 2021 00:53:19 -0700 (PDT)
+        bh=qEB2xKGyehuWamIa0Nk18mP9k4IMt9ZA/EgpxbGM3UQ=;
+        b=mN1gGYS3FUcP1qHWltCh6dGJSpuPQOaZh2gPyhLzjIdGo2B/kVtwADweOJ7X0/2hqz
+         oyhWhNDIQiFuhXCNzpofVQeQLrUBgCau1GJqCaTPJfTrNiOcOBsgyVDWE2mxSarHkik6
+         363PyWIbKXZOJUUUShXqiS+LAnvNRnUHnF0GMOmWqtBGunsmH5lsae+ZbNwkgPXr1EJ4
+         pesxhW/qQUiFMS5xk4KI6G8XsmGZz1nJHBPyrgldc1azxgQn8fm11lG4kpYotQ6frFBp
+         Tf01YNLaIxxrH4CtN6yWCX9g9GMe4F1ki0N72xhcJF7329XfMT4kULvGqPsLANmaP43+
+         WiuA==
+X-Gm-Message-State: AOAM533KcyAO7XUGil8H9CktPFH9iTf/x1F1BblziO79zAHzKOgYMViR
+        /AbrHP1FdEOniH0un4w4R6l0+Wwhf4Q=
+X-Google-Smtp-Source: ABdhPJyUSsRrw3v6UZdjSwgdAJHcf2z0mRABzxyax2Qc0pICg4oJPeMEdhx/+DsjzgRx3P/ibo9dHg==
+X-Received: by 2002:aa7:8745:0:b029:211:1103:d3e4 with SMTP id g5-20020aa787450000b02902111103d3e4mr14858484pfo.73.1616319580373;
+        Sun, 21 Mar 2021 02:39:40 -0700 (PDT)
 Received: from shane-XPS-13-9380.hsd1.ca.comcast.net ([2601:646:8800:1c00:9c26:6181:dc56:dba4])
-        by smtp.gmail.com with ESMTPSA id t7sm9855672pfg.69.2021.03.21.00.53.18
+        by smtp.gmail.com with ESMTPSA id w17sm9567102pfu.29.2021.03.21.02.39.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 Mar 2021 00:53:19 -0700 (PDT)
+        Sun, 21 Mar 2021 02:39:39 -0700 (PDT)
 From:   Xie He <xie.he.0141@gmail.com>
 To:     Martin Schiller <ms@dev.tdt.de>,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org
 Cc:     Xie He <xie.he.0141@gmail.com>
-Subject: [PATCH net-next] net: lapb: Make "lapb_t1timer_running" able to detect an already running timer
-Date:   Sun, 21 Mar 2021 00:53:16 -0700
-Message-Id: <20210321075316.90385-1-xie.he.0141@gmail.com>
+Subject: [PATCH net-next v2] net: lapb: Make "lapb_t1timer_running" able to detect an already running timer
+Date:   Sun, 21 Mar 2021 02:39:35 -0700
+Message-Id: <20210321093935.93438-1-xie.he.0141@gmail.com>
 X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -72,8 +72,8 @@ it is not, schedule it to run.
 
 However, if the timer has already fired and is running, and is waiting to
 get the "lapb->lock" lock, "lapb_t1timer_running" will not detect this,
-and "lapb_kick" will then schedule a new timer, which causes the old
-timer to be aborted.
+and "lapb_kick" will then schedule a new timer. The old timer will then
+abort when it sees a new timer pending.
 
 I think this is not right. The purpose of "lapb_kick" should be ensuring
 that the actual work of the timer function is scheduled to be done.
@@ -101,6 +101,11 @@ For consistency of the code, I also added "t2timer_running" and deleted
 "t2timer_stop".
 
 Signed-off-by: Xie He <xie.he.0141@gmail.com>
+---
+
+Change from v1:
+Small improvement to the commit message.
+
 ---
  include/net/lapb.h    |  2 +-
  net/lapb/lapb_iface.c |  4 ++--
