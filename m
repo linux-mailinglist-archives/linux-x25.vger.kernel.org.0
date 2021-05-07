@@ -2,54 +2,81 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CFE23628CF
-	for <lists+linux-x25@lfdr.de>; Fri, 16 Apr 2021 21:40:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E9F5376CD2
+	for <lists+linux-x25@lfdr.de>; Sat,  8 May 2021 00:27:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243916AbhDPTlH convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-x25@lfdr.de>); Fri, 16 Apr 2021 15:41:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56782 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236021AbhDPTlE (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 16 Apr 2021 15:41:04 -0400
-X-Greylist: delayed 10585 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 16 Apr 2021 12:40:38 PDT
-Received: from server.anaxus.com.au (unknown [IPv6:2a01:4f8:10b:4585::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D017DC061756;
-        Fri, 16 Apr 2021 12:40:38 -0700 (PDT)
-Received: from [193.56.28.106] (unknown [193.56.28.106])
-        by server.anaxus.com.au (Postfix) with ESMTPA id 8C9BC6EA668E;
-        Sat, 17 Apr 2021 01:46:30 +1000 (AEST)
-Authentication-Results: server.anaxus.com.au;
-        spf=pass (sender IP is 193.56.28.106) smtp.mailfrom=cqukesq6@gmail.com smtp.helo=[193.56.28.106]
-Received-SPF: pass (server.anaxus.com.au: connection is authenticated)
-Date:   Fri, 16 Apr 2021 08:46:59 -0700
-Mime-version: 1.0
-Subject: Compliments
-From:   Christopher Quinlan QC <cqukesq6@gmail.com>
-To:     Undisclosed-Recipients:;
-Message-Id: <20210416084659.LDAOMSGFVRINMN@gmail.com>
-Reply-To: cqukesq6@gmail.com
-Content-type: text/plain; charset="ISO-8859-1"; format=flowed
-Content-transfer-encoding: 8BIT
+        id S230227AbhEGW1v (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 7 May 2021 18:27:51 -0400
+Received: from bosmailout01.eigbox.net ([66.96.190.1]:36027 "EHLO
+        bosmailout01.eigbox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229470AbhEGW1h (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 7 May 2021 18:27:37 -0400
+X-Greylist: delayed 1929 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 May 2021 18:27:30 EDT
+Received: from bosmailscan09.eigbox.net ([10.20.15.9])
+        by bosmailout01.eigbox.net with esmtp (Exim)
+        id 1lf8QO-00068o-JJ; Fri, 07 May 2021 17:54:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=godsofu4.com; s=dkim; h=Sender:Content-Transfer-Encoding:Content-Type:
+        Message-ID:Reply-To:Subject:To:From:Date:MIME-Version:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=aM9bUFGSTpfnep8zAVAJMnojqhcwpuHDFPgQnPqW4M4=; b=bjgKomV6NO5Eg5D3qsCBps1llx
+        tj4k2teSfIdfo/duBtOSoC/FW1+C1nXiYJbrvf2JDobx8fDCsgnxHFoPWOCb5eI+OJOIgvnnfKlpl
+        ZqidIuDnjEPTMao1vFwrg6M9FUKU/cz6TT5/KN4ccsk+aQli3Wgs3G1cQz5vdbC1Y2SXULFY8Mu2t
+        1PShwmiDRn71EPzgUHUVu0GG39z6uSTEuRgOXhiNl9ekuZ5QXUAEykoocvC5/DkORRmERAA91o1HY
+        Sl76pPWw9UBVGbuFbfdVPfVcFxJM5xZDrmgt6uCf9J+dn/n7LFOSOxBaL9svxxYdhOkJwdz4uh075
+        2gI+xJSw==;
+Received: from [10.115.3.32] (helo=bosimpout12)
+        by bosmailscan09.eigbox.net with esmtp (Exim)
+        id 1lf8QO-0003aD-AI; Fri, 07 May 2021 17:54:20 -0400
+Received: from boswebmail06.eigbox.net ([10.20.16.6])
+        by bosimpout12 with 
+        id 1xuH2500407qujN01xuLVi; Fri, 07 May 2021 17:54:20 -0400
+X-EN-SP-DIR: OUT
+X-EN-SP-SQ: 1
+Received: from [127.0.0.1] (helo=homestead)
+        by boswebmail06.eigbox.net with esmtp (Exim)
+        id 1lf8QL-0006fx-UG; Fri, 07 May 2021 17:54:17 -0400
+Received: from [197.239.81.229]
+ by emailmg.homestead.com
+ with HTTP (HTTP/1.1 POST); Fri, 07 May 2021 17:54:17 -0400
+MIME-Version: 1.0
+Date:   Fri, 07 May 2021 21:54:17 +0000
+From:   Mrs Suzara Maling Wan <fast65@godsofu4.com>
+To:     undisclosed-recipients:;
+Subject: URGENT REPLY NEEDED
+Reply-To: suzara2017malingwan@gmail.com
+Mail-Reply-To: suzara2017malingwan@gmail.com
+Message-ID: <36acfe805efde59f3f399df1324ce6b9@godsofu4.com>
+X-Sender: fast65@godsofu4.com
+User-Agent: Roundcube Webmail/1.3.14
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-EN-AuthUser: fast65@godsofu4.com
+Sender:  Mrs Suzara Maling Wan <fast65@godsofu4.com>
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-My name is Christopher Quinlan QC I am a solicitor at law / investment adviser to your late relative. Your late relative left behind Cash deposit in capital and investment security account along with properties, I will like to discuss with you regarding making this claim since he is related to you going by the lineage, surname and country of origin.
 
-Please get back to me on my private email cqukesq6@gmail.com for further details.
 
-To facilitate the process of this transaction, urgently forward to me
-Your full names,
-Telephone and fax numbers,
-Address,
-Age,
-Marital status,
-Occupation
+My names are Mrs Suzara Maling Wan, I am a Nationality of the Republic
+of the Philippine presently base in West Africa B/F, dealing with
+exportation of Gold, I was diagnose of blood Causal decease, and my
+doctor have announce to me that I have few days to leave due to the
+condition of my sickness.
 
-I will be expecting to hear from you.
+I have a desire to build an orphanage home in your country of which i
+cannot execute the project myself due to my present health condition,
+I am willing to hand over the project under your care for you to help
+me fulfill my dreams and desire of building an orphanage home in your
+country.
 
-Regards
+Reply in you are will to help so that I can direct you to my bank for
+the urgent transfer of the fund/money require for the project to your
+account as I have already made the fund/money available.
 
-Christopher Quinlan QC
-Private email cqukesq6@gmail.com
-
+With kind regards
+Mrs Suzara Maling Wan
