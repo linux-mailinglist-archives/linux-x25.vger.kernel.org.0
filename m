@@ -2,62 +2,66 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81E65398B16
-	for <lists+linux-x25@lfdr.de>; Wed,  2 Jun 2021 15:52:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 108A439ADCE
+	for <lists+linux-x25@lfdr.de>; Fri,  4 Jun 2021 00:20:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbhFBNyl (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 2 Jun 2021 09:54:41 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187]:2853 "EHLO
-        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbhFBNyk (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 2 Jun 2021 09:54:40 -0400
-Received: from dggeme760-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Fw9Ms1VjgzWq0R;
-        Wed,  2 Jun 2021 21:48:09 +0800 (CST)
-Received: from localhost.localdomain (10.175.104.82) by
- dggeme760-chm.china.huawei.com (10.3.19.106) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2176.2; Wed, 2 Jun 2021 21:52:51 +0800
-From:   Zheng Yongjun <zhengyongjun3@huawei.com>
-To:     <ms@dev.tdt.de>, <davem@davemloft.net>, <kuba@kernel.org>,
-        <linux-x25@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Zheng Yongjun <zhengyongjun3@huawei.com>
-Subject: [PATCH net-next] net/x25: Return the correct errno code
-Date:   Wed, 2 Jun 2021 22:06:30 +0800
-Message-ID: <20210602140630.486073-1-zhengyongjun3@huawei.com>
-X-Mailer: git-send-email 2.25.1
+        id S230507AbhFCWVw (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 3 Jun 2021 18:21:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60170 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230344AbhFCWVv (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Thu, 3 Jun 2021 18:21:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 46EBF6140A;
+        Thu,  3 Jun 2021 22:20:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1622758806;
+        bh=hQN2UZAy+im+Fbux8BhW47nuaMvBm6++WvivhYqV+xU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=X4M0fR5bjn5NS3tLXSJ26IkT75xrCGfo8AFCnPKYU9CGhwfcXkRYjrzrE6shTAaOi
+         O3b99iMm435hoGLROa/1UMtIvaD68XMzrLhYV9aPinhRx+NYzmFJF0l48a2sL76Cb/
+         f9mlTGGnMmRJ7XPrv5mI51vDFb3dhlLfwDHJA6im/kETS6YT5C+o2QDL8YrCJA6soL
+         RkfdAgSGQbSj1CE4alwkd7kjqUyRqR0GPD+R+DJ/bTp3zBy5BNgmvd8DkCNoEUDDe6
+         5dQTxVW23oI8Ofi1gwmmxK3LAqXlcih/N5VA329UdIT+7nqeRgdSznsdDZKFQ3FWqi
+         KSutOiE9mLnZA==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 3837360A6C;
+        Thu,  3 Jun 2021 22:20:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Originating-IP: [10.175.104.82]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggeme760-chm.china.huawei.com (10.3.19.106)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net-next] net/x25: Return the correct errno code
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <162275880622.4249.2288247595417992464.git-patchwork-notify@kernel.org>
+Date:   Thu, 03 Jun 2021 22:20:06 +0000
+References: <20210602140630.486073-1-zhengyongjun3@huawei.com>
+In-Reply-To: <20210602140630.486073-1-zhengyongjun3@huawei.com>
+To:     Zheng Yongjun <zhengyongjun3@huawei.com>
+Cc:     ms@dev.tdt.de, davem@davemloft.net, kuba@kernel.org,
+        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-When kalloc or kmemdup failed, should return ENOMEM rather than ENOBUF.
+Hello:
 
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
----
- net/x25/af_x25.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This patch was applied to netdev/net.git (refs/heads/master):
 
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 44d6566dd23e..1816899499ce 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -536,7 +536,7 @@ static int x25_create(struct net *net, struct socket *sock, int protocol,
- 	if (protocol)
- 		goto out;
- 
--	rc = -ENOBUFS;
-+	rc = -ENOMEM;
- 	if ((sk = x25_alloc_socket(net, kern)) == NULL)
- 		goto out;
- 
--- 
-2.25.1
+On Wed, 2 Jun 2021 22:06:30 +0800 you wrote:
+> When kalloc or kmemdup failed, should return ENOMEM rather than ENOBUF.
+> 
+> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+> ---
+>  net/x25/af_x25.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+
+Here is the summary with links:
+  - [net-next] net/x25: Return the correct errno code
+    https://git.kernel.org/netdev/net/c/d7736958668c
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
