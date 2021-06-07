@@ -2,66 +2,73 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 108A439ADCE
-	for <lists+linux-x25@lfdr.de>; Fri,  4 Jun 2021 00:20:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30C5C39E23A
+	for <lists+linux-x25@lfdr.de>; Mon,  7 Jun 2021 18:16:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230507AbhFCWVw (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 3 Jun 2021 18:21:52 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60170 "EHLO mail.kernel.org"
+        id S232199AbhFGQPx (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 7 Jun 2021 12:15:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48704 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230344AbhFCWVv (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Thu, 3 Jun 2021 18:21:51 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 46EBF6140A;
-        Thu,  3 Jun 2021 22:20:06 +0000 (UTC)
+        id S231916AbhFGQPG (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:15:06 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8D85E613F4;
+        Mon,  7 Jun 2021 16:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1622758806;
-        bh=hQN2UZAy+im+Fbux8BhW47nuaMvBm6++WvivhYqV+xU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=X4M0fR5bjn5NS3tLXSJ26IkT75xrCGfo8AFCnPKYU9CGhwfcXkRYjrzrE6shTAaOi
-         O3b99iMm435hoGLROa/1UMtIvaD68XMzrLhYV9aPinhRx+NYzmFJF0l48a2sL76Cb/
-         f9mlTGGnMmRJ7XPrv5mI51vDFb3dhlLfwDHJA6im/kETS6YT5C+o2QDL8YrCJA6soL
-         RkfdAgSGQbSj1CE4alwkd7kjqUyRqR0GPD+R+DJ/bTp3zBy5BNgmvd8DkCNoEUDDe6
-         5dQTxVW23oI8Ofi1gwmmxK3LAqXlcih/N5VA329UdIT+7nqeRgdSznsdDZKFQ3FWqi
-         KSutOiE9mLnZA==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 3837360A6C;
-        Thu,  3 Jun 2021 22:20:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        s=k20201202; t=1623082395;
+        bh=lowF+9mQqHTMgQkRQWwBFnDLSYljPnKGHLiHqEhZVeQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=gC11rr9+c3d4rZ5rK7Zxu7vg4AoE6nW3GFHMSTqrpUf4G1lx1UX4sHf3nWNt/YKax
+         caWtG+P6yEu2aPmoP0ziwwvm3MVVBaXHg05M2g4wlUij/gSQUJk6WWDJNyhTzhZDNh
+         IFAYhY6WvvjI+oi5jf4yaA0Xm9ARdnoq7PBw7cV2Joduyh1iFMk2Ow7P3TccMOsE8N
+         C0H9Y/ZyLuG6Hx5Kt1sj2HB1gGIT1ntDw1KCalNXnWbufIJZ/PX9uUQvGj/hXv2JEr
+         OtheMjv4IYMyA9GBqDkzHuGylihiUkWgDcmoZtc+1BkpNDvHiRN1Jmsp979mxCLXGP
+         sggJZ+WgHuBdg==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Zheng Yongjun <zhengyongjun3@huawei.com>,
+        "David S . Miller" <davem@davemloft.net>,
+        Sasha Levin <sashal@kernel.org>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.12 47/49] net/x25: Return the correct errno code
+Date:   Mon,  7 Jun 2021 12:12:13 -0400
+Message-Id: <20210607161215.3583176-47-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210607161215.3583176-1-sashal@kernel.org>
+References: <20210607161215.3583176-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net/x25: Return the correct errno code
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <162275880622.4249.2288247595417992464.git-patchwork-notify@kernel.org>
-Date:   Thu, 03 Jun 2021 22:20:06 +0000
-References: <20210602140630.486073-1-zhengyongjun3@huawei.com>
-In-Reply-To: <20210602140630.486073-1-zhengyongjun3@huawei.com>
-To:     Zheng Yongjun <zhengyongjun3@huawei.com>
-Cc:     ms@dev.tdt.de, davem@davemloft.net, kuba@kernel.org,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
 
-This patch was applied to netdev/net.git (refs/heads/master):
+[ Upstream commit d7736958668c4facc15f421e622ffd718f5be80a ]
 
-On Wed, 2 Jun 2021 22:06:30 +0800 you wrote:
-> When kalloc or kmemdup failed, should return ENOMEM rather than ENOBUF.
-> 
-> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-> ---
->  net/x25/af_x25.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+When kalloc or kmemdup failed, should return ENOMEM rather than ENOBUF.
 
-Here is the summary with links:
-  - [net-next] net/x25: Return the correct errno code
-    https://git.kernel.org/netdev/net/c/d7736958668c
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/x25/af_x25.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
+index ff687b97b2d9..401901c8ad42 100644
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -536,7 +536,7 @@ static int x25_create(struct net *net, struct socket *sock, int protocol,
+ 	if (protocol)
+ 		goto out;
+ 
+-	rc = -ENOBUFS;
++	rc = -ENOMEM;
+ 	if ((sk = x25_alloc_socket(net, kern)) == NULL)
+ 		goto out;
+ 
+-- 
+2.30.2
 
