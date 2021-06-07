@@ -2,39 +2,39 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE6A039E402
-	for <lists+linux-x25@lfdr.de>; Mon,  7 Jun 2021 18:40:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43CB239E403
+	for <lists+linux-x25@lfdr.de>; Mon,  7 Jun 2021 18:40:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234153AbhFGQ2p (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 7 Jun 2021 12:28:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33392 "EHLO mail.kernel.org"
+        id S233746AbhFGQ2q (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 7 Jun 2021 12:28:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60366 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233985AbhFGQZC (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Mon, 7 Jun 2021 12:25:02 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6AC8661939;
-        Mon,  7 Jun 2021 16:16:01 +0000 (UTC)
+        id S234155AbhFGQZ1 (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Mon, 7 Jun 2021 12:25:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 994136143F;
+        Mon,  7 Jun 2021 16:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623082562;
-        bh=ucLNLCf5rRm6SkudXfKKiS8NBTQNhJd1UmBUBzRPhyk=;
+        s=k20201202; t=1623082581;
+        bh=c4tfBSDu/8Sb9YNPIcdis5klrUrezDTAxTa2z/cY31o=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=abg4vSLbHYhngPARmiTB32j4TdEtVZ5ADsOQPQ+pnLSDcifujpDHKuEJZARpgZU3g
-         0goZBmqQsuNqcQVQztcg8/wC6ft9mRIpnxX6acqsXtSOD4CG7SfpN6h/I8GwXRoMJ4
-         4DOO5xJ5wS4R92/gVt+xU0tPB7LV56c8bLTEgFrE98vFgsexHBpRyrGkxpweVuFQka
-         M4JnVd9WBI6auxukQxNdmdBlfmTFWCTj31QgljQFSIoNOclGGtPobx/N2gg5cEaxLR
-         +WOeBOIRnlWcGhqROx6mBxIHTsshSihj0iTqr/HsOtfGzIjUcJyEkW7QwaZ6u6vKWj
-         CAgw+jMAP094Q==
+        b=fYjn3RilH8JM4cbhymb3wZMEoD4Qx1RfPponmIHAJFz9TGvo9lBtKpjWwuuCviVO5
+         2s3XSGW9oJEDMHRUzK1PqJDOwZjOs+Jjy4w8SrEaSy3/G5pkQgEeihpgnZ4OVZbVuq
+         658VD8jNLzz/WzMp6ZfDBd5cryfX05DOLHiBdaRBI9TsIZgWucVGG5ugNMi12Tkp1v
+         +/Qy1a5j8LHS1cAxXt2G1xnaAdHKs6Rk1MEh0YlTANlIT3jz1wzdQP5aKjoR0XbmEh
+         imxZTuZb2XxpIEiABc/ExeG3+qONAp/KqP7K8d+2odJQv91Ucc6mBTdEcx7TbMMD3n
+         ikCrebyM9CLGg==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Zheng Yongjun <zhengyongjun3@huawei.com>,
         "David S . Miller" <davem@davemloft.net>,
         Sasha Levin <sashal@kernel.org>, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.9 13/15] net/x25: Return the correct errno code
-Date:   Mon,  7 Jun 2021 12:15:41 -0400
-Message-Id: <20210607161543.3584778-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.4 12/14] net/x25: Return the correct errno code
+Date:   Mon,  7 Jun 2021 12:16:03 -0400
+Message-Id: <20210607161605.3584954-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210607161543.3584778-1-sashal@kernel.org>
-References: <20210607161543.3584778-1-sashal@kernel.org>
+In-Reply-To: <20210607161605.3584954-1-sashal@kernel.org>
+References: <20210607161605.3584954-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -57,7 +57,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 9c3fbf4553cc..c23c04d38a82 100644
+index a9fd95d10e84..156639be7ed0 100644
 --- a/net/x25/af_x25.c
 +++ b/net/x25/af_x25.c
 @@ -550,7 +550,7 @@ static int x25_create(struct net *net, struct socket *sock, int protocol,
