@@ -2,69 +2,101 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 215FF3A17F9
-	for <lists+linux-x25@lfdr.de>; Wed,  9 Jun 2021 16:52:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC2243A2BEC
+	for <lists+linux-x25@lfdr.de>; Thu, 10 Jun 2021 14:49:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237944AbhFIOyf (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 9 Jun 2021 10:54:35 -0400
-Received: from flippie-beckerswealth-sa.xyz ([62.173.147.2]:47944 "EHLO
-        host.flippie-beckerswealth-sa.xyz" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S237146AbhFIOyf (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 9 Jun 2021 10:54:35 -0400
-X-Greylist: delayed 8153 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jun 2021 10:54:34 EDT
-Received: from flippie-beckerswealth-sa.xyz (ec2-3-131-99-163.us-east-2.compute.amazonaws.com [3.131.99.163])
-        by host.flippie-beckerswealth-sa.xyz (Postfix) with ESMTPA id 2795830C46A3
-        for <linux-x25@vger.kernel.org>; Wed,  9 Jun 2021 15:10:30 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippie-beckerswealth-sa.xyz 2795830C46A3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flippie-beckerswealth-sa.xyz; s=default; t=1623240630;
-        bh=h0ivQLrZuUWuyEKz/TWb+FP9AASpHhVqOsJtRcwKQV4=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=EozmsMG0pWNptYYoOOIyEhFXEcHycT4f+7T33OxgT3GxdR7tc7/fEvmp+XVyydIzv
-         uQfYdl+nHO5VfIX2gkfs5LyCJ9V44sJj7HPmg9t164Gf8WK/JWF9/d4D13YeM/hcvj
-         ElnRtRAxNee/g/pmH50rQDgwvTKX9A6l8GIg93fQ=
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippie-beckerswealth-sa.xyz 2795830C46A3
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flippie-beckerswealth-sa.xyz; s=default; t=1623240630;
-        bh=h0ivQLrZuUWuyEKz/TWb+FP9AASpHhVqOsJtRcwKQV4=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=EozmsMG0pWNptYYoOOIyEhFXEcHycT4f+7T33OxgT3GxdR7tc7/fEvmp+XVyydIzv
-         uQfYdl+nHO5VfIX2gkfs5LyCJ9V44sJj7HPmg9t164Gf8WK/JWF9/d4D13YeM/hcvj
-         ElnRtRAxNee/g/pmH50rQDgwvTKX9A6l8GIg93fQ=
-Reply-To: jmasuku40@flippiebeckerwealthservices.com
-From:   Jotham Masuku <jmasuku40@flippie-beckerswealth-sa.xyz>
-To:     linux-x25@vger.kernel.org
-Subject: Proposal
-Date:   09 Jun 2021 12:10:29 +0000
-Message-ID: <20210609121029.736B71CFBF78AE2C@flippie-beckerswealth-sa.xyz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        id S230130AbhFJMvW (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 10 Jun 2021 08:51:22 -0400
+Received: from szxga08-in.huawei.com ([45.249.212.255]:5327 "EHLO
+        szxga08-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230230AbhFJMvS (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 10 Jun 2021 08:51:18 -0400
+Received: from dggeme766-chm.china.huawei.com (unknown [172.30.72.54])
+        by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4G13Zf0xrDz1BK4Z;
+        Thu, 10 Jun 2021 20:44:26 +0800 (CST)
+Received: from huawei.com (10.175.104.82) by dggeme766-chm.china.huawei.com
+ (10.3.19.112) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Thu, 10
+ Jun 2021 20:49:18 +0800
+From:   Wang Hai <wanghai38@huawei.com>
+To:     <davem@davemloft.net>, <kuba@kernel.org>, <ms@dev.tdt.de>
+CC:     <linux-x25@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH net-next] net: x25: Use list_for_each_entry() to simplify code in x25_route.c
+Date:   Thu, 10 Jun 2021 20:48:26 +0800
+Message-ID: <20210610124826.3833818-1-wanghai38@huawei.com>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Originating-IP: [10.175.104.82]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ dggeme766-chm.china.huawei.com (10.3.19.112)
+X-CFilter-Loop: Reflected
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello there,
+Convert list_for_each() to list_for_each_entry() where
+applicable. This simplifies the code.
 
-I hope this message finds you in good spirits especially during=20
-this challenging time of coronavirus pandemic. I hope you and=20
-your family are well and keeping safe. Anyway, I am Jotham=20
-Masuku, a broker working with Flippiebecker Wealth. I got your=20
-contact (along with few other contacts) through an online=20
-business directory and I thought I should contact you to see if=20
-you are interested in this opportunity. I am contacting you=20
-because one of my high profile clients is interested in investing=20
-abroad and has asked me to look for individuals and companies=20
-with interesting business ideas and projects that he can invest=20
-in. He wants to invest a substantial amount of asset abroad.
+Reported-by: Hulk Robot <hulkci@huawei.com>
+Signed-off-by: Wang Hai <wanghai38@huawei.com>
+---
+ net/x25/x25_route.c | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
 
-Please kindly respond back to this email if you are interested in=20
-this opportunity. Once I receive your response, I will give you=20
-more details and we can plan a strategy that will be beneficial=20
-to all parties.
+diff --git a/net/x25/x25_route.c b/net/x25/x25_route.c
+index 9fbe4bb38d94..647f325ed867 100644
+--- a/net/x25/x25_route.c
++++ b/net/x25/x25_route.c
+@@ -27,14 +27,11 @@ static int x25_add_route(struct x25_address *address, unsigned int sigdigits,
+ 			 struct net_device *dev)
+ {
+ 	struct x25_route *rt;
+-	struct list_head *entry;
+ 	int rc = -EINVAL;
+ 
+ 	write_lock_bh(&x25_route_list_lock);
+ 
+-	list_for_each(entry, &x25_route_list) {
+-		rt = list_entry(entry, struct x25_route, node);
+-
++	list_for_each_entry(rt, &x25_route_list, node) {
+ 		if (!memcmp(&rt->address, address, sigdigits) &&
+ 		    rt->sigdigits == sigdigits)
+ 			goto out;
+@@ -78,14 +75,11 @@ static int x25_del_route(struct x25_address *address, unsigned int sigdigits,
+ 			 struct net_device *dev)
+ {
+ 	struct x25_route *rt;
+-	struct list_head *entry;
+ 	int rc = -EINVAL;
+ 
+ 	write_lock_bh(&x25_route_list_lock);
+ 
+-	list_for_each(entry, &x25_route_list) {
+-		rt = list_entry(entry, struct x25_route, node);
+-
++	list_for_each_entry(rt, &x25_route_list, node) {
+ 		if (!memcmp(&rt->address, address, sigdigits) &&
+ 		    rt->sigdigits == sigdigits && rt->dev == dev) {
+ 			__x25_remove_route(rt);
+@@ -141,13 +135,10 @@ struct net_device *x25_dev_get(char *devname)
+ struct x25_route *x25_get_route(struct x25_address *addr)
+ {
+ 	struct x25_route *rt, *use = NULL;
+-	struct list_head *entry;
+ 
+ 	read_lock_bh(&x25_route_list_lock);
+ 
+-	list_for_each(entry, &x25_route_list) {
+-		rt = list_entry(entry, struct x25_route, node);
+-
++	list_for_each_entry(rt, &x25_route_list, node) {
+ 		if (!memcmp(&rt->address, addr, rt->sigdigits)) {
+ 			if (!use)
+ 				use = rt;
+-- 
+2.17.1
 
-Best regards
-
-J Masuku
-Flippiebecker Wealth
