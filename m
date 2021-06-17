@@ -2,69 +2,59 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AB4213A359E
-	for <lists+linux-x25@lfdr.de>; Thu, 10 Jun 2021 23:10:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 726C53AAC34
+	for <lists+linux-x25@lfdr.de>; Thu, 17 Jun 2021 08:28:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbhFJVMG (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 10 Jun 2021 17:12:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47472 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231266AbhFJVMB (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Thu, 10 Jun 2021 17:12:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 9F8A761426;
-        Thu, 10 Jun 2021 21:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1623359404;
-        bh=l14ZhZfB2w4EtQwcXkG2sxnF5xa2hYaN1kEeDUONisE=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=t95FyLButH/bS2lTq4tDRm5j05UdtWhPeELFzN5lKdK8mYbw1bvSxdD4zXHUFFPF6
-         fKZc74cp5iCWExKTTNs6GgtfbYSdG+AOj5fa0DW32ZMjOK2iZRdBC2qgfp7Ver85Q2
-         3QmES26xwsalLl1ANQRCESLVdJBWt5EsOT7FARYuTNxLvdEzmhMrYa0ylqrklBbEAc
-         Vslh8qOFK9n7UpdIaXE7M3ifzMOEcqXt8Z39d5cWYWzBOuC4+ZRZyqSNdoY+mx9RH4
-         HG0k1tAjiKCibOvZvCLeui7bl1jO5SZbEO96RNtD6+AhmVri61nKF9hL/S0PThzRt/
-         dyxQEGrgr5OWw==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8CD75609E4;
-        Thu, 10 Jun 2021 21:10:04 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S229845AbhFQGa4 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Thu, 17 Jun 2021 02:30:56 -0400
+Received: from 6-200-5-45.rpnnetprovedor.com.br ([45.5.200.6]:56835 "EHLO
+        srv01.rpnnetprovedor.com.br" rhost-flags-OK-FAIL-OK-FAIL)
+        by vger.kernel.org with ESMTP id S230161AbhFQGax (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 17 Jun 2021 02:30:53 -0400
+X-Greylist: delayed 2329 seconds by postgrey-1.27 at vger.kernel.org; Thu, 17 Jun 2021 02:30:52 EDT
+Received: from [84.38.130.143] (helo=IP-130-143.dataclub.eu)
+        by srv01.rpnnetprovedor.com.br with esmtpa (Exim 4.92.2)
+        (envelope-from <robertnellsona@citromail.hu>)
+        id 1ltkuY-00017z-5r
+        for linux-x25@vger.kernel.org; Thu, 17 Jun 2021 02:49:54 -0300
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: x25: Use list_for_each_entry() to simplify code
- in x25_route.c
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <162335940457.9889.14285326201925967368.git-patchwork-notify@kernel.org>
-Date:   Thu, 10 Jun 2021 21:10:04 +0000
-References: <20210610124826.3833818-1-wanghai38@huawei.com>
-In-Reply-To: <20210610124826.3833818-1-wanghai38@huawei.com>
-To:     Wang Hai <wanghai38@huawei.com>
-Cc:     davem@davemloft.net, kuba@kernel.org, ms@dev.tdt.de,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: CAN YOU INVEST WITH ME?...6
+To:     linux-x25@vger.kernel.org
+From:   "Mr.  Robert" <robertnellsona@citromail.hu>
+Date:   Thu, 17 Jun 2021 08:49:46 +0300
+Reply-To: robertnellsona@citromail.hu
+Message-Id: <E1ltkuY-00017z-5r@srv01.rpnnetprovedor.com.br>
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
 
-This patch was applied to netdev/net-next.git (refs/heads/master):
+ATTENTION; linux-x25@vger.kernel.org,
 
-On Thu, 10 Jun 2021 20:48:26 +0800 you wrote:
-> Convert list_for_each() to list_for_each_entry() where
-> applicable. This simplifies the code.
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Wang Hai <wanghai38@huawei.com>
-> ---
->  net/x25/x25_route.c | 15 +++------------
->  1 file changed, 3 insertions(+), 12 deletions(-)
+IMPORTANT INVESTMENT INFORMATION
 
-Here is the summary with links:
-  - [net-next] net: x25: Use list_for_each_entry() to simplify code in x25_route.c
-    https://git.kernel.org/netdev/net-next/c/bc831facf8a1
+We have a good investment program going on now.
+We have $95m USD for Investment in your Country.
+We use this opportunity to invest you to join the investment program and you will never regret it.
+Please kindly invest with us and you will be receiving monthly income/return/profit every month.
+We can also give you Loan, 
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+We have: 
 
+1. Short Term Loan, 
 
+2. Medium Term Loan 
+
+3. and Long Term Loan, 
+
+There is no need of collateral security. We will use our company to sign agreement and guarantee on your behalf and our Lawyer will sign on your behalf.
+
+Reply for more detail.
+
+Thank you Sir.
+
+Robert Nellson.
+INVESTMENT MANAGER.
