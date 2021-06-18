@@ -2,54 +2,42 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CF093AAE2D
-	for <lists+linux-x25@lfdr.de>; Thu, 17 Jun 2021 09:56:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA27F3ACA5C
+	for <lists+linux-x25@lfdr.de>; Fri, 18 Jun 2021 13:44:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230411AbhFQH6m (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 17 Jun 2021 03:58:42 -0400
-Received: from [122.15.141.162] ([122.15.141.162]:42940 "EHLO
-        UPCDCDAMX02.upcl.org" rhost-flags-FAIL-FAIL-OK-FAIL)
-        by vger.kernel.org with ESMTP id S229666AbhFQH6g (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 17 Jun 2021 03:58:36 -0400
-Received: from UPCDCDAMX02.upcl.org (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id EF84AC3EEC;
-        Thu, 17 Jun 2021 12:51:17 +0530 (IST)
-Received: from UPCDCDAMX02.upcl.org (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 9D8C1C318F;
-        Thu, 17 Jun 2021 12:50:14 +0530 (IST)
-Received: from User (unknown [210.212.82.37])
-        by UPCDCDAMX02.upcl.org (Postfix) with SMTP;
-        Thu, 17 Jun 2021 12:50:14 +0530 (IST)
-Reply-To: <marielthiago102@gmail.com>
-From:   "Mariel Thiago" <info@infotools.in>
-Subject: Re:: Please contact me it's very urgent.
-Date:   Thu, 17 Jun 2021 07:20:41 -0000
+        id S234075AbhFRLqu convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Fri, 18 Jun 2021 07:46:50 -0400
+Received: from [210.180.118.67] ([210.180.118.67]:36604 "EHLO blank.cafe24.com"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S234202AbhFRLqp (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Fri, 18 Jun 2021 07:46:45 -0400
+X-Greylist: delayed 108573 seconds by postgrey-1.27 at vger.kernel.org; Fri, 18 Jun 2021 07:46:45 EDT
+Received: from IP-130-143.dataclub.eu (ip-130-143.dataclub.info [84.38.130.143] (may be forged))
+        (authenticated bits=0)
+        by blank.cafe24.com (8.14.7/8.14.7) with ESMTP id 15IBhv8s011314
+        for <linux-x25@vger.kernel.org>; Fri, 18 Jun 2021 20:44:30 +0900
+Message-Id: <202106181144.15IBhv8s011314@blank.cafe24.com>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-Id: <20210617072014.9D8C1C318F@UPCDCDAMX02.upcl.org>
-To:     undisclosed-recipients:;
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSVA-9.1.0.1960-8.6.0.1013-26224.006
-X-TM-AS-Result: No-2.497-5.0-31-10
-X-imss-scan-details: No-2.497-5.0-31-10
-X-TMASE-Version: IMSVA-9.1.0.1960-8.6.1013-26224.006
-X-TMASE-Result: 10-2.496900-10.000000
-X-TMASE-MatchedRID: PEpoWB/n4wPoJ7ZHxnJI6/6CJzEkJBKDVOXpHWpii+ddyparHcc9UIhu
-        TvsiBEc/JfjcKHKDDk8K4MBRf7I7puawzjZNF/+9gM4D72plZiep43A0ENmZJqRrhpwKFLjUkZO
-        l7WKIImpu9tOD27u7FNTHX+rg7MGt505jRA97RdWRSAi45KhHyaxczqyf2GA9LHdIgRft8S1QSp
-        LfxZGQcl8vMu11r33KXPP583vQDYF3yrRBFBiPVS2s/H4x5wHg3QfwsVk0UbuGrPnef/I+ej6N5
-        5/6MNSnpdDo0PaPyGFHwD2XNKdI8sVZh7bvPcyg0m3qDro1rgcxP1evyC/00KVBBtW+D6/IR7CD
-        JBvMFOms6dZMAot5Yg==
-X-IMSS-DKIM-White-List: No
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-12:0,22:0,33:0,34:0-0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: BUSINESS LOAN/PROJECT FUNDING...67
+To:     linux-x25@vger.kernel.org
+From:   "Smith Green" <ssbinvestmentsllc@citromail.hu>
+Date:   Fri, 18 Jun 2021 14:45:08 +0300
+Reply-To: ssbinvestmentsllc@citromail.hu
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
- I think I have something huge you might be interested in.
+Dear Sir/Madam,
+
+Our Investors are based in the middle east with a profound track record. We invite you to take advantage of our investment loan program to fund your existing or intending projects. We offer a straight or convertible loan investment program for projects with high-returns and payback prospects without the usual rigid procedures of conventional lenders.
+ 
+Kindly forward a copy of your Executive business summary for our review: info@ssbinvestmentsllc.us
+
+ 
+Best Regards.
+Smith Green
+E:info@ssbinvestmentsllc.us
+International investment broker
