@@ -2,103 +2,66 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0BEA3ADED0
-	for <lists+linux-x25@lfdr.de>; Sun, 20 Jun 2021 15:36:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A45733B1E23
+	for <lists+linux-x25@lfdr.de>; Wed, 23 Jun 2021 17:54:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbhFTNjD (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 20 Jun 2021 09:39:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40580 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229646AbhFTNiv (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 20 Jun 2021 09:38:51 -0400
-Received: from mail-io1-xd43.google.com (mail-io1-xd43.google.com [IPv6:2607:f8b0:4864:20::d43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41D48C0613A3
-        for <linux-x25@vger.kernel.org>; Sun, 20 Jun 2021 06:36:16 -0700 (PDT)
-Received: by mail-io1-xd43.google.com with SMTP id v3so6864190ioq.9
-        for <linux-x25@vger.kernel.org>; Sun, 20 Jun 2021 06:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
-        b=uDIEtWfgl91FDet7ZYX1u1ozW0abpKvg4acx3thqXBCDoYcWKg7eyNZSXNk+51VeuJ
-         sYbwx77CCJt/Xl1UBy7P++4/uHOQjQcptGzc4BiJd5A/7x+FLCtsFr6R08yAScCPxE/G
-         ycRitdP5UZQCPHBcljPWiYz9qooX9+o9VlIcE1iBIKjgWFsG58IfpnIZmKh5Mer/et0Q
-         Wvv2McVtUA6rn+iTugaAQulni5t+7gIBWkpgi42U+JEUmcEEUifIxcViVFyKhDEEgfNV
-         A33afccbptAYxVMQ3XRd6cg8QS8Vl2AEYQyihFbFLRpIaiCXlHMQE4BSfPfytvzUMqcd
-         FXMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=D7l/Y2nU4ivOXB3kYNarWKNDy1SUWuawPt7q4q/Bhv4=;
-        b=PR+89W0pFxpt3zw1vEte6qXziflo3UDuH9GDaAAwsK6ng6DUp+Blrb9huhk3gzL+c6
-         v/TqEH5F+lPwCD7Da02ab4SMmBTWtA6W9tGx9rHSvorFVqdpyGZwnG/TthLoNeSImuP6
-         xSYzqu3DryQUvQSZuju3sHjS8+aoTLCD44DH3VJ76ZTM381HJ27VODi0UQXcj+LMEjjY
-         h6iw8IjSsBg/k/umK2ghq7YTv+/K1aqux/iUdlA+iwrsku5lXQiFKNkPHVmHbK1BYuum
-         QKZOuuNX6Gzsrks0Y/rAOSkUq6FDiyChRb4M9FGxRe0rScEBHCy+mXYCNQDdTlZv5GDw
-         gW4A==
-X-Gm-Message-State: AOAM533T3u5QX/pK6ynoX+qsCmNEENK1hp9p8Delsl3s6SrVoPPBYHKT
-        9mtiQQ8uuLsiSh/o8GvWtXuCPYqEMF7S49Dj0RY=
-X-Google-Smtp-Source: ABdhPJwOQ5lA8oaPxit1UXNypL8Kah2QWj0jtAWNuj5/Z8/Rl7T8YsfxHtOIriCZuXo1tXOWzxp5d5YlbnVjDFRsY5Q=
-X-Received: by 2002:a02:a810:: with SMTP id f16mr12630337jaj.64.1624196175568;
- Sun, 20 Jun 2021 06:36:15 -0700 (PDT)
+        id S231553AbhFWP5F convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Wed, 23 Jun 2021 11:57:05 -0400
+Received: from [183.90.58.236] ([183.90.58.236]:51806 "EHLO ns1.zackeruz.tk"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S231519AbhFWP5E (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Wed, 23 Jun 2021 11:57:04 -0400
+Received: from johnlewis.com (unknown [192.168.20.1])
+        by ns1.zackeruz.tk (Postfix) with ESMTPSA id 75AE18462CD
+        for <linux-x25@vger.kernel.org>; Wed, 23 Jun 2021 23:54:45 +0800 (+08)
+Reply-To: robert_turner@johnlewis-trading.com,
+          pippawicks.sales@johnlewis-trading.com
+From:   John Lewis & Partnersip <robert.turner107@johnlewis.com>
+To:     linux-x25@vger.kernel.org
+Subject: 6/23/2021 Product Inquiry 
+Date:   23 Jun 2021 15:54:44 +0000
+Message-ID: <20210623094114.128144243149F8DB@johnlewis.com>
 MIME-Version: 1.0
-Received: by 2002:a05:6e02:1baf:0:0:0:0 with HTTP; Sun, 20 Jun 2021 06:36:14
- -0700 (PDT)
-Reply-To: sarahkoffi389@yahoo.co.jp
-From:   Sarah Koffi <sarah.koffi101@gmail.com>
-Date:   Sun, 20 Jun 2021 15:36:14 +0200
-Message-ID: <CA+ifgLE1g7jgi567M2HhZfvRSUF63Hu6stsW+ysX=3U-=qnn6Q@mail.gmail.com>
-Subject: Greetings From Mrs. Sarah Koffi
-To:     sarahkoffi389@yahoo.co.jp
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Greetings From Mrs. Sarah Koffi
+Dear linux-x25
 
-I'm contacting you based on your good profiles I read and for a good
-reasons, I am in search of a property to buy in your country as I
-intended to come over to your
-country for investment, Though I have not meet with you before but I
-believe that one has to risk confiding in someone to succeed sometimes
-in life.
+The famous brand John Lewis Partnership, is UK's largest multi-
+channel retailer with over 126 shops and multiple expansion in 
+Africa furnished by European/Asian/American products. We are 
+sourcing new products to attract new customers and also retain 
+our existing ones, create new partnerships with companies dealing 
+with different kinds of goods globally.
 
-My name is Mrs. Sarah Koffi. My late husband deals on Crude Oil with
-Federal Government of Sudan and he has a personal Oil firm in Bentiu
-Oil zone town and Upper
-Nile city. What I have experience physically, I don't wish to
-experience it again in my life due to the recent civil Ethnic war
-cause by our President Mr. Salva Kiir
-and the rebel leader Mr Riek Machar, I have been Under United Nation
-refuge camp in chad to save my life and that of my little daughter.
+Your company's products are of interest to our market as we have 
+an amazing market for your products.
 
-Though, I do not know how you will feel to my proposal, but the truth
-is that I sneaked into Chad our neighboring country where I am living
-now as a refugee.
-I escaped with my little daughter when the rebels bust into our house
-and killed my husband as one of the big oil dealers in the country,
-ever since then, I have being on the run.
+Provide us your current catalog through email to review more. We 
+hope to be able to order with you and start a long-term friendly,
+respectable and solid business partnership. Please we would 
+appreciate it if you could send us your stock availability via 
+email if any.
 
-I left my country and move to Chad our neighboring country with the
-little ceasefire we had, due to the face to face peace meeting accord
-coordinated by the US Secretary of State, Mr John Kerry and United
-Nations in Ethiopia (Addis Ababa) between our President Mr Salva Kiir
-and the rebel leader Mr Riek Machar to stop this war.
+Our payment terms are 15 days net in Europe, 30 days Net in UK 
+and 30 days net in Asia/USA as we operate with over 5297 
+suppliers around the globe for the past 50 years now. For 
+immediate response Send your reply to robert_turner@johnlewis-
+trading.com for us to be able to 
+treat with care and urgency.
 
-I want to solicit for your partnership with trust to invest the $8
-million dollars deposited by my late husband in Bank because my life
-is no longer safe in our country, since the rebels are looking for the
-families of all the oil business men in the country to kill, saying
-that they are they one that is milking the country dry.
 
-I will offer you 20% of the total fund for your help while I will
-partner with you for the investment in your country.
-If I get your reply.
+Best Regards
 
-I will wait to hear from you so as to give you details.With love from
-
- i need you to contact me here sarahkoffi389@yahoo.co.jp
-
-Mrs. Sarah Koffi
+Rob Turner
+Head Of Procurement Operations
+John Lewis & Partners.
+robert_turner@johnlewis-trading.com
+Tel: +44-7451-274090
+WhatsApp: +447497483925
+www.johnlewis.com
+REGISTERED OFFICE: 171 VICTORIA STREET, LONDON SW1E 5NN 
