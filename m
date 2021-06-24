@@ -2,70 +2,53 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 42EAF3B5CEF
-	for <lists+linux-x25@lfdr.de>; Mon, 28 Jun 2021 13:08:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20EF73B729B
+	for <lists+linux-x25@lfdr.de>; Tue, 29 Jun 2021 14:53:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232745AbhF1LKl (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 28 Jun 2021 07:10:41 -0400
-Received: from flippiebeckerswealthmgr.xyz ([62.173.147.16]:49740 "EHLO
-        host.flippiebeckerswealthmgr.xyz" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S232769AbhF1LKk (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 28 Jun 2021 07:10:40 -0400
-X-Greylist: delayed 2835 seconds by postgrey-1.27 at vger.kernel.org; Mon, 28 Jun 2021 07:10:40 EDT
-Received: from flippiebeckerswealthmgr.xyz (ec2-54-157-176-210.compute-1.amazonaws.com [54.157.176.210])
-        by host.flippiebeckerswealthmgr.xyz (Postfix) with ESMTPA id 238EB17007
-        for <linux-x25@vger.kernel.org>; Mon, 28 Jun 2021 13:13:38 +0300 (MSK)
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippiebeckerswealthmgr.xyz 238EB17007
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flippiebeckerswealthmgr.xyz; s=default; t=1624875218;
-        bh=G3PrS2ssLE6xKmHDCm5hvScMpvbJPlyTw8R1AuPMkGc=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=2G1rTmjzk7Gmodpqcj1m/muVohAC6Hh2AAZOFkK9Ubkj18vI/dIrMS1rNOlOLtH9j
-         D8Gv6Hr6+D3N6kFBb2EqO/fSn6CYqBkXSPFcyUa4Of+/ifNi9nH02I0akQCIFsXPEP
-         7So1lJdDsOmc4d45/p9cpfWQcVCVjzEIc+wzk46I=
-DKIM-Filter: OpenDKIM Filter v2.11.0 host.flippiebeckerswealthmgr.xyz 238EB17007
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=flippiebeckerswealthmgr.xyz; s=default; t=1624875218;
-        bh=G3PrS2ssLE6xKmHDCm5hvScMpvbJPlyTw8R1AuPMkGc=;
-        h=Reply-To:From:To:Subject:Date:From;
-        b=2G1rTmjzk7Gmodpqcj1m/muVohAC6Hh2AAZOFkK9Ubkj18vI/dIrMS1rNOlOLtH9j
-         D8Gv6Hr6+D3N6kFBb2EqO/fSn6CYqBkXSPFcyUa4Of+/ifNi9nH02I0akQCIFsXPEP
-         7So1lJdDsOmc4d45/p9cpfWQcVCVjzEIc+wzk46I=
-Reply-To: jmasuku09@flippiebecker.com
-From:   Jotham Masuku <jmasuku09@flippiebeckerswealthmgr.xyz>
-To:     linux-x25@vger.kernel.org
-Subject: Projects
-Date:   28 Jun 2021 10:13:37 +0000
-Message-ID: <20210628101337.E81380E960945DF1@flippiebeckerswealthmgr.xyz>
-Mime-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        id S233025AbhF2Mzn convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-x25@lfdr.de>); Tue, 29 Jun 2021 08:55:43 -0400
+Received: from [218.75.92.58] ([218.75.92.58]:65346 "EHLO WIN-VTPUBHNS72V"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S232498AbhF2Mzn (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Tue, 29 Jun 2021 08:55:43 -0400
+Received: from [192.168.43.47] (Unknown [197.210.84.10])
+        by WIN-VTPUBHNS72V with ESMTPA
+        ; Thu, 24 Jun 2021 20:46:53 +0800
+Message-ID: <A4B03876-BD3A-4DC1-B0BC-E6097BCD2DAC@WIN-VTPUBHNS72V>
+Content-Type: text/plain; charset="iso-8859-1"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8BIT
+Content-Description: Mail message body
+Subject: URGENT ATTENTION
+To:     Recipients <wjjt@wjjt.cn>
+From:   "Andres Auchincloss" <wjjt@wjjt.cn>
+Date:   Thu, 24 Jun 2021 14:46:28 +0200
+Reply-To: andresauchincloss926@gmail.com
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello there,
+Hi,
 
-I hope this message finds you in good spirits especially during=20
-this challenging time of coronavirus pandemic. I hope you and=20
-your family are well and keeping safe. Anyway, I am Jotham=20
-Masuku, a broker working with Flippiebecker Wealth. I got your=20
-contact through an online business directory and I thought I=20
-should contact you to see if you are interested in this=20
-opportunity. I am contacting you because one of my high profile=20
-clients is interested in investing abroad and has asked me to=20
-look for individuals and companies in your country with=20
-interesting business ideas and projects that he can invest in. He=20
-wants to invest a substantial amount of asset abroad.
+I will like to use this opportunity to wish you a productive time in 2021 and also confide in you to finalize this transaction of mutual benefits. It may seem strange to you, but it is real. This is a transaction that has no risk at all, due process shall be followed and it shall be carried out under the ambit of the financial laws. Being the Chief Financial Officer, BP Plc. I want to trust and put in your care Eighteen Million British Pounds Sterling, The funds were acquired from an over-invoiced payment from a past contract executed in one of my departments.
 
-I have decided to keep this brief for now but please kindly=20
-respond back to this email if you are interested in this=20
-opportunity. Once I receive your response, I will give you more=20
-details and we can plan a strategy that will be beneficial to all=20
-parties.
+I can't successfully achieve this transaction without presenting you as foreign contractor who will provide a bank account to receive the funds.
 
-Best regards
+Documentation for the claim of the funds will be legally processed and documented, so I will need your full cooperation on this matter for our mutual benefits. We will discuss details if you are interested to work with me to secure this funds. I will appreciate your prompt response in every bit of our communication. Stay Blessed and Stay Safe.
 
-J Masuku
-Flippiebecker Wealth
+
+
+Best Regards
+
+
+
+
+Tel: +1 (587) 770-0485
+Andres .B. Auchincloss
+Chief financial officerBP Petroleum p.l.c.
+
+
+
+
+                                  Copyright ©? 1996-2021
+
