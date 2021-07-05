@@ -2,184 +2,68 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 359D93B8D8B
-	for <lists+linux-x25@lfdr.de>; Thu,  1 Jul 2021 07:58:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26DC33BBA1C
+	for <lists+linux-x25@lfdr.de>; Mon,  5 Jul 2021 11:23:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233942AbhGAGAg (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 1 Jul 2021 02:00:36 -0400
-Received: from mxout70.expurgate.net ([194.37.255.70]:54955 "EHLO
-        mxout70.expurgate.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232797AbhGAGAf (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 1 Jul 2021 02:00:35 -0400
-X-Greylist: delayed 404 seconds by postgrey-1.27 at vger.kernel.org; Thu, 01 Jul 2021 02:00:35 EDT
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1lypbW-0007dN-3f; Thu, 01 Jul 2021 07:51:14 +0200
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1lypbV-0006N8-0t; Thu, 01 Jul 2021 07:51:13 +0200
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id 5D002240041;
-        Thu,  1 Jul 2021 07:51:12 +0200 (CEST)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id E701B240040;
-        Thu,  1 Jul 2021 07:51:11 +0200 (CEST)
-Received: from mail.dev.tdt.de (localhost [IPv6:::1])
-        by mail.dev.tdt.de (Postfix) with ESMTP id EDC46201CA;
-        Thu,  1 Jul 2021 07:51:10 +0200 (CEST)
+        id S230246AbhGEJZl (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 5 Jul 2021 05:25:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230149AbhGEJZk (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 5 Jul 2021 05:25:40 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5F4AC061574
+        for <linux-x25@vger.kernel.org>; Mon,  5 Jul 2021 02:23:02 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id v20so28145980eji.10
+        for <linux-x25@vger.kernel.org>; Mon, 05 Jul 2021 02:23:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=xLoNOxCs1ubsbdkHIy646p19iJgcj2iwbWWJlijREbc=;
+        b=aIf/WQ2EySXQnJjGpg8eiaa0lsS7HFnRPy4b/KohjHd+hrF3SMpgR+58svAFtuD2R6
+         OcbX/9Zlw23Vmd7Kyvurv8OpTVcR1nPoOWQNlpT1bMqjpcoZ3Qk+WljKgBMLB/xeuHdg
+         GkdhBRwSi/KvhP7VkSAZkOK5gyEWmCQEW+2os1996QpjJtxWkdb2n/HptFHdBvrf/zfG
+         qVzByoE2g7X6Sa2gEa+weskV4UubsGxp9JL7JFuiXUBFuHMvts0LUnTjUQN2diP26Obe
+         U3XZNKm5KPsrMa/VXY3QIgyoLRFiUm/IRr27roCHYx2AgS+f9grOXbeLRO27g9g5w7Ii
+         Lwfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=xLoNOxCs1ubsbdkHIy646p19iJgcj2iwbWWJlijREbc=;
+        b=gJ+t1uxBt6KF1nFs9A5dvO4IyZKMnuAd0RNg9qiYAc5aiZKkRwjKQ49NMKgVtLcaxM
+         FMdSjsq6wLwyyFXDWsQKH19qitS5lp5M45CxHc0QA02uUJQHEKJOkm+dVw52YPER8oFo
+         lbbrvoLVujFaPJJ76n5OMkRaW5+nTUVPuUcNZdQLcEOcnLU0Sx0XseYSFS/wGvWx7GJ5
+         q/YhbH+4LraLKFdK/rJFzRwBRnX4ABAVGGhT8xoCpcJvViSqzgqmzLrFbwEfnMkJSNni
+         Wf7WBhW/anVZgkSYHuy7kSZDhx2dBE2crHrMR+oe/mmlQ3pr2wa5hWZtsiIYQgY4AGxq
+         /yog==
+X-Gm-Message-State: AOAM531YjXe1jTnZzG5ZqB15OdusRBA9R/XgxjSI2FRI0VE2vXBYdzEq
+        phSYQgsh8ElNEAQTd/M5ytCgBcXzG/65NQKUow8=
+X-Google-Smtp-Source: ABdhPJwIL0M89SmfWBWjosyvKOIqPF6SK5aG6bkznDpg1fC5IRa2jxYyde6YpoR+RR1zfcQhjN2WPfdByIKMx7S9A34=
+X-Received: by 2002:a17:906:49ce:: with SMTP id w14mr12591966ejv.273.1625476981058;
+ Mon, 05 Jul 2021 02:23:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 01 Jul 2021 07:51:10 +0200
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     Yajun Deng <yajun.deng@linux.dev>
-Cc:     davem@davemloft.net, kuba@kernel.org, linux-x25@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] net: x25: Optimize the code in
- {compat_}x25_subscr_ioctl()
-Organization: TDT AG
-In-Reply-To: <20210630091521.15568-1-yajun.deng@linux.dev>
-References: <20210630091521.15568-1-yajun.deng@linux.dev>
-Message-ID: <c9af2f27b8459af35c91ec3347a96d6d@dev.tdt.de>
-X-Sender: ms@dev.tdt.de
-User-Agent: Roundcube Webmail/1.3.16
-X-Spam-Status: No, score=-1.0 required=5.0 tests=ALL_TRUSTED,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.2
-X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mail.dev.tdt.de
-X-purgate-ID: 151534::1625118673-00003E95-377AFA87/0/0
-X-purgate-type: clean
-X-purgate: clean
+Received: by 2002:a50:33c6:0:0:0:0:0 with HTTP; Mon, 5 Jul 2021 02:23:00 -0700 (PDT)
+Reply-To: yi.hiuman@hotmail.com
+From:   Yi Hiuman <waynescarlet101@gmail.com>
+Date:   Mon, 5 Jul 2021 10:23:00 +0100
+Message-ID: <CAOMytRzmnNBKo83a2S65jY35TuhrC+dbcsAJRcAv0WO5F5NYcw@mail.gmail.com>
+Subject: =?UTF-8?Q?Ich_habe_ein_Gesch=C3=A4ft_f=C3=BCr_Sie?=
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On 2021-06-30 11:15, Yajun Deng wrote:
-> Combine the redundant return values, make it more concise.
-> 
-> Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
-> ---
->  net/x25/af_x25.c   | 19 ++++++++-----------
->  net/x25/x25_link.c | 21 ++++++++++-----------
->  2 files changed, 18 insertions(+), 22 deletions(-)
-> 
-> diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-> index 3583354a7d7f..53c40fc7c1fd 100644
-> --- a/net/x25/af_x25.c
-> +++ b/net/x25/af_x25.c
-> @@ -1625,21 +1625,19 @@ static int compat_x25_subscr_ioctl(unsigned int 
-> cmd,
->  	struct net_device *dev;
->  	int rc = -EINVAL;
-> 
-> -	rc = -EFAULT;
-> -	if (copy_from_user(&x25_subscr, x25_subscr32, sizeof(*x25_subscr32)))
-> +	if (copy_from_user(&x25_subscr, x25_subscr32, sizeof(*x25_subscr32))) 
-> {
-> +		rc = -EFAULT;
->  		goto out;
-> +	}
-> 
-> -	rc = -EINVAL;
->  	dev = x25_dev_get(x25_subscr.device);
-> -	if (dev == NULL)
-> +	if (!dev)
->  		goto out;
-> 
->  	nb = x25_get_neigh(dev);
-> -	if (nb == NULL)
-> +	if (!nb)
->  		goto out_dev_put;
-> 
-> -	dev_put(dev);
-> -
->  	if (cmd == SIOCX25GSUBSCRIP) {
->  		read_lock_bh(&x25_neigh_list_lock);
->  		x25_subscr.extended = nb->extended;
-> @@ -1648,7 +1646,6 @@ static int compat_x25_subscr_ioctl(unsigned int 
-> cmd,
->  		rc = copy_to_user(x25_subscr32, &x25_subscr,
->  				sizeof(*x25_subscr32)) ? -EFAULT : 0;
->  	} else {
-> -		rc = -EINVAL;
->  		if (x25_subscr.extended == 0 || x25_subscr.extended == 1) {
->  			rc = 0;
->  			write_lock_bh(&x25_neigh_list_lock);
-> @@ -1658,11 +1655,11 @@ static int compat_x25_subscr_ioctl(unsigned int 
-> cmd,
->  		}
->  	}
->  	x25_neigh_put(nb);
-> -out:
-> -	return rc;
-> +
->  out_dev_put:
->  	dev_put(dev);
-> -	goto out;
-> +out:
-> +	return rc;
->  }
-> 
->  static int compat_x25_ioctl(struct socket *sock, unsigned int cmd,
-> diff --git a/net/x25/x25_link.c b/net/x25/x25_link.c
-> index 5460b9146dd8..01a13ec88ce8 100644
-> --- a/net/x25/x25_link.c
-> +++ b/net/x25/x25_link.c
-> @@ -360,19 +360,19 @@ int x25_subscr_ioctl(unsigned int cmd, void 
-> __user *arg)
->  	if (cmd != SIOCX25GSUBSCRIP && cmd != SIOCX25SSUBSCRIP)
->  		goto out;
-> 
-> -	rc = -EFAULT;
-> -	if (copy_from_user(&x25_subscr, arg, sizeof(x25_subscr)))
-> +	if (copy_from_user(&x25_subscr, arg, sizeof(x25_subscr))) {
-> +		rc = -EFAULT;
->  		goto out;
-> +	}
-> 
-> -	rc = -EINVAL;
-> -	if ((dev = x25_dev_get(x25_subscr.device)) == NULL)
-> +	dev = x25_dev_get(x25_subscr.device);
-> +	if (!dev)
->  		goto out;
-> 
-> -	if ((nb = x25_get_neigh(dev)) == NULL)
-> +	nb = x25_get_neigh(dev);
-> +	if (!nb)
->  		goto out_dev_put;
-> 
-> -	dev_put(dev);
-> -
->  	if (cmd == SIOCX25GSUBSCRIP) {
->  		read_lock_bh(&x25_neigh_list_lock);
->  		x25_subscr.extended	     = nb->extended;
-> @@ -381,7 +381,6 @@ int x25_subscr_ioctl(unsigned int cmd, void __user 
-> *arg)
->  		rc = copy_to_user(arg, &x25_subscr,
->  				  sizeof(x25_subscr)) ? -EFAULT : 0;
->  	} else {
-> -		rc = -EINVAL;
->  		if (!(x25_subscr.extended && x25_subscr.extended != 1)) {
->  			rc = 0;
->  			write_lock_bh(&x25_neigh_list_lock);
-> @@ -391,11 +390,11 @@ int x25_subscr_ioctl(unsigned int cmd, void 
-> __user *arg)
->  		}
->  	}
->  	x25_neigh_put(nb);
-> -out:
-> -	return rc;
-> +
->  out_dev_put:
->  	dev_put(dev);
-> -	goto out;
-> +out:
-> +	return rc;
->  }
+Hallo,
 
-Looks good to me.
-
-Acked-by: Martin Schiller <ms@dev.tdt.de>
+Ich bin Herr Yi Huiman, ehemaliger Vorsitzender der Industrial and
+Commercial Bank of China (ICBC) und derzeitiger China Securities
+Regulatory Commission (CSRC). Ich habe einen Gesch=C3=A4ftsvorschlag, der
+uns beiden zugute kommt. Ich suche einen seri=C3=B6sen Partner, um eine
+Transaktion im Wert von 45.275.000,00 USD anzuvertrauen. Kann ich mich
+auf dich verlassen? Bitte kontaktieren Sie mich f=C3=BCr weitere
+Informationen =C3=BCber meine pers=C3=B6nliche E-Mail-Adresse:
+yi.hiuman@hotmail.com
