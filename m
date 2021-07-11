@@ -2,83 +2,148 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8C613C2238
-	for <lists+linux-x25@lfdr.de>; Fri,  9 Jul 2021 12:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 652843C3FB1
+	for <lists+linux-x25@lfdr.de>; Mon, 12 Jul 2021 00:31:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232049AbhGIKbV (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 9 Jul 2021 06:31:21 -0400
-Received: from mail.zx2c4.com ([104.131.123.232]:53922 "EHLO mail.zx2c4.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232006AbhGIKbV (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Fri, 9 Jul 2021 06:31:21 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Jul 2021 06:31:21 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-        t=1625826113;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=7dR0/VUJHKDLRMz9yU5Zdn5RWQOxI+Wc0vq05RWjQvE=;
-        b=SvQ1Je064yhDKpHtC+rohJT39TVuxD85wqjML8PO3gxEcEu4/YVvk3iaUzENwcWcM5wqDH
-        thvwKk3BjAVh7F3FOpUHcQhDhnWXtVUhiWZl/AB9a/0FYWH9OU9sN96yOgwmH9E5N6HbE3
-        GTlcQVkPe26jsPPQ4IgmztdiwLeX+Qk=
-Received: by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9f8613a4 (TLSv1.3:AEAD-AES256-GCM-SHA384:256:NO);
-        Fri, 9 Jul 2021 10:21:53 +0000 (UTC)
-Received: by mail-yb1-f182.google.com with SMTP id i4so13900066ybe.2;
-        Fri, 09 Jul 2021 03:21:53 -0700 (PDT)
-X-Gm-Message-State: AOAM530r+Kr7cH0AcFJCCo1ELnziOet3mR32TnCgFpMWwWlssorqRFGU
-        rSp34naIb2vZUICKFFSYJZuEy4hw4D463fHCJwM=
-X-Google-Smtp-Source: ABdhPJw3hLruA2qeePGLKBjcD2sa6DYSkDPQlzvvzUhZwIUmRBHDfkI+Q8Yxy6ibaOCC6j/KSgkkwr+titsIhBFR4BE=
-X-Received: by 2002:a25:b684:: with SMTP id s4mr45457481ybj.178.1625826110246;
- Fri, 09 Jul 2021 03:21:50 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210709021747.32737-1-rdunlap@infradead.org> <20210709021747.32737-7-rdunlap@infradead.org>
-In-Reply-To: <20210709021747.32737-7-rdunlap@infradead.org>
-From:   "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date:   Fri, 9 Jul 2021 12:21:39 +0200
-X-Gmail-Original-Message-ID: <CAHmME9rUJndFC-6KAxGL3w6Ka4WgyP_m5DS+1_vuHdQowonSOg@mail.gmail.com>
-Message-ID: <CAHmME9rUJndFC-6KAxGL3w6Ka4WgyP_m5DS+1_vuHdQowonSOg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] net: wireguard: rename 'mod_init' & 'mod_exit'
- functions to be module-specific
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
+        id S231708AbhGKWeo (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sun, 11 Jul 2021 18:34:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34480 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229893AbhGKWen (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sun, 11 Jul 2021 18:34:43 -0400
+Received: from bombadil.infradead.org (bombadil.infradead.org [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95563C0613E8;
+        Sun, 11 Jul 2021 15:31:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        MIME-Version:Message-Id:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:
+        Content-ID:Content-Description:In-Reply-To:References;
+        bh=Mo6qpJjml5U8iLYgc9vnqw2QRu2qtGojLIGPXWhslFE=; b=KScQpnoW/TzXIY7cNb0X+9rSTc
+        VObwFUOiCt5HhPY75lZjfPLHLVTbCMD/VuuLAIMQ6hApemoQ3hw+wz9SbNb1RYnuqNuz9S+iJZ+qC
+        qpwFw/szYblDg5BxhQ6jVt5jV5/IgXdKU5VdSizKG8cz9ymXhlV4DVkqXcDBzZ7ZHVtx/kbFP+gAT
+        2xBpaSPyAWZdj1ri7FYqhc25RuGLS9aH0tO+XVxQvViZyD8FqCesqZvCyGJ3VPiVzrGrb2MIdT0i3
+        u85KjU46Lwn0uiOOAqTZbFPM8Kx/3MxtWtNzLLZXUIJrII87eXv7QPEgz3iehZU173pcqyK7SzmnD
+        JpVvManQ==;
+Received: from [2601:1c0:6280:3f0::aefb] (helo=bombadil.infradead.org)
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1m2hzK-005U4u-Es; Sun, 11 Jul 2021 22:31:50 +0000
+From:   Randy Dunlap <rdunlap@infradead.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     Randy Dunlap <rdunlap@infradead.org>,
+        "Jason A . Donenfeld" <Jason@zx2c4.com>,
         Russell King <linux@armlinux.org.uk>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-kernel@lists.infradead.org,
         Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andres Salomon <dilinger@queued.net>,
         linux-geode@lists.infradead.org, Matt Mackall <mpm@selenic.com>,
         Herbert Xu <herbert@gondor.apana.org.au>,
-        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        linux-crypto@vger.kernel.org,
         Christian Gromm <christian.gromm@microchip.com>,
-        Krzysztof Halasa <khc@pm.waw.pl>,
-        Netdev <netdev@vger.kernel.org>,
+        Krzysztof Halasa <khc@pm.waw.pl>, netdev@vger.kernel.org,
         "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>,
         Martin Schiller <ms@dev.tdt.de>, linux-x25@vger.kernel.org,
-        WireGuard mailing list <wireguard@lists.zx2c4.com>
-Content-Type: text/plain; charset="UTF-8"
+        wireguard@lists.zx2c4.com
+Subject: [PATCH 0/6 v2] treewide: rename 'mod_init' & 'mod_exit' functions to be module-specific
+Date:   Sun, 11 Jul 2021 15:31:42 -0700
+Message-Id: <20210711223148.5250-1-rdunlap@infradead.org>
+X-Mailer: git-send-email 2.26.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hi Randy,
+There are multiple (16) modules which use a module_init() function
+with the name 'mod_init' and a module_exit() function with the name
+'mod_exit'. This can lead to confusion or ambiguity when reading
+crashes/oops/bugs etc. and when reading an initcall_debug log.
 
-The commit subject line should be:
+Example 1: (System.map file)
 
-wireguard: main: rename 'mod_init' & 'mod_exit' functions to be module-specific
+ffffffff83446d10 t mod_init
+ffffffff83446d18 t mod_init
+ffffffff83446d20 t mod_init
+...
+ffffffff83454665 t mod_init
+ffffffff834548a4 t mod_init
+ffffffff83454a53 t mod_init
+...
+ffffffff8345bd42 t mod_init
+...
+ffffffff8345c916 t mod_init
+ffffffff8345c92a t mod_init
+ffffffff8345c93e t mod_init
+ffffffff8345c952 t mod_init
+ffffffff8345c966 t mod_init
+...
+ffffffff834672c9 t mod_init
 
-And:
+Example 2: (boot log when using 'initcall_debug')
 
-On Fri, Jul 9, 2021 at 4:17 AM Randy Dunlap <rdunlap@infradead.org> wrote:
-> -static int __init mod_init(void)
-> +static int __init wireguard_init(void)
+[    0.252157] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+[    0.252180] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+[    0.252202] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+...
+[    0.892907] initcall mod_init+0x0/0x23f returned -19 after 104 usecs
+[    0.913788] initcall mod_init+0x0/0x1af returned -19 after 9 usecs
+[    0.934353] initcall mod_init+0x0/0x49 returned -19 after 0 usecs
+...
+[    1.454870] initcall mod_init+0x0/0x66 returned 0 after 72 usecs
+...
+[    1.455527] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+[    1.455531] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+[    1.455536] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+[    1.455541] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+[    1.455545] initcall mod_init+0x0/0x52 returned 0 after 0 usecs
+...
+[    1.588162] initcall mod_init+0x0/0xef returned 0 after 45 usecs
 
-wg_mod_init
 
-> -static void __exit mod_exit(void)
-> +static void __exit wireguard_exit(void)
+v2: wireguard: changes per Jason
+    arm/crypto/curve25519-glue: add Russell's Acked-by
 
-wg_mod_exit
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Russell King <linux@armlinux.org.uk>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Andres Salomon <dilinger@queued.net>
+Cc: linux-geode@lists.infradead.org
+Cc: Matt Mackall <mpm@selenic.com>
+Cc: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: linux-crypto@vger.kernel.org
+Cc: Christian Gromm <christian.gromm@microchip.com>
+Cc: Krzysztof Halasa <khc@pm.waw.pl>
+Cc: netdev@vger.kernel.org
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Martin Schiller <ms@dev.tdt.de>
+Cc: linux-x25@vger.kernel.org
+Cc: wireguard@lists.zx2c4.com
 
-Thanks,
-Jason
+[PATCH 1/6 v2] arm: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
+[PATCH 2/6 v2] hw_random: rename 'mod_init' & 'mod_exit' functions to be module-specific
+[PATCH 3/6 v2] lib: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
+[PATCH 4/6 v2] MOST: cdev: rename 'mod_init' & 'mod_exit' functions to be module-specific
+[PATCH 5/6 v2] net: hdlc: rename 'mod_init' & 'mod_exit' functions to be module-specific
+[PATCH 6/6 v2] net: wireguard: rename 'mod_init' & 'mod_exit' functions to be module-specific
+
+ arch/arm/crypto/curve25519-glue.c  |    8 ++++----
+ drivers/char/hw_random/amd-rng.c   |    8 ++++----
+ drivers/char/hw_random/geode-rng.c |    8 ++++----
+ drivers/char/hw_random/intel-rng.c |    8 ++++----
+ drivers/char/hw_random/via-rng.c   |    8 ++++----
+ drivers/most/most_cdev.c           |    8 ++++----
+ drivers/net/wan/hdlc_cisco.c       |    8 ++++----
+ drivers/net/wan/hdlc_fr.c          |    8 ++++----
+ drivers/net/wan/hdlc_ppp.c         |    8 ++++----
+ drivers/net/wan/hdlc_raw.c         |    8 ++++----
+ drivers/net/wan/hdlc_raw_eth.c     |    8 ++++----
+ drivers/net/wan/hdlc_x25.c         |    8 ++++----
+ drivers/net/wireguard/main.c       |    8 ++++----
+ lib/crypto/blake2s.c               |    8 ++++----
+ lib/crypto/chacha20poly1305.c      |    8 ++++----
+ lib/crypto/curve25519.c            |    8 ++++----
+ 16 files changed, 64 insertions(+), 64 deletions(-)
