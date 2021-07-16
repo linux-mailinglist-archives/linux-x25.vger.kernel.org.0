@@ -2,76 +2,148 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D93273CA438
-	for <lists+linux-x25@lfdr.de>; Thu, 15 Jul 2021 19:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABF3C3CB3EA
+	for <lists+linux-x25@lfdr.de>; Fri, 16 Jul 2021 10:16:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235098AbhGOR2h (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 15 Jul 2021 13:28:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37448 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235390AbhGOR2g (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 15 Jul 2021 13:28:36 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C06CC0613DF
-        for <linux-x25@vger.kernel.org>; Thu, 15 Jul 2021 10:25:42 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id p4-20020a17090a9304b029016f3020d867so4944070pjo.3
-        for <linux-x25@vger.kernel.org>; Thu, 15 Jul 2021 10:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=Ibb5KNEw1DKqJEg9n4gJy5KnzVasBofn6QaWYsu9UCQ=;
-        b=A07qw47jpyx7/pJf1ZS9aQv4pD7PiHBZWlsl9UoiurRqqc+7ZndQI51YdaaD0nkecu
-         Qd4i+G02coH8O2I/r6ZupOF8oYSIAoIwVq4zkuCtuhDJYsbynWGQdegcG7aq+QxGg/bp
-         poyp2DbaibSeABlojQr/pIAqMWExNaHg4RIE+IQzBlXdCiQq16Yp/UqkBXwITYu4DgIP
-         XTs1gXkC7Br62pPmJXs/2nF+jRhXCAs3iAxTxuy51YthTghMWE/kONdSGZKCG8sWM+Ev
-         WU1ATEDaIH5W63c7UQCvZTdM21+mq9I9FOl7BCTb650pCRFEJMZ521zklByg85zlNwmj
-         7b/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=Ibb5KNEw1DKqJEg9n4gJy5KnzVasBofn6QaWYsu9UCQ=;
-        b=uHWwGM/YCvH4+1pGbRLXJsiBl+R0M0hhQGP6D4HTOJkr3bqDEWysMTadN8/JlFYo2h
-         u0z0KjXbCjW5rc/FeXQ/nVO2JbiYHLNEzcwHHutCyNvUfHDFEptggigu0P26LZKkV8YV
-         v7JOlKV/eEVk1SyzJu4kdsQczvm24w21kqAaoss+DxMkiyIyoLfgUnpTTVzOpW9t8JqD
-         37mq/lC8M3qOIg5MIibdUszxHSvLxaWMWGzLmTn+kXmVJTZYQZh1fEGby8+8Rf5ww3m9
-         uQw5w0hfOhqMAbZSmAqR4BtoDX5O5aDkZW9nIuujP0qhV3JVeJipKq9pv1RfID06o5Kx
-         YnmQ==
-X-Gm-Message-State: AOAM533Wl9BH0TOTwvVgpcsV9Vn5Ji7IVNDmyGOZtLcz30SY5WN2jr0g
-        FWO1ow8JBmM7pLpuqglHbQw5z6R8lfGEY5IgdxA=
-X-Google-Smtp-Source: ABdhPJyZMrq1Z7I3pjjmyAtUHW3ABh0oEghTe77F5dAxRk/llsByjQhtZ30eIUOoh7sIooPsLTy5+nPJ1BCNgIavtsM=
-X-Received: by 2002:a17:90b:d8f:: with SMTP id bg15mr10963237pjb.152.1626369941880;
- Thu, 15 Jul 2021 10:25:41 -0700 (PDT)
+        id S237481AbhGPISz (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 16 Jul 2021 04:18:55 -0400
+Received: from helcar.hmeau.com ([216.24.177.18]:51406 "EHLO deadmen.hmeau.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237415AbhGPISv (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Fri, 16 Jul 2021 04:18:51 -0400
+Received: from gondobar.mordor.me.apana.org.au ([192.168.128.4] helo=gondobar)
+        by deadmen.hmeau.com with esmtp (Exim 4.92 #5 (Debian))
+        id 1m4J0O-0005fg-8y; Fri, 16 Jul 2021 16:15:32 +0800
+Received: from herbert by gondobar with local (Exim 4.92)
+        (envelope-from <herbert@gondor.apana.org.au>)
+        id 1m4J09-0000YN-HC; Fri, 16 Jul 2021 16:15:17 +0800
+Date:   Fri, 16 Jul 2021 16:15:17 +0800
+From:   Herbert Xu <herbert@gondor.apana.org.au>
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     linux-kernel@vger.kernel.org,
+        "Jason A . Donenfeld" <Jason@zx2c4.com>,
+        Russell King <linux@armlinux.org.uk>,
+        linux-arm-kernel@lists.infradead.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andres Salomon <dilinger@queued.net>,
+        linux-geode@lists.infradead.org, Matt Mackall <mpm@selenic.com>,
+        linux-crypto@vger.kernel.org,
+        Christian Gromm <christian.gromm@microchip.com>,
+        Krzysztof Halasa <khc@pm.waw.pl>, netdev@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Martin Schiller <ms@dev.tdt.de>, linux-x25@vger.kernel.org,
+        wireguard@lists.zx2c4.com
+Subject: Re: [PATCH 0/6 v2] treewide: rename 'mod_init' & 'mod_exit'
+ functions to be module-specific
+Message-ID: <20210716081517.GB2034@gondor.apana.org.au>
+References: <20210711223148.5250-1-rdunlap@infradead.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:fc85:0:0:0:0 with HTTP; Thu, 15 Jul 2021 10:25:41
- -0700 (PDT)
-Reply-To: faty.muhamad@gmail.com
-From:   Ms Fatima Muhammad <general.infofederalreserve@gmail.com>
-Date:   Thu, 15 Jul 2021 17:25:41 +0000
-Message-ID: <CAJzJz_Dwu6rUxmnqq1QV9qD4hugxutFJZuENGUwx7RamXm5txA@mail.gmail.com>
-Subject: Hello Dear
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210711223148.5250-1-rdunlap@infradead.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello Dear,
+On Sun, Jul 11, 2021 at 03:31:42PM -0700, Randy Dunlap wrote:
+> There are multiple (16) modules which use a module_init() function
+> with the name 'mod_init' and a module_exit() function with the name
+> 'mod_exit'. This can lead to confusion or ambiguity when reading
+> crashes/oops/bugs etc. and when reading an initcall_debug log.
+> 
+> Example 1: (System.map file)
+> 
+> ffffffff83446d10 t mod_init
+> ffffffff83446d18 t mod_init
+> ffffffff83446d20 t mod_init
+> ...
+> ffffffff83454665 t mod_init
+> ffffffff834548a4 t mod_init
+> ffffffff83454a53 t mod_init
+> ...
+> ffffffff8345bd42 t mod_init
+> ...
+> ffffffff8345c916 t mod_init
+> ffffffff8345c92a t mod_init
+> ffffffff8345c93e t mod_init
+> ffffffff8345c952 t mod_init
+> ffffffff8345c966 t mod_init
+> ...
+> ffffffff834672c9 t mod_init
+> 
+> Example 2: (boot log when using 'initcall_debug')
+> 
+> [    0.252157] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+> [    0.252180] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+> [    0.252202] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
+> ...
+> [    0.892907] initcall mod_init+0x0/0x23f returned -19 after 104 usecs
+> [    0.913788] initcall mod_init+0x0/0x1af returned -19 after 9 usecs
+> [    0.934353] initcall mod_init+0x0/0x49 returned -19 after 0 usecs
+> ...
+> [    1.454870] initcall mod_init+0x0/0x66 returned 0 after 72 usecs
+> ...
+> [    1.455527] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+> [    1.455531] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+> [    1.455536] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+> [    1.455541] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
+> [    1.455545] initcall mod_init+0x0/0x52 returned 0 after 0 usecs
+> ...
+> [    1.588162] initcall mod_init+0x0/0xef returned 0 after 45 usecs
+> 
+> 
+> v2: wireguard: changes per Jason
+>     arm/crypto/curve25519-glue: add Russell's Acked-by
+> 
+> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+> Cc: Russell King <linux@armlinux.org.uk>
+> Cc: linux-arm-kernel@lists.infradead.org
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: Andres Salomon <dilinger@queued.net>
+> Cc: linux-geode@lists.infradead.org
+> Cc: Matt Mackall <mpm@selenic.com>
+> Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> Cc: linux-crypto@vger.kernel.org
+> Cc: Christian Gromm <christian.gromm@microchip.com>
+> Cc: Krzysztof Halasa <khc@pm.waw.pl>
+> Cc: netdev@vger.kernel.org
+> Cc: "David S. Miller" <davem@davemloft.net>
+> Cc: Jakub Kicinski <kuba@kernel.org>
+> Cc: Martin Schiller <ms@dev.tdt.de>
+> Cc: linux-x25@vger.kernel.org
+> Cc: wireguard@lists.zx2c4.com
+> 
+> [PATCH 1/6 v2] arm: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> [PATCH 2/6 v2] hw_random: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> [PATCH 3/6 v2] lib: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> [PATCH 4/6 v2] MOST: cdev: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> [PATCH 5/6 v2] net: hdlc: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> [PATCH 6/6 v2] net: wireguard: rename 'mod_init' & 'mod_exit' functions to be module-specific
+> 
+>  arch/arm/crypto/curve25519-glue.c  |    8 ++++----
+>  drivers/char/hw_random/amd-rng.c   |    8 ++++----
+>  drivers/char/hw_random/geode-rng.c |    8 ++++----
+>  drivers/char/hw_random/intel-rng.c |    8 ++++----
+>  drivers/char/hw_random/via-rng.c   |    8 ++++----
+>  drivers/most/most_cdev.c           |    8 ++++----
+>  drivers/net/wan/hdlc_cisco.c       |    8 ++++----
+>  drivers/net/wan/hdlc_fr.c          |    8 ++++----
+>  drivers/net/wan/hdlc_ppp.c         |    8 ++++----
+>  drivers/net/wan/hdlc_raw.c         |    8 ++++----
+>  drivers/net/wan/hdlc_raw_eth.c     |    8 ++++----
+>  drivers/net/wan/hdlc_x25.c         |    8 ++++----
+>  drivers/net/wireguard/main.c       |    8 ++++----
+>  lib/crypto/blake2s.c               |    8 ++++----
+>  lib/crypto/chacha20poly1305.c      |    8 ++++----
+>  lib/crypto/curve25519.c            |    8 ++++----
+>  16 files changed, 64 insertions(+), 64 deletions(-)
 
-My name is Ms.Fatima Muhammad., Please forgive me for stressing you
-with my predicaments and I sorry to approach you through this media
-because is serves the fastest means of  my communication right now,
-
-I came across your Email from my personal search and I decided to
-contact you believing you will be honest to fulfill my business
-proposal which I believe that will be a very good opportunity for both
-of us. Please it is my pleasure to contact you today for a business
-partnership investments projects worth $4.6 million USD which I intend
-to establish in your country..
-
-Pls If this business proposal offends your moral and ethic values do
-accept my apology. therefore kindly contact me immediately if you are
-interested for more details.
-
-Thank you for your wiliness to help me
-Yours Sincerely Fatima Muhammad
+Patches 1-3 applied.  Thanks.
+-- 
+Email: Herbert Xu <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
