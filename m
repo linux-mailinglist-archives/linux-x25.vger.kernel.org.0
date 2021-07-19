@@ -2,23 +2,27 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABF3C3CB3EA
-	for <lists+linux-x25@lfdr.de>; Fri, 16 Jul 2021 10:16:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0293CCDAA
+	for <lists+linux-x25@lfdr.de>; Mon, 19 Jul 2021 07:53:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237481AbhGPISz (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 16 Jul 2021 04:18:55 -0400
-Received: from helcar.hmeau.com ([216.24.177.18]:51406 "EHLO deadmen.hmeau.com"
+        id S229906AbhGSFza (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 19 Jul 2021 01:55:30 -0400
+Received: from ni.piap.pl ([195.187.100.5]:59386 "EHLO ni.piap.pl"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237415AbhGPISv (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Fri, 16 Jul 2021 04:18:51 -0400
-Received: from gondobar.mordor.me.apana.org.au ([192.168.128.4] helo=gondobar)
-        by deadmen.hmeau.com with esmtp (Exim 4.92 #5 (Debian))
-        id 1m4J0O-0005fg-8y; Fri, 16 Jul 2021 16:15:32 +0800
-Received: from herbert by gondobar with local (Exim 4.92)
-        (envelope-from <herbert@gondor.apana.org.au>)
-        id 1m4J09-0000YN-HC; Fri, 16 Jul 2021 16:15:17 +0800
-Date:   Fri, 16 Jul 2021 16:15:17 +0800
-From:   Herbert Xu <herbert@gondor.apana.org.au>
+        id S234437AbhGSFz2 (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Mon, 19 Jul 2021 01:55:28 -0400
+X-Greylist: delayed 419 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Jul 2021 01:55:26 EDT
+Received: from t19.piap.pl (OSB1819.piap.pl [10.0.9.19])
+        by ni.piap.pl (Postfix) with ESMTPSA id 795F4C3F2A51;
+        Mon, 19 Jul 2021 07:45:21 +0200 (CEST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 ni.piap.pl 795F4C3F2A51
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=piap.pl; s=mail;
+        t=1626673524; bh=xH3yU1unl5seSQwdZbQWwx5A9ON1+nGOmgWR8IFn5r8=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=L7U05iMv3oK92oCUuG5CTlxppqcc0E6eKg9JErEbxAKkTlJL107YThmaj1R9//agf
+         ujEHiof3dy3tIle/ZvOryphYwiEfqEPiMWKwlENA/Tzv3jq7JttbBCzB0lDDauFBMk
+         lA27aWd7d+osdxmPHbr2zUAKGu54dYjmQaG1nnxk=
+From:   =?utf-8?Q?Krzysztof_Ha=C5=82asa?= <khalasa@piap.pl>
 To:     Randy Dunlap <rdunlap@infradead.org>
 Cc:     linux-kernel@vger.kernel.org,
         "Jason A . Donenfeld" <Jason@zx2c4.com>,
@@ -28,6 +32,7 @@ Cc:     linux-kernel@vger.kernel.org,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andres Salomon <dilinger@queued.net>,
         linux-geode@lists.infradead.org, Matt Mackall <mpm@selenic.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
         linux-crypto@vger.kernel.org,
         Christian Gromm <christian.gromm@microchip.com>,
         Krzysztof Halasa <khc@pm.waw.pl>, netdev@vger.kernel.org,
@@ -35,115 +40,59 @@ Cc:     linux-kernel@vger.kernel.org,
         Jakub Kicinski <kuba@kernel.org>,
         Martin Schiller <ms@dev.tdt.de>, linux-x25@vger.kernel.org,
         wireguard@lists.zx2c4.com
-Subject: Re: [PATCH 0/6 v2] treewide: rename 'mod_init' & 'mod_exit'
+Subject: Re: [PATCH 5/6 v2] net: hdlc: rename 'mod_init' & 'mod_exit'
  functions to be module-specific
-Message-ID: <20210716081517.GB2034@gondor.apana.org.au>
 References: <20210711223148.5250-1-rdunlap@infradead.org>
+        <20210711223148.5250-6-rdunlap@infradead.org>
+Sender: khalasa@piap.pl
+Date:   Mon, 19 Jul 2021 07:45:21 +0200
+In-Reply-To: <20210711223148.5250-6-rdunlap@infradead.org> (Randy Dunlap's
+        message of "Sun, 11 Jul 2021 15:31:47 -0700")
+Message-ID: <m3y2a2zwjy.fsf@t19.piap.pl>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210711223148.5250-1-rdunlap@infradead.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-KLMS-Rule-ID: 1
+X-KLMS-Message-Action: clean
+X-KLMS-AntiSpam-Lua-Profiles: 165067 [Jul 18 2021]
+X-KLMS-AntiSpam-Version: 5.9.20.0
+X-KLMS-AntiSpam-Envelope-From: khalasa@piap.pl
+X-KLMS-AntiSpam-Rate: 0
+X-KLMS-AntiSpam-Status: not_detected
+X-KLMS-AntiSpam-Method: none
+X-KLMS-AntiSpam-Auth: dkim=pass header.d=piap.pl
+X-KLMS-AntiSpam-Info: LuaCore: 448 448 71fb1b37213ce9a885768d4012c46ac449c77b17, {Tracking_from_exist}, {Tracking_Text_ENG_RU_Has_Extended_Latin_Letters, eng}, {Tracking_marketers, three}, {Tracking_from_domain_doesnt_match_to}, d41d8cd98f00b204e9800998ecf8427e.com:7.1.1;piap.pl:7.1.1;t19.piap.pl:7.1.1;127.0.0.199:7.1.2
+X-MS-Exchange-Organization-SCL: -1
+X-KLMS-AntiSpam-Interceptor-Info: scan successful
+X-KLMS-AntiPhishing: Clean, bases: 2021/07/19 04:42:00
+X-KLMS-AntiVirus: Kaspersky Security for Linux Mail Server, version 8.0.3.30, bases: 2021/07/19 00:49:00 #16924188
+X-KLMS-AntiVirus-Status: Clean, skipped
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-On Sun, Jul 11, 2021 at 03:31:42PM -0700, Randy Dunlap wrote:
-> There are multiple (16) modules which use a module_init() function
-> with the name 'mod_init' and a module_exit() function with the name
-> 'mod_exit'. This can lead to confusion or ambiguity when reading
-> crashes/oops/bugs etc. and when reading an initcall_debug log.
-> 
-> Example 1: (System.map file)
-> 
-> ffffffff83446d10 t mod_init
-> ffffffff83446d18 t mod_init
-> ffffffff83446d20 t mod_init
-> ...
-> ffffffff83454665 t mod_init
-> ffffffff834548a4 t mod_init
-> ffffffff83454a53 t mod_init
-> ...
-> ffffffff8345bd42 t mod_init
-> ...
-> ffffffff8345c916 t mod_init
-> ffffffff8345c92a t mod_init
-> ffffffff8345c93e t mod_init
-> ffffffff8345c952 t mod_init
-> ffffffff8345c966 t mod_init
-> ...
-> ffffffff834672c9 t mod_init
-> 
-> Example 2: (boot log when using 'initcall_debug')
-> 
-> [    0.252157] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
-> [    0.252180] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
-> [    0.252202] initcall mod_init+0x0/0x8 returned 0 after 0 usecs
-> ...
-> [    0.892907] initcall mod_init+0x0/0x23f returned -19 after 104 usecs
-> [    0.913788] initcall mod_init+0x0/0x1af returned -19 after 9 usecs
-> [    0.934353] initcall mod_init+0x0/0x49 returned -19 after 0 usecs
-> ...
-> [    1.454870] initcall mod_init+0x0/0x66 returned 0 after 72 usecs
-> ...
-> [    1.455527] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
-> [    1.455531] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
-> [    1.455536] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
-> [    1.455541] initcall mod_init+0x0/0x14 returned 0 after 0 usecs
-> [    1.455545] initcall mod_init+0x0/0x52 returned 0 after 0 usecs
-> ...
-> [    1.588162] initcall mod_init+0x0/0xef returned 0 after 45 usecs
-> 
-> 
-> v2: wireguard: changes per Jason
->     arm/crypto/curve25519-glue: add Russell's Acked-by
-> 
-> Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-> Cc: Russell King <linux@armlinux.org.uk>
-> Cc: linux-arm-kernel@lists.infradead.org
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: Andres Salomon <dilinger@queued.net>
-> Cc: linux-geode@lists.infradead.org
-> Cc: Matt Mackall <mpm@selenic.com>
-> Cc: Herbert Xu <herbert@gondor.apana.org.au>
-> Cc: linux-crypto@vger.kernel.org
-> Cc: Christian Gromm <christian.gromm@microchip.com>
-> Cc: Krzysztof Halasa <khc@pm.waw.pl>
-> Cc: netdev@vger.kernel.org
-> Cc: "David S. Miller" <davem@davemloft.net>
-> Cc: Jakub Kicinski <kuba@kernel.org>
-> Cc: Martin Schiller <ms@dev.tdt.de>
-> Cc: linux-x25@vger.kernel.org
-> Cc: wireguard@lists.zx2c4.com
-> 
-> [PATCH 1/6 v2] arm: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> [PATCH 2/6 v2] hw_random: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> [PATCH 3/6 v2] lib: crypto: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> [PATCH 4/6 v2] MOST: cdev: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> [PATCH 5/6 v2] net: hdlc: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> [PATCH 6/6 v2] net: wireguard: rename 'mod_init' & 'mod_exit' functions to be module-specific
-> 
->  arch/arm/crypto/curve25519-glue.c  |    8 ++++----
->  drivers/char/hw_random/amd-rng.c   |    8 ++++----
->  drivers/char/hw_random/geode-rng.c |    8 ++++----
->  drivers/char/hw_random/intel-rng.c |    8 ++++----
->  drivers/char/hw_random/via-rng.c   |    8 ++++----
->  drivers/most/most_cdev.c           |    8 ++++----
->  drivers/net/wan/hdlc_cisco.c       |    8 ++++----
->  drivers/net/wan/hdlc_fr.c          |    8 ++++----
->  drivers/net/wan/hdlc_ppp.c         |    8 ++++----
->  drivers/net/wan/hdlc_raw.c         |    8 ++++----
->  drivers/net/wan/hdlc_raw_eth.c     |    8 ++++----
->  drivers/net/wan/hdlc_x25.c         |    8 ++++----
->  drivers/net/wireguard/main.c       |    8 ++++----
->  lib/crypto/blake2s.c               |    8 ++++----
->  lib/crypto/chacha20poly1305.c      |    8 ++++----
->  lib/crypto/curve25519.c            |    8 ++++----
->  16 files changed, 64 insertions(+), 64 deletions(-)
+Hi Randy,
 
-Patches 1-3 applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+Randy Dunlap <rdunlap@infradead.org> writes:
+
+> Rename module_init & module_exit functions that are named
+> "mod_init" and "mod_exit" so that they are unique in both the
+> System.map file and in initcall_debug output instead of showing
+> up as almost anonymous "mod_init".
+
+>  drivers/net/wan/hdlc_cisco.c   |    8 ++++----
+>  drivers/net/wan/hdlc_fr.c      |    8 ++++----
+>  drivers/net/wan/hdlc_ppp.c     |    8 ++++----
+>  drivers/net/wan/hdlc_raw.c     |    8 ++++----
+>  drivers/net/wan/hdlc_raw_eth.c |    8 ++++----
+>  drivers/net/wan/hdlc_x25.c     |    8 ++++----
+
+Sorry for the delay.
+
+Acked-by: Krzysztof Halasa <khalasa@piap.pl>
+--=20
+Krzysztof Ha=C5=82asa
+
+Sie=C4=87 Badawcza =C5=81ukasiewicz
+Przemys=C5=82owy Instytut Automatyki i Pomiar=C3=B3w PIAP
+Al. Jerozolimskie 202, 02-486 Warszawa
