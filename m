@@ -2,146 +2,74 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 999763D7EC2
-	for <lists+linux-x25@lfdr.de>; Tue, 27 Jul 2021 22:00:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A38603DCF78
+	for <lists+linux-x25@lfdr.de>; Mon,  2 Aug 2021 06:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232097AbhG0UAV (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 27 Jul 2021 16:00:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40750 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231204AbhG0UAO (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Tue, 27 Jul 2021 16:00:14 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id ED0CF60FA0;
-        Tue, 27 Jul 2021 20:00:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627416014;
-        bh=7gbluUXqRRDrRRn0YT85HoIea0afHl4fXkBq3wS8myc=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ZuKh0QZIr0bo4IkkVxJ+KGIS7CN6C3qN0vMjFXehfb5lPWADe0PwPwsnk1qMM5vvO
-         HlWCTVM4ZzSaJEPtmoNUa1vsliz463WcrdCQN1lkHHswUKgaNNtq29styVqu3BjN7r
-         JYjOpWXSrkVvfQxj9Ek6rU+aJOXdBkncGx3bb9Y1mzLSX2u2tkkakG1hfNRYcUUq4e
-         inTy+HHa8/MPQbmrfH3/IPLKgDL9lIMIjHc7+pUM2DHjS9wtjN7iT01LHakbA2lpny
-         sQF0HUZcKsDMvVwqgSaSNCqv1JR5iOvrYNY91Aq7W+oxmNXRaUF211VLnU6VOI+NyL
-         UUZx8tXVJZbzw==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id E1C38609CC;
-        Tue, 27 Jul 2021 20:00:13 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S232253AbhHBEYn (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 2 Aug 2021 00:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43846 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232216AbhHBEYn (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 2 Aug 2021 00:24:43 -0400
+Received: from mail-ej1-x644.google.com (mail-ej1-x644.google.com [IPv6:2a00:1450:4864:20::644])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B4B0C0617B9
+        for <linux-x25@vger.kernel.org>; Sun,  1 Aug 2021 21:24:33 -0700 (PDT)
+Received: by mail-ej1-x644.google.com with SMTP id o5so28771542ejy.2
+        for <linux-x25@vger.kernel.org>; Sun, 01 Aug 2021 21:24:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
+        b=WDq9P0bY1AsY9kO7VoQiuEkd/+xeN2uAzVka1J/B7YABFMMcv9zsRMDuUzGU3t7LVq
+         x60AdfwMQPfhhBT91CFmxmNgG6fRcK6BFaIDqx+Ms1vLOgOAYNOd4Xbt+10CNKTcRAMK
+         KeTYcmNC0bNtdVd3yLIRxS8Pr5sLxpts2NC88pKkxuGBDjkmUnJislac8lDy7dNnd85N
+         dz7rwNTEXx7I9NqC47E4asccGsO9/P6huztRZkI4lkvRJ5hB7XcOxioVdhTGqNDSXebW
+         Md0Dh2ya6SQXgvhbdFNsJy7D030uG2HCPIxJG2TxztPigkWx+ZXfNLX+hVWs0ri0sCK7
+         k48A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=JbMtpdZj7sghISs4e5T5yryQDvERMuYalazmdQP0RcA=;
+        b=AKtHBpSaBlCCJGWMQHYBOpM91gJiuXMfrN0/cPsVk0NixaM45hkLZNVzNcA/PE+mGU
+         eQWIq9z3M7SlXDwEPKljNkR+DBsa9dD2KL8qZKn8hkGFZGgz94xhPYDN6mcFYjVDDTVn
+         Xfvf6N/L26A2qZH0FwWfm8SyVW6jD/Z9J3Rbth+WEcPWXePpjIK/JnhKafUCYZ6m2LBP
+         14kPa7JvzdlsqivB2ZjRtY+SisPGKkTw492r4Vb0bIcDL+eIOB/4l/UWurDwvOycjC93
+         U4rXl0ycRGuzDLqr5nubdzSCjG/wCvmDki5UHGABxF3NLDwDVHfUK9kg5HyTxbRCReb/
+         h8fw==
+X-Gm-Message-State: AOAM53112+oKLaxSWI+y/7CG6eGLMsc16xgU6wZp5OrKWiFOa4MAGd5K
+        wP1ZN3ZdAum4H90Wks7LKDp7se013q0dRboPB2M=
+X-Google-Smtp-Source: ABdhPJyge6CE4/3PK9Ai4ltivb6MMxmm7LTQ2s8bjzS0dUrr9KzpIrZxfzN76q9x5Xx6YjpKdH1irFSuudYhIT6knzs=
+X-Received: by 2002:a17:906:3b87:: with SMTP id u7mr13818454ejf.66.1627878272087;
+ Sun, 01 Aug 2021 21:24:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next v3 00/31] ndo_ioctl rework
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <162741601391.17427.11630081272562695042.git-patchwork-notify@kernel.org>
-Date:   Tue, 27 Jul 2021 20:00:13 +0000
-References: <20210727134517.1384504-1-arnd@kernel.org>
-In-Reply-To: <20210727134517.1384504-1-arnd@kernel.org>
-To:     Arnd Bergmann <arnd@kernel.org>
-Cc:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kuba@kernel.org, davem@davemloft.net, arnd@arndb.de,
-        j.vosburgh@gmail.com, vfalico@gmail.com, andy@greyhouse.net,
-        rajur@chelsio.com, t.sailer@alumni.ethz.ch, jreuter@yaina.de,
-        jpr@f6fbb.org, jes@trained-monkey.org, khc@pm.waw.pl,
-        kevin.curtis@farsite.co.uk, qiang.zhao@nxp.com, ms@dev.tdt.de,
-        kvalo@codeaurora.org, j@w1.fi, jwi@linux.ibm.com,
-        kgraul@linux.ibm.com, yoshfuji@linux-ipv6.org, dsahern@kernel.org,
-        roopa@nvidia.com, nikolay@nvidia.com, steffen.klassert@secunet.com,
-        herbert@gondor.apana.org.au, courmisch@gmail.com, andrew@lunn.ch,
-        hch@lst.de, linux-parisc@vger.kernel.org,
-        linux-hams@vger.kernel.org, linux-hippi@sunsite.dk,
-        linux-ppp@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-x25@vger.kernel.org, linux-wireless@vger.kernel.org,
-        linux-s390@vger.kernel.org, bridge@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org
+Received: by 2002:a17:907:d0b:0:0:0:0 with HTTP; Sun, 1 Aug 2021 21:24:31
+ -0700 (PDT)
+Reply-To: ablahikazabl67@gmail.com
+From:   Abdoulahi Kazim <drwilliamcuthbert@gmail.com>
+Date:   Mon, 2 Aug 2021 05:24:31 +0100
+Message-ID: <CAKwBCXtg5uyf7Jb2AAcE1ghxD-+sCDTGfZ6n10fsvHdbE918iA@mail.gmail.com>
+Subject: More Authentic Information
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+-- 
+Dear Partner,
 
-This series was applied to netdev/net-next.git (refs/heads/master):
+I am soliciting your partnership to relocate $12.5 Million to your
+country for investment on my behalf and you will be entitled to 30% of
+the sum once the transaction is successful made.
 
-On Tue, 27 Jul 2021 15:44:46 +0200 you wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
-> 
-> This series is a follow-up to the series for removing
-> compat_alloc_user_space() and copy_in_user() that has now
-> been merged.
-> 
-> I wanted to be sure I address all the ways that 'struct ifreq' is used
-> in device drivers through .ndo_do_ioctl, originally to prove that
-> my approach of changing the struct definition was correct, but then
-> I discarded that approach and went on anyway.
-> 
-> [...]
+Please indicate your genuine interest if you are capable so that i
+will send you the authentic details and documents of the transaction
+in awareness with some of my fellow Directors in the bank.
 
-Here is the summary with links:
-  - [net-next,v3,01/31] net: split out SIOCDEVPRIVATE handling from dev_ioctl
-    https://git.kernel.org/netdev/net-next/c/b9067f5dc4a0
-  - [net-next,v3,02/31] staging: rtlwifi: use siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/89939e890605
-  - [net-next,v3,03/31] staging: wlan-ng: use siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/3343c49a959d
-  - [net-next,v3,04/31] hostap: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/3f3fa5340745
-  - [net-next,v3,05/31] bridge: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/561d8352818f
-  - [net-next,v3,06/31] phonet: use siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/4747c1a8bc50
-  - [net-next,v3,07/31] tulip: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/029a4fef6b22
-  - [net-next,v3,08/31] bonding: use siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/232ec98ec35d
-  - [net-next,v3,09/31] appletalk: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/dbecb011eb78
-  - [net-next,v3,10/31] hamachi: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/99b78a37a371
-  - [net-next,v3,11/31] tehuti: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/32d05468c462
-  - [net-next,v3,12/31] eql: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/d92f7b59d32b
-  - [net-next,v3,13/31] fddi: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/043393d8b478
-  - [net-next,v3,14/31] net: usb: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/ef1b5b0c30bc
-  - [net-next,v3,15/31] slip/plip: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/76b5878cffab
-  - [net-next,v3,16/31] qeth: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/18787eeebd71
-  - [net-next,v3,17/31] cxgb3: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/ebb4a911e09a
-  - [net-next,v3,18/31] hamradio: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/25ec92fbdd23
-  - [net-next,v3,19/31] airo: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/ae6af0120dda
-  - [net-next,v3,20/31] ip_tunnel: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/3e7a1c7c561e
-  - [net-next,v3,21/31] hippi: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/81a68110a22a
-  - [net-next,v3,22/31] sb1000: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/cc0aa831a0d9
-  - [net-next,v3,23/31] ppp: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/34f7cac07c4e
-  - [net-next,v3,24/31] wan: use ndo_siocdevprivate
-    https://git.kernel.org/netdev/net-next/c/73d74f61a559
-  - [net-next,v3,25/31] wan: cosa: remove dead cosa_net_ioctl() function
-    https://git.kernel.org/netdev/net-next/c/8fb75b79cd98
-  - [net-next,v3,26/31] dev_ioctl: pass SIOCDEVPRIVATE data separately
-    https://git.kernel.org/netdev/net-next/c/a554bf96b49d
-  - [net-next,v3,27/31] dev_ioctl: split out ndo_eth_ioctl
-    https://git.kernel.org/netdev/net-next/c/a76053707dbf
-  - [net-next,v3,28/31] net: split out ndo_siowandev ioctl
-    https://git.kernel.org/netdev/net-next/c/ad7eab2ab014
-  - [net-next,v3,29/31] net: socket: return changed ifreq from SIOCDEVPRIVATE
-    https://git.kernel.org/netdev/net-next/c/88fc023f7de2
-  - [net-next,v3,30/31] net: bridge: move bridge ioctls out of .ndo_do_ioctl
-    https://git.kernel.org/netdev/net-next/c/ad2f99aedf8f
-  - [net-next,v3,31/31] net: bonding: move ioctl handling to private ndo operation
-    https://git.kernel.org/netdev/net-next/c/3d9d00bd1885
-
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+If you are interested, here is my private Email address:
+(ablahikazabl67@gmail.com)
+For more authentic and legit information.
 
 
+Regards :  Abdoulahi Kazim
