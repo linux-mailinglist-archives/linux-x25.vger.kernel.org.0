@@ -2,71 +2,99 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A23704151F9
-	for <lists+linux-x25@lfdr.de>; Wed, 22 Sep 2021 22:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D224541963F
+	for <lists+linux-x25@lfdr.de>; Mon, 27 Sep 2021 16:23:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237796AbhIVU4w (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 22 Sep 2021 16:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34026 "EHLO
+        id S234810AbhI0OZB (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 27 Sep 2021 10:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237868AbhIVU4p (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 22 Sep 2021 16:56:45 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44A90C061574
-        for <linux-x25@vger.kernel.org>; Wed, 22 Sep 2021 13:55:13 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id j11-20020a4a92cb000000b002902ae8cb10so1384429ooh.7
-        for <linux-x25@vger.kernel.org>; Wed, 22 Sep 2021 13:55:13 -0700 (PDT)
+        with ESMTP id S234816AbhI0OYn (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 27 Sep 2021 10:24:43 -0400
+Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9E4C061774
+        for <linux-x25@vger.kernel.org>; Mon, 27 Sep 2021 07:23:04 -0700 (PDT)
+Received: by mail-pl1-x643.google.com with SMTP id x4so4400505pln.5
+        for <linux-x25@vger.kernel.org>; Mon, 27 Sep 2021 07:23:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to;
-        bh=ijKrByR1/KtEp2Ut8Wj0vMi00kBZm/A/r1gPwOEYZIg=;
-        b=KdXnhe/3zkHeZgixn9BpXiRXniwMgDmhauf6YTuxP0wgB5yzxGI3euReyxhx9TVrxq
-         3Od5gARvk08SiaQHEdbK80uTPJiKvZD1mvaXmFEi2OlRGGLVxi9qjTdQEJHDNx6GrhQf
-         +YDVSfcVXX6hJ9tzkOuxVlwY0IK/v4ECFsMgPN0YbEUFjdWw7wtLO6HU7k0GlwYOwBU7
-         g0u5ZrnjkFj9bDNBfxTJ+EZszn5R+MIWkE1noseX+tMOjLt3VKfnAtHOf7zGnzUi7/Ss
-         4zORj2FhCL6VBd/6ui6VhZsTJDlTQFr3MO12bpjTdn18irITsVHBfbJQd5ezVh5SqLsC
-         4EBw==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=qUh54W0B1/celFz/Sm7fg0RIIFoq+17jwQ/Vr2Rkb20=;
+        b=OPI7iVicwj+Z1bNsM1YvUZi+QGt2yNylkxWdF/+ajsoI2xmNR5fcD5Dbs41N0P7HHI
+         oemkww2s8T8+t3QBzhEzHSlC0rRogoWWPWnc1O+fkwMO8uToHXiv/tXQ2faxQh3BftDE
+         kEMA0XQAKBWM582qJWbcAL7Sb3Krl/xZ/mf0CKiNpNtvBj0cl3U6b4kS/Pp8KgrW64uO
+         4WeKDIEU/mvlbu5iyEAUik+VMfcsJQaqgNu6J0QdERXaFv8veB0MQZbILJ83UEwKlXVo
+         pJ7kG7ILHIEpBzymEYGN90h+yH9HfglTWoN1xbh95pF8t1t1TEY+sCRlM0pl2Dt/rD7W
+         zrUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to;
-        bh=ijKrByR1/KtEp2Ut8Wj0vMi00kBZm/A/r1gPwOEYZIg=;
-        b=fWCa4KpYQPX4BsAPmbcjXVm9Hq82rNFCvSgUNM96vckjuk7H3zcMiaMWg1QEcgppJP
-         00M7Ug4rsYxRNj9n5SKdZ4rUyomZY0wBxLFPberkrDdGiAl3FXdesmeBh/3JgIWiqZ5V
-         U3fwcOVU67MJXkO+5qOuSz8Zg+YHD1ucwGlNBbJbyS9vQGtvgvBx2F0KyGFKXfbx7yOG
-         d+TbvCzI4tgdJiOQeh7eOpFwILL4BKsPUy41/NtOQ8ZDAueHQHZHtKaSX1mmf3iF9Bg4
-         9OXA9APu6TTn7MMTyzyk/RwmcCAUd19PPe1Ozk//prU12bksLJL0ecAhYHMP/dkYmm6L
-         8LjQ==
-X-Gm-Message-State: AOAM5335/cA4yHOS7QNCQe0USEUlz1Fq/ns4cXRYIlnfofGLq3ovfJwm
-        lx5z5xa3p5LE3z64gWDt5ZMfi7sbWikTgqzFKQMMlMC4qKqMBA==
-X-Google-Smtp-Source: ABdhPJwsLqRgkk9jb+wC1ECBTFJXrEEB4mmlIo/Kaul20LfIYdlAYLv9tmwaB5Pxv0AmysZSk6ZePRs2dvYCH/qVqH0=
-X-Received: by 2002:a05:6902:150a:: with SMTP id q10mr1344586ybu.515.1632344102557;
- Wed, 22 Sep 2021 13:55:02 -0700 (PDT)
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=qUh54W0B1/celFz/Sm7fg0RIIFoq+17jwQ/Vr2Rkb20=;
+        b=gcPP+fgCcCMSe/BlSngIyM/2ksxBre+O3jATH+2fxqylajTHxUFdRFE3SjnTKK0Ovo
+         u40lj1ImT4gpWTOleRPBBC1KZdoyDi8WMOlS6QoL7JfppZXd0zAtKXn+mp48ipvbhUPs
+         xbtIF9VLXJCV+op/2mSDcPS3cvnncdQ7O8TwLvkM/0j2i3/MpboQf3jTZ7HO0iCEFTVt
+         HemId2wsnSilNIzPakhu2+TaCb9T8aqMQMsrBIlOECQ4tV3F45RfOOVj2dkTzCnGUljB
+         6ytfWysB2B3s/Q5mHdczkCS5f/aNELca/A3R588a/0rg4m9ZdpGKkWXXkEsocSYToajp
+         rT7A==
+X-Gm-Message-State: AOAM530u5HjeVJZ+Ac+Xn75ZzrgpRP34OCR/wI8zw96rTor4TWj9/0LT
+        QhRzSWO9Ng36G8wjAQ7SwiG0E3SDMy+jFzNdSbA=
+X-Google-Smtp-Source: ABdhPJzkuMqNQT1NW6nw/HQQwrrmuHE+tts4atEt0koUeFvMlou/2tj45EwQSaUIK/j1QbFJ9zlp0GzADUb/XL0OzAs=
+X-Received: by 2002:a17:90b:33c8:: with SMTP id lk8mr20193335pjb.241.1632752583655;
+ Mon, 27 Sep 2021 07:23:03 -0700 (PDT)
 MIME-Version: 1.0
-Sender: pablogboy98@gmail.com
-Received: by 2002:a05:7000:1903:0:0:0:0 with HTTP; Wed, 22 Sep 2021 13:55:02
+Received: by 2002:a05:6a10:5d17:0:0:0:0 with HTTP; Mon, 27 Sep 2021 07:23:02
  -0700 (PDT)
-From:   Aisha Al-Qaddafi <aisha.gdaffi24@gmail.com>
-Date:   Wed, 22 Sep 2021 21:55:02 +0100
-X-Google-Sender-Auth: EgWN-7KeHIzBWxs5WISil-9jI9s
-Message-ID: <CAFZ0LQG=HorOEh0B82pMRaOtrfukA2tHOBoX92F9fX48+pG2cA@mail.gmail.com>
-Subject: My Dear Friend
+Reply-To: wvictor@gmx.at
+From:   willson victor <willsonvic3@gmail.com>
+Date:   Mon, 27 Sep 2021 15:23:02 +0100
+Message-ID: <CAPvEOSjzzWXYVum61SMjri_UAVcVnDbf708SFE0zJZuMmwpU=A@mail.gmail.com>
+Subject: Greeting from Abidjan
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Assalamu alaikum,
-I came across your e-mail contact prior to a private search while in
-need of your assistance. I am Aisha Al-Qaddafi, the only biological,
-Daughter of Former President of Libya Col. Muammar Al-Qaddafi. Am a
-single Mother and a Widow with three Children. I have investment funds
-worth Twenty Seven Million Five Hundred Thousand United State Dollar
-($27.500.000.00 ) and i need a trusted  investment Manager/Partner
-because of my current refugee status, however, I am interested in you
-for investment project assistance in your country. If you are willing
-to handle this project on my behalf kindly reply urgently to enable me
-to provide you more information about the investment
-funds.
-Best Regards
+-- 
+
+
+-- 
+
+I am a bank AUDITIOR GENERAL by profession,I am interested in
+transferring the funds to your country through the help of our bank
+insider whom is to make it happen, so we can invest the money in a
+good business of your choice in your country under your technical and
+managerial partnership, should you be inclined to be involved in this
+project, I will appreciate a prompt response from you through  my
+Private Email, so that you can provide your banking details even
+without any money in the account so we can quickly realize this
+transaction together.
+
+The total amount involved is One hundred and sixty million US DOLLARS
+only [160,000.000.00 DOLLARS ] and we wish to transfer this money into
+a safe foreigners account abroad. But I don't know any foreigner; I am
+only contacting you as a foreigner because this money cannot be
+approved to a local person here, but to a foreigner who has
+information about the account, which I shall give to you upon your
+positive response. I am revealing this to you with believe in God that
+you will never let me down in this business.
+
+I guarantee you that this transaction will be executed under a
+legitimate arrangement that will protect you from any breach of the
+law. The bank official will destroy all documents of the transaction
+immediately you receive this money leaving no trace to any place. I
+will use my position and influence to obtain all legal approvals for
+onward transfer of this money to your account with appropriate
+clearance from the relevant ministries and foreign exchange
+departments, At the conclusion of this business, you will be given 30%
+of the total amount, 70% will be for us.
+
+PLEASE, TREAT THIS PROPOSAL AS TOP SECRET.
+
+I look forward to hear from you. contact me through my email address
+( wvictor@gmx.at ).
+
+
+Yours sincerely,
+Willson victor .
