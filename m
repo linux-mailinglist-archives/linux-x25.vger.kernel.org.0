@@ -2,99 +2,150 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D224541963F
-	for <lists+linux-x25@lfdr.de>; Mon, 27 Sep 2021 16:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A2EC41DF32
+	for <lists+linux-x25@lfdr.de>; Thu, 30 Sep 2021 18:39:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234810AbhI0OZB (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 27 Sep 2021 10:25:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55874 "EHLO
+        id S1352191AbhI3QlV (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 30 Sep 2021 12:41:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234816AbhI0OYn (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 27 Sep 2021 10:24:43 -0400
-Received: from mail-pl1-x643.google.com (mail-pl1-x643.google.com [IPv6:2607:f8b0:4864:20::643])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9E4C061774
-        for <linux-x25@vger.kernel.org>; Mon, 27 Sep 2021 07:23:04 -0700 (PDT)
-Received: by mail-pl1-x643.google.com with SMTP id x4so4400505pln.5
-        for <linux-x25@vger.kernel.org>; Mon, 27 Sep 2021 07:23:04 -0700 (PDT)
+        with ESMTP id S1352170AbhI3QlU (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 30 Sep 2021 12:41:20 -0400
+Received: from mail-ua1-x943.google.com (mail-ua1-x943.google.com [IPv6:2607:f8b0:4864:20::943])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC908C06176D
+        for <linux-x25@vger.kernel.org>; Thu, 30 Sep 2021 09:39:37 -0700 (PDT)
+Received: by mail-ua1-x943.google.com with SMTP id r8so4740593uap.0
+        for <linux-x25@vger.kernel.org>; Thu, 30 Sep 2021 09:39:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=qUh54W0B1/celFz/Sm7fg0RIIFoq+17jwQ/Vr2Rkb20=;
-        b=OPI7iVicwj+Z1bNsM1YvUZi+QGt2yNylkxWdF/+ajsoI2xmNR5fcD5Dbs41N0P7HHI
-         oemkww2s8T8+t3QBzhEzHSlC0rRogoWWPWnc1O+fkwMO8uToHXiv/tXQ2faxQh3BftDE
-         kEMA0XQAKBWM582qJWbcAL7Sb3Krl/xZ/mf0CKiNpNtvBj0cl3U6b4kS/Pp8KgrW64uO
-         4WeKDIEU/mvlbu5iyEAUik+VMfcsJQaqgNu6J0QdERXaFv8veB0MQZbILJ83UEwKlXVo
-         pJ7kG7ILHIEpBzymEYGN90h+yH9HfglTWoN1xbh95pF8t1t1TEY+sCRlM0pl2Dt/rD7W
-         zrUw==
+        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
+        b=o3SZ3/8xgB3svMq+UXE3vgW9sKtG91px1UYnaI00T4dLP05ECFH5EVSAWUR78xdR5n
+         ebHrIeHXVPRJa791OB2s/aZJdtzWdPaX5sbadOL24EflkgZ6O2rEvsBWvojGxJeeST6T
+         eb+k8lxZZa/bWNfHNPwQHvNUM1YEFh4fUMO861Pe8Wc6pfqqL72s+8eCO53Msweav+mv
+         XfoVjVScWXWc0hGgmBVMNFkqROc3jDhXxKvwZxz1ZkBwNJLCRx7xYOcAqQ0tzz+Q5cSM
+         PuhaOVDUO2vb8ybQ6jSikOKS/AFhEN/8Lz75PuCS5qgomh+uSMNWQBtsXYMKNbf3IvW6
+         pZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
          :subject:to;
-        bh=qUh54W0B1/celFz/Sm7fg0RIIFoq+17jwQ/Vr2Rkb20=;
-        b=gcPP+fgCcCMSe/BlSngIyM/2ksxBre+O3jATH+2fxqylajTHxUFdRFE3SjnTKK0Ovo
-         u40lj1ImT4gpWTOleRPBBC1KZdoyDi8WMOlS6QoL7JfppZXd0zAtKXn+mp48ipvbhUPs
-         xbtIF9VLXJCV+op/2mSDcPS3cvnncdQ7O8TwLvkM/0j2i3/MpboQf3jTZ7HO0iCEFTVt
-         HemId2wsnSilNIzPakhu2+TaCb9T8aqMQMsrBIlOECQ4tV3F45RfOOVj2dkTzCnGUljB
-         6ytfWysB2B3s/Q5mHdczkCS5f/aNELca/A3R588a/0rg4m9ZdpGKkWXXkEsocSYToajp
-         rT7A==
-X-Gm-Message-State: AOAM530u5HjeVJZ+Ac+Xn75ZzrgpRP34OCR/wI8zw96rTor4TWj9/0LT
-        QhRzSWO9Ng36G8wjAQ7SwiG0E3SDMy+jFzNdSbA=
-X-Google-Smtp-Source: ABdhPJzkuMqNQT1NW6nw/HQQwrrmuHE+tts4atEt0koUeFvMlou/2tj45EwQSaUIK/j1QbFJ9zlp0GzADUb/XL0OzAs=
-X-Received: by 2002:a17:90b:33c8:: with SMTP id lk8mr20193335pjb.241.1632752583655;
- Mon, 27 Sep 2021 07:23:03 -0700 (PDT)
+        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
+        b=DH3CtoQppMYNt/uMOTW/4ADqPHJY6j9HNLaZCPa1VzcewKARcic0MRKcITykM6o/PP
+         ZIQ6xzpO4207RkQSkuNZOyuhzr2PDmwV0QSRFUEhwdrtMAshR3ySstHcyKVed23J+Ezs
+         d/PgzZH2mKTrXvZFmrFitVaMP2OCklxETnckNbjwbfpKCQStKstqCptlhiLEAEDb7/7b
+         ThkZNhxofsNZV3c8/CtNX6MDC2O0m0BP3Bu+PuhZTRJBJuHYTFa9UL3qN41aHPvSlON7
+         +dnPw3RKCQTgJM8d0jw07eZ63fP0sI9Exvm0jqUjIESI2kYtgOTQyRQleDd+PFp4Hw+4
+         IuJA==
+X-Gm-Message-State: AOAM533B2qxlGVEbvXoUPBVJ2RRclddKJIxyM7KryDR5YVI/k7ULqPVl
+        BlNDMrGyksSVJCVBDe1KiiCuS8XFfKD1goAx/Ho=
+X-Google-Smtp-Source: ABdhPJx0AmgkV9cE7YZrAYTucsDxPOj7iGMkrooBstJ2APLp74YQnUFP0J0PcWONym4DRiNtFFvbKXZFoRlaXsy60JM=
+X-Received: by 2002:ab0:5602:: with SMTP id y2mr6724983uaa.120.1633019977032;
+ Thu, 30 Sep 2021 09:39:37 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:5d17:0:0:0:0 with HTTP; Mon, 27 Sep 2021 07:23:02
- -0700 (PDT)
-Reply-To: wvictor@gmx.at
-From:   willson victor <willsonvic3@gmail.com>
-Date:   Mon, 27 Sep 2021 15:23:02 +0100
-Message-ID: <CAPvEOSjzzWXYVum61SMjri_UAVcVnDbf708SFE0zJZuMmwpU=A@mail.gmail.com>
-Subject: Greeting from Abidjan
+Received: by 2002:a59:ab2e:0:b0:22d:7f44:603a with HTTP; Thu, 30 Sep 2021
+ 09:39:36 -0700 (PDT)
+Reply-To: irenezakari24@gmail.com
+From:   Irene zakari <irenezakari88@gmail.com>
+Date:   Thu, 30 Sep 2021 09:39:36 -0700
+Message-ID: <CAFT8PFG_8981ivC4O1EnUpb=bxUAD3b8Ry0XqxnGDqbSoBpVzQ@mail.gmail.com>
+Subject: PLEASE I NEED YOUR HELP
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
--- 
+Hello   ..
 
+How do you do over there? I hope you are doing well?
 
--- 
+My name is Irene. (24 years), i am single, from Gambia, the only child
+of late Eng. Bernard Bakary Zakaria. the Director of Bajam Enterprise
+(Building Construction Company in The Gambia) also the CEO of Bernard
+Import and Export (GAMBIA).
 
-I am a bank AUDITIOR GENERAL by profession,I am interested in
-transferring the funds to your country through the help of our bank
-insider whom is to make it happen, so we can invest the money in a
-good business of your choice in your country under your technical and
-managerial partnership, should you be inclined to be involved in this
-project, I will appreciate a prompt response from you through  my
-Private Email, so that you can provide your banking details even
-without any money in the account so we can quickly realize this
-transaction together.
+As a matter of fact my mother died when i was barely 4 years old
+according to my late father and because of the type of love he had for
+my mother made him to remain UN-married till he left the ghost..
 
-The total amount involved is One hundred and sixty million US DOLLARS
-only [160,000.000.00 DOLLARS ] and we wish to transfer this money into
-a safe foreigners account abroad. But I don't know any foreigner; I am
-only contacting you as a foreigner because this money cannot be
-approved to a local person here, but to a foreigner who has
-information about the account, which I shall give to you upon your
-positive response. I am revealing this to you with believe in God that
-you will never let me down in this business.
+So after the death of my father as a result of assassinate, his brother (My
+Uncle) who is the purchasing and marketing sale manager of my late
+fathers company named (Mr. James Tokunbo Oriade Zakaria) wanted to
+convert all the properties and resources of my late father into his
+which i quarreled with him and it made him to lay his anger on me to
+the extent of hiring an assassins to kill me but to God be the glory i
+succeeded by making a way to Burkina faso for my dear life.
+Honestly i do live a fearful life even here in Burkina faso because of
+those Assassins coming after me .
 
-I guarantee you that this transaction will be executed under a
-legitimate arrangement that will protect you from any breach of the
-law. The bank official will destroy all documents of the transaction
-immediately you receive this money leaving no trace to any place. I
-will use my position and influence to obtain all legal approvals for
-onward transfer of this money to your account with appropriate
-clearance from the relevant ministries and foreign exchange
-departments, At the conclusion of this business, you will be given 30%
-of the total amount, 70% will be for us.
+I would want to live and study in your country for my better future.
+because my father same blood brother wanted to force me into undecided
+marriage, just for me to leave my father home and went and live with
+another man I never know as he want to occupied all my father home
+and maybe to sold it as my father no longer alive, I'm the only child
+daughter my father born, '' but he don't know that i am not
+interesting in any of my father properties or early marriage for now,
+because i still have future to think about and to focus on my studies
+first as i was doing my first year in the University before the death
+of my father.
 
-PLEASE, TREAT THIS PROPOSAL AS TOP SECRET.
+Actually what I want to discuss with you is about my personal issue
+concern funds my late father deposited in a bank outside my country,
+worth $4.5 million united state dollars. i need your assistance to
+receive and invest this funds in your country.
 
-I look forward to hear from you. contact me through my email address
-( wvictor@gmx.at ).
+Please help me, I am sincere to you and I want to be member of your
+family as well if you wouldn't mind to accept me and lead me to better
+future in your country.
 
+All the documents the bank issue to my father during time of deposit
+is with me now.
+I already notify the bank on phone about the death of my father and
+they are surprise for the news and accept that my father is their good
+customer.
+I will be happy if this money can be invested in any business of your
+choice and it will be under your control till i finished my education,
+also I'm assuring you good relationship and I am ready to discuss the
+amount of money to give you from this money for your help.
 
-Yours sincerely,
-Willson victor .
+Therefore, I shall give you the bank contact and other necessary
+information in my next email if you will only promise me that you will
+not/never betray and disclosed this matter to anybody, because, this
+money is the only hope i have for survival on earth since I have lost
+my parents.
+
+Moreover I have the FUND PLACEMENT CERTIFICATE and the DEATH
+CERTIFICATE here with me, but before I give you further information, i
+will like to know your full data
+
+1. Full Name: ........................
+2. Address: ..................
+3. Nationality: ........... Sex................
+4. Age:........... Date of Birth:................
+5. Occupation:...................
+.....
+6. Phone: ........... Fax:.........................
+7. State of Origin: .......Country:..............
+8. Occupation:...................
+................
+9. Marital status........... E-mail address's: ............
+10. Scan copy of your ID card or Driving License/Photo:............
+DECLARATION:
+
+so that i will be fully sure that i am not trusting the wrong person.
+and it will also give me the mind to send you the bank contact for you
+to communicate with them for more verification about this money. and
+to know you more better.
+
+Meanwhile, you can reach me through my pastor,his name is Pastor Paul
+any time you call, tell him that you want to speak with me because
+right now i am living in the church here in Burkina faso and i don't
+want to stay here any longer,
+send for me to speak with you his phone number is this(+226 75213646)
+
+I will stop here and i will be waiting for your reply and feel free
+ask any thing you want to know about me.
+Please help me, I would be highly appreciated
+Have nice day.
+From Irene
