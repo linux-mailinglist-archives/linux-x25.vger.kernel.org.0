@@ -2,76 +2,70 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B460241E42E
-	for <lists+linux-x25@lfdr.de>; Fri,  1 Oct 2021 00:57:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BB0E41EBBF
+	for <lists+linux-x25@lfdr.de>; Fri,  1 Oct 2021 13:23:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348702AbhI3W7S (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 30 Sep 2021 18:59:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40450 "EHLO
+        id S1353360AbhJALZS (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 1 Oct 2021 07:25:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348689AbhI3W7Q (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 30 Sep 2021 18:59:16 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2972DC06177E
-        for <linux-x25@vger.kernel.org>; Thu, 30 Sep 2021 15:57:32 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id i19so28216012lfu.0
-        for <linux-x25@vger.kernel.org>; Thu, 30 Sep 2021 15:57:32 -0700 (PDT)
+        with ESMTP id S1353694AbhJALZR (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 1 Oct 2021 07:25:17 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED2E2C0613E2
+        for <linux-x25@vger.kernel.org>; Fri,  1 Oct 2021 04:23:32 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id s24so6960140wmh.4
+        for <linux-x25@vger.kernel.org>; Fri, 01 Oct 2021 04:23:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=AnIUtRQtDgk3YDJAatwz+LXUKRWPbctJNdAprjwvZ5o=;
-        b=NbyMdHEZeBs3sGq/yDHhFme6/Fat2fIEs1FbuecL1VGVLNPFVKU5MMEzqqtmtv3lrT
-         LyW5uhTxAor2u02W/ObGaIVKkso13EmNkPeqEKWvp/MUMhviRWbZ8nckHCYJ556NudOp
-         CVsQD4dF9ZylhNVdYAbBqX0A0zUyE0K2pGMLE76ziizR4sORoxcFl/sLgtHo3wxalxgg
-         zVWop8qYFvchibQzEbMROBdDHjlzHZVZJ1FRfybhb6wrSwetzJb9THEFmdLn6gkHaAVz
-         dFyBj/yMHcUaz8lAQTBNC3OUOyaayX15aeEcmR3hIb43fnzJKw76ohBZCKh7LDPECDvY
-         Mt4w==
+        bh=5L/E4eErsLvrvRSyjenHMn1XgR3BfAibYkaUBTxnmho=;
+        b=LLmurtDEA5JVo9ZjaVbs0k4e4TwS64Te4eBdtibog0kZhKtMbbW8tQQDGWCGYqh2vR
+         8gJtXNuGTlAQJd+qsGv+3OAhFDt/wOGzw8G6YLcjGrydESup73VVND/l29tgi0mXUeVx
+         6yFbWdliMayK0fUtEgI8JL2JnmrVDrL12nhRb2mcvVmCDNjW8DNyoG1X3sCxHWDr4PqV
+         +LQ+HSwjVq+cA6hpgFAkK00lZzjD6OXAoiuAjAQ8OWIDaoQ4uT4766xHvsmdcJJW1hwY
+         HEHpAxnZyUvLEI2bEKwi8zkfJfFUQ00VuDFJ4JgLrVlTzPrMBuGJ+NoTTYUw4KPWZ57Z
+         hXKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
          :subject:to;
-        bh=AnIUtRQtDgk3YDJAatwz+LXUKRWPbctJNdAprjwvZ5o=;
-        b=ej0NpCD5l499Qyk8ZYrkudwmzRNTkxjQ7MG/SroiTR6PwgYFXQ0isiqlelZhFBlXq3
-         OUXxJ76Dpy79Jhilbr2N7KiNYs7gt5lWj0/FfKWczeIYUfnXqtdWpsC5I68vnR38cK8z
-         Xwf85QsotJsirp5NwilfAPxfdwuLsnOmCuMmPXvsZb4etN8LReCBUAwf+8qhj3SCysfC
-         6PXVgYC+dPbWaHK9RlMcrOEBK8Lo1j7Ww1qUXBVvHD2nWlFq96DoLNSSga3hSyR+/lQg
-         nh13WBA+daQ4gi8jqOUXByVwoIH4p56pLAbzFmCYHg08LN/fOiHCDVI0uhmEVTA7XAxg
-         JhGg==
-X-Gm-Message-State: AOAM530vn4YK8HbFW9lEKca6THJsysoAklFwrxEi1tSDSlaj/FOrdY3Y
-        pTf0qXUwCLOkVFxbdcOVOu6jlkf2w7FJU/qvZ+0=
-X-Google-Smtp-Source: ABdhPJwtAjakrk22PhsocMynsw1dcpQi8Yyjww/qtw286RJir5/Sf5h95h400OE8CslcguyIOaDpjCBWapvMI27/7k0=
-X-Received: by 2002:a2e:5705:: with SMTP id l5mr8854699ljb.456.1633042649694;
- Thu, 30 Sep 2021 15:57:29 -0700 (PDT)
+        bh=5L/E4eErsLvrvRSyjenHMn1XgR3BfAibYkaUBTxnmho=;
+        b=FHy1EDIk/g7kGV5DKvsfDms0YnfLeMW44qvF2MXpQFddYjC4CvQpnpwn1Z4HEGrjea
+         lQpyWNIwf00kGh/A7/xplChfjBwvKtHFNSMqydAj93aX9lkbWgMBANJoOI+zrwPYMns/
+         Er1/rs7nSGiPqB0NAKMWXv6qb/S8474iHKa0IGtB+MIbyLaqMgFDc5xpPXitjbvn+moj
+         wdLwiJDFaDjDSLWZUhleT+IomP73YZQa3KKnJsGyBaGM1Q5ERddwvM/VV0exeIp0hH80
+         pUs+Uh0eYyVYPnJaarnuJoG+CEdNVZBndiRjoTnyazYybFjLFLgIM3jg4ARlhy9ILe7S
+         LUxg==
+X-Gm-Message-State: AOAM532Ni61CNk807ELE93uRhNY0ZyhSBlWih9jGrGfELUq3E7XAns56
+        92T7AetTYSVXjXvoi4dt/09S8TNvczuHKdttYVw=
+X-Google-Smtp-Source: ABdhPJwx6yg83rEz/wA3vUxiDB4RpzcX7hEEsqPqQUM4vWqpNgpCfJS7yHovwICOW8hdgnEQXPQ9uvBeH0bXWvea8hc=
+X-Received: by 2002:a1c:9dcc:: with SMTP id g195mr3911232wme.70.1633087411379;
+ Fri, 01 Oct 2021 04:23:31 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a05:6512:5d8:0:0:0:0 with HTTP; Thu, 30 Sep 2021 15:57:29
- -0700 (PDT)
-Reply-To: southwestloanco59@gmail.com
-From:   SOUTHWESTLOANCO <saniabdullahinng2020@gmail.com>
-Date:   Thu, 30 Sep 2021 15:57:29 -0700
-Message-ID: <CA+3X9TxSf18dxD51aJOg_UrukfudS2Vv1PZk=HxC5aHG_Y0JQg@mail.gmail.com>
-Subject: Dear owner,
+Received: by 2002:a5d:47c8:0:0:0:0:0 with HTTP; Fri, 1 Oct 2021 04:23:30 -0700 (PDT)
+Reply-To: joymat52@gmail.com
+From:   JOYCE THOMAS <co68605@gmail.com>
+Date:   Fri, 1 Oct 2021 04:23:30 -0700
+Message-ID: <CAFNbjxSSKXSOW9rtdEUTKWhhjbgiEf5cOUPdkUDSMZwyJxdNTg@mail.gmail.com>
+Subject: ATTN:
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
--- 
-Good day,
-          Do you need a loan ? We offer any kind of loan to repay in
-6months with just 2% interest
-
-Kindly Reply with below information
-
-NAME...............
-ADDRESS..........
-OCCUPATION....
-AGE...................
-PHONE..............
-AMOUNT NEEDED......
-
-Regards
-
-Contact  Mr Gary Edward +13182955380
-
-Remittance Department southwestloanco59@gmail.com
+Hello Dear
+My Name is Mr. Joyce Thomas. Contact me for more information on the
+transfer of ($7.9 million dollars) left by my late client from your
+Country. I want to present you as a business partner and next of kin
+of the fund. I will give you the details of this transaction, as soon
+as I hear from you. I need the information below:
+Full Name:
+Address:
+Occupation:
+Age:
+Personal Email:
+Personal Telephone:
+Best Regards,
+Mr.Joyce  Thomas
