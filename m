@@ -2,128 +2,80 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 83AD741FB72
-	for <lists+linux-x25@lfdr.de>; Sat,  2 Oct 2021 14:03:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB895428B2F
+	for <lists+linux-x25@lfdr.de>; Mon, 11 Oct 2021 12:53:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232979AbhJBMF3 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sat, 2 Oct 2021 08:05:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60886 "EHLO
+        id S236059AbhJKKy6 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 11 Oct 2021 06:54:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232935AbhJBMF1 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sat, 2 Oct 2021 08:05:27 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41C3C061570;
-        Sat,  2 Oct 2021 05:03:41 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id z184so1532206iof.5;
-        Sat, 02 Oct 2021 05:03:41 -0700 (PDT)
+        with ESMTP id S236022AbhJKKyo (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 11 Oct 2021 06:54:44 -0400
+Received: from mail-ed1-x542.google.com (mail-ed1-x542.google.com [IPv6:2a00:1450:4864:20::542])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1CB1C061777
+        for <linux-x25@vger.kernel.org>; Mon, 11 Oct 2021 03:52:20 -0700 (PDT)
+Received: by mail-ed1-x542.google.com with SMTP id i20so49833796edj.10
+        for <linux-x25@vger.kernel.org>; Mon, 11 Oct 2021 03:52:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=YxWIlaBSYFvjD6wxI3Im7HD0DUa8SKawF0d7t45AEzKjL6m83eOsT6rgZdQRGCng74
-         6RLcJMZhzHbNym1o2udNgSV2epSTH0qAv/gDWDsxACfpBL7vOUGDwWmGmUaO2SE5P8uY
-         T63X4axLx9vlrJbw970R//6K5CXkIsOYNNanoWJo6B81ZE00DEyRoVjZrAUA3RQ+9ju3
-         SZYoVWN+Ed+cukZyyntSGlKOmbEpXAJVn5nVjU9PttbC0fy1k1kkmOWz1VvVx3VvX7FT
-         7VoKZi/ug9VIcJXMy54+WPXzQ6H5V7BFKbJ6aHn+8SZElmbcl8wcN4j53q3jHLdvow5u
-         jyoA==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
+        b=AOwGJPRzreY174rbkYBENqDohFuS97wCy60jVSdUYNPvEhybdL2c3BcOeGHfafS8qn
+         uli8WfEZJzoNSATFu7DBFWZM5wABtXSV1fVUNkqBG+wI3EdLjqFjRGvGLPDsXQD4j8ti
+         JdKJOvfhiPWLhIdXxcZs7yEtyw7uhQsNkQbVb/JxSGMRe/N7DhEqEKRxFVAhJqYVr6ip
+         luxhwneuxQj/LqEVquYWqA1ElmxbF28So8sZzLv8Aq0heCWPmvwVFbMZiqnZY0gUleVY
+         srMWfgZ4YU41fQPU+nXlKo2suPYWVFr3mwjljaEytb5oh4cOqW2uYqGIU/2pgk6wVBCS
+         OkkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=nsZbpm1YBoHMpWTnzHLuE/zYZ0yg4jBiKD5Q7oCTPBE=;
-        b=LmOqDwxqDDyQv8S5r8mgiOrkAdVuYjTHRPeL3SEcVCmf7iltEE+9E/WZ/p4a/Rn6OK
-         r3NIfiwPWf7KMH2N8E7aj9oaEc65LBtP0zvNSXYapgvfoiGp/gn4pQr6YnnJ321thhXg
-         UPVYssUs2StzWAD4Fo7masaaFkiOnbLL5nVv/dCZJIbtpy0aOis4w8Sq2+zDrQJpYgJ2
-         BgAockzdWQXrw276F+kR1NCbmuusK8c+G5aTErF1zxB/C4qJBdeiCmLoNqfxrhcADHs1
-         C+A9TlKq/pvb05UIgyvRzQeVCHUz2Vc2jXMdDry12eLQagUSqyM6oyQG9mzJutcKherx
-         5Ckw==
-X-Gm-Message-State: AOAM531n/GcSWL+Qoyf2OX/kqSmiAkrV6zyLjg67Vu5E6w2n/478Pi66
-        /U4B72F0Qpia4whCxpJUMQqm5jkVFMT4Yf+6K6E=
-X-Google-Smtp-Source: ABdhPJz2q09A+517W2EVe9dbDivdnk3AEH6BZaUlyYLwJiT4IN/1ySl0KWhD1PmrDJ75/9gz6SNXe4y+mLeDTP26TSo=
-X-Received: by 2002:a05:6638:104:: with SMTP id x4mr2547380jao.145.1633176221400;
- Sat, 02 Oct 2021 05:03:41 -0700 (PDT)
+         :subject:to;
+        bh=DOxN63QWnl4dBNWQl+LufsBrewR+8VuPJnGph7ijSeE=;
+        b=MS90jBJeG3OvPMmuku9JX5iCcjwb53RCyEAdp7GvlRCi9VHudzS35NAYDnr0uetqDG
+         KZZZw0Ph/1dtP6ZAuG3drovYIEdorHEUxbIvux1uLGySAylBNOdqTLeX3NI1UGh8UO2w
+         J9AM6QVmX8Xc03H/oG9nW443LJ3rVX+ApbPcxwnTXLU75zp20mraE0bOu6ZDYqN7nWO+
+         DwCzBT4rBpvLrQCh4dLm0VqJYXSZ9UBKSk0Zl3yTTLnmFQmi5laZqrXBFIV0VgjNwQbB
+         fYzHQQCPgIL05I/p9zr18m1WMkwmqsDBx3tehuacXM2GzrwJpnNfevpl9t5VMHx/FW0o
+         xlDQ==
+X-Gm-Message-State: AOAM530Kj9gBo/iar+CrPPm6b5O2WjX8Rc0J2zsN+iEOR8cIY3c1Vdon
+        nqnUr1td6edOMY555u82AQ4JRLPVyVgcU5B2yU+Uy4DKeCLJdg==
+X-Google-Smtp-Source: ABdhPJyfJGEDNJnYy+rVU5F2kp5CR0JNqric22BUxuwjRQiA96y3Nmwroy+PAkdet7/Z+lAMJSMDUb21JjG1eJ5mxBo=
+X-Received: by 2002:adf:a550:: with SMTP id j16mr24209932wrb.180.1633949528442;
+ Mon, 11 Oct 2021 03:52:08 -0700 (PDT)
 MIME-Version: 1.0
-Received: by 2002:a4f:f90d:0:0:0:0:0 with HTTP; Sat, 2 Oct 2021 05:03:41 -0700 (PDT)
-Reply-To: unitednnation0@gmail.com
-From:   "U.n" <wadebaye33@gmail.com>
-Date:   Sat, 2 Oct 2021 00:03:41 -1200
-Message-ID: <CACE0T5XLJ2ZM5W28B0Dyv4Rc8vqA8pN78J4Aso6XvTW_kxoNmQ@mail.gmail.com>
-Subject: Attention
-To:     unitednnation0@gmail.com
-Cc:     pberger@brimson.com, alborchers@steinerpoint.com,
-        xavyer@ix.netcom.com, support@connecttech.com,
-        steve.glendinning@shawell.net, luca.risolia@studio.unibo.it,
-        stern@rowland.harvard.edu, oneukum@suse.de,
-        linux-uvc-devel@lists.sourceforge.net,
-        laurent.pinchart@ideasonboard.com, jussi.kivilinna@mbnet.fi,
-        sarah.a.sharp@linux.intel.com, royale@zerezo.com,
-        jdike@addtoit.com, richard@nod.at,
-        user-mode-linux-devel@lists.sourceforge.net,
-        user-mode-linux-user@lists.sourceforge.net, hjk@hansjkoch.de,
-        kzak@redhat.com, util-linux@vger.kernel.org, spock@gentoo.org,
-        hirofumi@mail.parknet.co.jp, alex.williamson@redhat.com,
-        pawel@osciak.com, m.szyprowski@samsung.com,
-        kyungmin.park@samsung.com, amit.shah@redhat.com,
-        rusty@rustcorp.com.au, mst@redhat.com, kvm@vger.kernel.org,
-        rl@hellgate.ch, brucechang@via.com.tw, HaraldWelte@viatech.com,
-        FlorianSchandinat@gmx.de, linux-fbdev@vger.kernel.org,
-        romieu@fr.zoreil.com, kaber@trash.net, florian@openwrt.org,
-        openwrt-devel@lists.openwrt.org, martyn.welch@ge.com,
-        manohar.vanga@gmail.com, gregkh@linuxfoundation.org,
-        devel@driverdev.osuosl.org, sbhatewara@vmware.com,
-        arvindkumar@vmware.com, pv-drivers@vmware.com, lrg@ti.com,
-        juergh@gmail.com, vt8231@hiddenengine.co.uk,
-        tony.olech@elandigitalsystems.com, linux-mmc@vger.kernel.org,
-        linux-usb@vger.kernel.org, zbr@ioremap.net, m.hulsman@tudelft.nl,
-        r.marek@assembler.cz, khali@linux-fr.org,
-        lm-sensors@lm-sensors.org, pierre@ossman.eu, wim@iguana.be,
-        linux-watchdog@vger.kernel.org, zaga@fly.cc.fer.hr,
-        linux-scsi@vger.kernel.org, dh.herrmann@googlemail.com,
-        david@hardeman.nu, inaky.perez-gonzalez@intel.com,
-        linux-wimax@intel.com, wimax@linuxwimax.org, mitr@volny.cz,
-        acme@ghostprotocols.net, lrg@slimlogic.co.uk,
-        linux-input@vger.kernel.org, broonie@opensource.wolfsonmicro.com,
-        patches@opensource.wolfsonmicro.com, tj@kernel.org,
-        andrew.hendry@gmail.com, linux-x25@vger.kernel.org,
-        tglx@linutronix.de, mingo@redhat.com, hpa@zytor.com,
-        x86@kernel.org, mjg@redhat.com,
-        platform-driver-x86@vger.kernel.org, tony.luck@intel.com,
-        bp@alien8.de, linux-edac@vger.kernel.org, mchehab@redhat.com,
-        jeremy@goop.org, virtualization@lists.linux-foundation.org,
-        stefano.stabellini@eu.citrix.com, ian.campbell@citrix.com,
-        netdev@vger.kernel.org, konrad.wilk@oracle.com,
-        xen-devel@lists.xensource.com, bpm@sgi.com, elder@kernel.org,
-        xfs@oss.sgi.com, anirudh@xilinx.com, John.Linn@xilinx.com,
-        grant.likely@secretlab.ca, jacmet@sunsite.dk
+Received: by 2002:adf:dd8c:0:0:0:0:0 with HTTP; Mon, 11 Oct 2021 03:52:07
+ -0700 (PDT)
+Reply-To: ramcharan9910@outlook.com
+From:   "Cr.David Ramcharan" <convy0101@gmail.com>
+Date:   Mon, 11 Oct 2021 03:52:07 -0700
+Message-ID: <CADDRs97R=WZOwhBkw75zF4TtQ=idFbd5TWX3jbTc8zsFJ+4qNw@mail.gmail.com>
+Subject: Thank You
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
---=20
+Please I am writing to notify you again on my intention to list your
+name as a beneficiary to the total sum of GBP6.350 million (Six
+million, Three hundred and fifty thousand British Pounds Sterlings) in
+the intent of the deceased (name now withheld since this is my second
+letter to you).
 
+I contacted you because you bear the surname identity and therefore
+can present you as the beneficiary to inherit the account proceeds of
+the deceased since there is no written "WILL" or trace to the deceased
+family relatives. My aim is to present you to my Bank Authorities as
+the Next of Kin to our deceased client. I will guide you all through
+the Claim procedure by providing all relevant Information and guiding
+you in your decisions and response to the Bank Management. All the
+papers will be processed after your acceptance.
 
-Attention Sir/Madam
-This is the United Nation (UN). We the United Nations (UN) Globally
-has approved (US$2.500,000)( two Million Five hundred thousand
-dollars) compensation as part of our responsibilities for humanitarian
-Aid for fighting against CoronaVirus and you are among the lucky ones.
+In your acceptance of this deal, I request that you kindly forward to
+me your letter of acceptance; your current telephone and fax numbers
+,age, occupational status and a forwarding address to enable me submit
+to the Bank Management the details as the Next of Kin to their
+deceased customer. Reply strictly through: ramcharancrdavid@gmail.com
 
-
-This compensation is for the most affected countries, communities and
-families across the global. Your funds were deposited with Bank in USA
-to transfer your funds to you via Internet Banking. You have to send
-your full details as state below:with this email Address
-  ( unitednnation0@gmail.com )
-Your full names:
-Address:
-Telephone:
-Occupation:
-
-
-
-Yours Sincerely
-Mr. Ant=C3=B3nio Guterres
-United Nations (UN).
+Yours faithfully,
+Cr.David Ramcharan
