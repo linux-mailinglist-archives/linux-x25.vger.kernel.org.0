@@ -2,79 +2,61 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2282D4453E2
-	for <lists+linux-x25@lfdr.de>; Thu,  4 Nov 2021 14:31:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B9D13447ADF
+	for <lists+linux-x25@lfdr.de>; Mon,  8 Nov 2021 08:27:11 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231305AbhKDNeG (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 4 Nov 2021 09:34:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58496 "EHLO
+        id S235786AbhKHH3u (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 8 Nov 2021 02:29:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230401AbhKDNeF (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 4 Nov 2021 09:34:05 -0400
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6A54C061714
-        for <linux-x25@vger.kernel.org>; Thu,  4 Nov 2021 06:31:27 -0700 (PDT)
-Received: by mail-ua1-x932.google.com with SMTP id v20so10772842uaj.9
-        for <linux-x25@vger.kernel.org>; Thu, 04 Nov 2021 06:31:27 -0700 (PDT)
+        with ESMTP id S235751AbhKHH3u (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 8 Nov 2021 02:29:50 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA6C061714
+        for <linux-x25@vger.kernel.org>; Sun,  7 Nov 2021 23:27:06 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id g14so58050310edz.2
+        for <linux-x25@vger.kernel.org>; Sun, 07 Nov 2021 23:27:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=vckQpSJQurswtg+FMKN7n5mxI42l1UN13f4t9l1+9N0=;
-        b=o1jeEuZMj6I9Z4ilR9F+pMNVnRmKTquFa/35aDEzuOLHsKsgPv8+mcY0PqOEXbB7en
-         dAh0jGD8+ceFxmf1QstnbCl9Ab/zpVLQHMad0eaPLu7oVaSWKIPdiXnWOHO0CqCRTiTV
-         oCxlWTOU0VgliUM1K8t28nmwt3P+xcPk4MRrn0j+xKxpO5M465vz4zDMP61MyziRMNLq
-         CYb8c9k2LOE+RTeLvc/HsJceVMFp832bW02fKP/NsBH/OtdB28vmDHDFoxv+WdlJSnIE
-         3YTL4iWuP1PQ2KxXDoOaBjziRbTSJNe+6x4sdPt9DkpsINUrV4TwaglLHmTi3UdCK72p
-         kjzA==
+        bh=gS+G2bXPLTc8QV9oSOsVFPfildfSifO+gabOlUjPn+8=;
+        b=PnTjqCg/4dLlfwZvkIw5TCFiXXqI7eQL3D+17+RauQ+gPkf2k9hY9S+Ii/M5IA0uoj
+         tcY9XkBE8UoWnMFVRIdA+q744Hmx7Z0JsFaVREssmf6KamM5Bd6A03cMP5bTAvPf1/y/
+         DwxXsJaTEuCfFdzSQFJTUHpZB56hO6UBVJPo7/S7fIQbraF2JB9fnNx0H/YOCyXyn5Fv
+         TpIbuoc9MhMDHEy5d5ztUWIHQVhdvbVN+KOKXsEiQg7QzXSruhiqF9yWAy+A70V6Qa0U
+         ve8aiam44Pcv5P2919T2rRvgnVW0nPh2s7GY8MWiotEmFwjxJpYnpgBFa5LZ/bTsndTX
+         N0eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:reply-to:from:date:message-id
          :subject:to;
-        bh=vckQpSJQurswtg+FMKN7n5mxI42l1UN13f4t9l1+9N0=;
-        b=wFlWyae15XBlvVv9s19MSalenu73x5db9oqj/BWlCQHsY0E+u5HjTZgIQUW81nN9ID
-         0ZWpjBrlx6w7jMKd+KdCS1DYofKjuaefZf9MGpy4YJBZqaozmLki82eMIqolI4vkdRHe
-         c3SGJbKo5lGgrlyq6T+ib3iH9eEjFi7MZKXThaVRHDLF1+pJ97X/RtbSN1YipS0gqYN1
-         DBzctTNqdwVv75EV9jZyu+Gxp+cPrc/FRHSGQpDSyfh5Exz2CTYNsoVE3BwxNuL3nVft
-         R3VigQD5XQgRBnyKavNgckK1irLTjqzu6i6+nTU9i1FKzIpCpQfNp41FWN460/KtyOJz
-         PDWg==
-X-Gm-Message-State: AOAM530EcdEBKxVgto40puxdryGUTX2bk8mgaoFt6DVFm9lQKty0+Cs6
-        yU/agGbWrSEWyPZnMFTNxhSInW1drttVCC9cj6U=
-X-Google-Smtp-Source: ABdhPJwMd6+Cpg/MJxeMiUZ8/AgS5sU3lX+V0s4A2SxX5yi1sQRpmnvrPRETvmNq0I2dz0tsyUC1aZ1LNcN1ZUWUxR4=
-X-Received: by 2002:ab0:648c:: with SMTP id p12mr47432706uam.93.1636032685551;
- Thu, 04 Nov 2021 06:31:25 -0700 (PDT)
+        bh=gS+G2bXPLTc8QV9oSOsVFPfildfSifO+gabOlUjPn+8=;
+        b=QO5DXtdS1t81KlFmtO4wrH0HauMLcMwlLjUGXgA6gGyXBuPkUF95lVeb/5L2+KVnKC
+         pbO5W6AsS4/0udbdJasv+GKo6IK6ddOTziodwxi2HGpNB6w30yeIWar+MG3OY22VcftO
+         e6FgyvYr1ilsW8mY49h0oNjDeTg0ojtG1L0NYmNQQnlvkxpJky8QoAjjUHr7wNcH4KtS
+         RasfRh7TPyKRvHftt6mXJOiBwjNGv05/GRL05CE8Erh9SlB5BrJArFdbi5M5jSSjF8/i
+         8ckm15J3DfNLZm8iPH8gJqjh81AMdEeHFkjRju5ibTrTyUcVY7sSGE2oFugZA/X1Shd3
+         seXg==
+X-Gm-Message-State: AOAM532RIGWCYjkBIa7pI6wtLGt3nv/s0VSQ6qit0qJOEqrgnbRvbNuD
+        SvMHM4+Om93KDCZnVFdbZBjAS86E9hZ2/OJt8gPVWnN8s/A=
+X-Google-Smtp-Source: ABdhPJz9Akl6xfGwwFGOOyIMXLWznjij6kDDSEQ53AjVdYeVh/nfgX+la012XOuUHhNctlqPhGJ9oR9znvMO/9Cv6/o=
+X-Received: by 2002:a50:930b:: with SMTP id m11mr83450378eda.133.1636356414537;
+ Sun, 07 Nov 2021 23:26:54 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a59:c20b:0:b0:23d:911f:4ff4 with HTTP; Thu, 4 Nov 2021
- 06:31:25 -0700 (PDT)
-Reply-To: pd0874586@gmail.com
-From:   Inspector Peter Douglas <anthonychrist12345@gmail.com>
-Date:   Thu, 4 Nov 2021 06:31:25 -0700
-Message-ID: <CAGKYHfwFC0P24zjzgantDcmDPTuCg_hgz_oMPTqZjGk2SAi8iA@mail.gmail.com>
-Subject: Hello, Respond ASAP
+Received: by 2002:a50:2501:0:0:0:0:0 with HTTP; Sun, 7 Nov 2021 23:26:54 -0800 (PST)
+Reply-To: mariaschaefler@gmx.com
+From:   Maria Schaefler <ziskoraa@gmail.com>
+Date:   Mon, 8 Nov 2021 07:26:54 +0000
+Message-ID: <CAJh0FjiDs5_oQE4K3AME-kH_RMPNXEEapYKvrR9As+S+Dzwh5Q@mail.gmail.com>
+Subject: MY HEART CHOOSE YOU.
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello, Respond ASAP
-
-I am a united nation inspection agent with a mandate from U.N Security
-council to investigate money laundering, terrorism financing & all
-related acts currently stationed at Hartsfield Jackson Atlanta
-International Airport GA conducting audition of all abandoned
-consignment in United state Airports, upon a closer investigation, I
-discovered an abandoned luggage in your name which was transferred to
-our facility and When scanned it was revealed that it contains
-legitimate cash with a rough estimation of about six million USD
-($6.000,0000)
-
-I am contacting you because I want us to transact this business and
-share the money since the shipper have abandoned it. Upon your
-response indicating your interest, more detailed information shall be
-released to you. contact me with this email address
-(pd0874586@gmail.com).
-
-Thank's
-Inspector Peter Douglas
-MY PROPOSAL.
-Email: pd0874586@gmail.com
+Given my current state of health, I have decided to donate what I
+inherited from my late husband to you to help the poor and needy. I am
+Mrs Maria Schaefler,a 57years old dying woman. I was diagnosed for
+cancer about 2 years ago and I have few months to live according to
+medical experts. Email me for my directives
