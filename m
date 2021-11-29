@@ -2,59 +2,73 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DC59458660
-	for <lists+linux-x25@lfdr.de>; Sun, 21 Nov 2021 21:44:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id C45B5461518
+	for <lists+linux-x25@lfdr.de>; Mon, 29 Nov 2021 13:31:33 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232919AbhKUUrz (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 21 Nov 2021 15:47:55 -0500
-Received: from mx07-00227901.pphosted.com ([185.132.182.185]:50190 "EHLO
-        mx08-00227901.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S230421AbhKUUry (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 21 Nov 2021 15:47:54 -0500
-X-Greylist: delayed 31417 seconds by postgrey-1.27 at vger.kernel.org; Sun, 21 Nov 2021 15:47:52 EST
-Received: from pps.filterd (m0097675.ppops.net [127.0.0.1])
-        by mx07-.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 1AJ7xOI5005994;
-        Fri, 19 Nov 2021 10:27:14 +0100
-Received: from zbw2k16ex01.bardusch.net ([185.80.186.174])
-        by mx07-.pphosted.com (PPS) with ESMTPS id 3cdjtyh6e0-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Fri, 19 Nov 2021 10:27:14 +0100
-Received: from ZBW2K16EX01.bardusch.net (172.25.1.1) by
- ZBW2K16EX01.bardusch.net (172.25.1.1) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA) id 15.1.2308.20;
- Fri, 19 Nov 2021 10:27:13 +0100
-Received: from User (172.25.1.131) by ZBW2K16EX01.bardusch.net (172.25.1.1)
- with Microsoft SMTP Server id 15.1.2308.20 via Frontend Transport; Fri, 19
- Nov 2021 10:27:03 +0100
-Reply-To: <josechoondak@gmail.com>
-From:   Joseph Choondak <info@ndd.co.mz>
-Subject: I hope this email finds you well.
-Date:   Fri, 19 Nov 2021 01:27:17 -0800
+        id S1348152AbhK2Met (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 29 Nov 2021 07:34:49 -0500
+Received: from no-data ([111.160.120.54]:56313 "HELO 23.128.96.18"
+        rhost-flags-OK-FAIL-FAIL-FAIL) by vger.kernel.org with SMTP
+        id S236408AbhK2Mcp (ORCPT <rfc822;linux-x25@vger.kernel.org>);
+        Mon, 29 Nov 2021 07:32:45 -0500
+X-Greylist: delayed 17613 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Nov 2021 07:32:42 EST
+Received: from [178.88.101.204] by 23.128.96.18 with ESMTP id 23100309; Mon, 29 Nov 2021 11:27:27 -0100
+Message-ID: <h-i--tb4dc$84-$h-n4@8luckq0z2>
+From:    =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
+         <hgds2142ajh@hanmail.net>
+Reply-To:  =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
+           <hgds2142ajh@hanmail.net>
+To:     linux-nilfs@vger.kernel.org
+Subject:  =?ISO-8859-1?Q?=20=B1=B8=C0=CE/=B1=B8=C1=F7=C1=DF=C0=CC=BD=C3=B6?= =?ISO-8859-1?Q?=F3=B8?=
+        =?ISO-8859-1?Q?=E9?=  =?ISO-8859-1?Q?=20=B9=DD=B5=E5=BD=C3?=  =?ISO-8859-1?Q?=20=B9=E6=B9=AE=C7?=
+        =?ISO-8859-1?Q?=D8=BC=AD?=  =?ISO-8859-1?Q?=20=C8=AE=C0=CE=C7=D8=BA=B8=BC=BC=BF=E4.?= sna n 
+Date:   Mon, 29 Nov 2021 11:27:27 -0100
+X-Mailer: Microsoft Outlook Express 5.50.4133.2400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/alternative;
+        boundary="_B5D_DECAABC44A_BA_"
 X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
-Message-ID: <df3f24ed-6571-4db0-afaf-2f1171b46248@ZBW2K16EX01.bardusch.net>
-To:     Undisclosed recipients:;
-X-Proofpoint-ORIG-GUID: 64rehLaKfzm2AOk5eUTzKrlN8apD89hM
-X-Proofpoint-GUID: 64rehLaKfzm2AOk5eUTzKrlN8apD89hM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.790,Hydra:6.0.425,FMLib:17.0.607.475
- definitions=2021-11-19_08,2021-11-17_01,2020-04-07_01
-X-Proofpoint-Spam-Reason: orgsafe
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-May I please ask with considerable urgency for your kind assistance with the following matter.
-I'm a financial person, I think  I have something huge you might be interested in.
 
-Looking forward to hearing from you.
+--_B5D_DECAABC44A_BA_
+Content-Type: text/plain;
+Content-Transfer-Encoding: quoted-printable
 
+<p>=BE=C8=B3=E7=C7=CF=BC=BC=BF=E4. =C8=B8=BF=F8=B4=D4=B5=E9~~~!!
+   <div>=B0=A8=B1=E2,=C4=DA=B7=CE=B3=AA
+=C1=B6=BD=C9=C7=CF=BD=C3=B0=ED=BF=E4=
+,</div>
+   <div>=C0=A5=BC=AD=C7=CE=C7=CF=B4=D9 =B1=B8=C0=CE/=B1=B8=C1=F7=BF=A1 =B0=
+=FC=C7=D1 =C1=C1=C0=BA =C1=A4=BA=B8=B0=A1 =C0=D6=BE=EE
+=B0=F8=C0=AF=C7=D5=B4=
+=CF=B4=D9.</div>
+   <div>
+      <br />=C1=F7=C1=BE/=C6=C4=C6=AE/=BA=D0=B7=F9=BA=B0=B7=CE
+=C6=C4=C6=AE=
+=C5=B8=C0=D3,=BE=CB=B9=D9,=C1=A4=C1=F7=BF=F8 =B1=B8=C0=CE
+=B1=B8=C1=F7=C0=CC=
+ =B0=A1=B4=C9=C7=D1
+   </div>
+   <div>=BE=E0 300=BF=A9=B0=B3 =BB=E7=C0=CC=C6=AE =C0=FC=BF=EB
+=BE=EE=C7=C3=
+=B8=AE=C4=C9=C0=CC=BC=C7=C0=D4=B4=CF=B4=D9.</div>
+   <div>
+      <br />=B4=A9=B1=BA=B0=A1 =B9=AB=BE=F9=C0=BB =C3=A3=B5=E7=C1=F6
+=B9=DD=
+=B5=E5=BD=C3 "=C0=E2=B9=EA=B5=E5 =C0=FC=BF=EB=BE=DB"=BF=A1=B4=C2 =C0=D6=B4=
+=D9=B0=ED =C0=DA=BD=C5=C7=D5=B4=CF=B4=D9.
+   </div>
+   <div>=B2=C0 =C7=D1=B9=F8 =B9=E6=B9=AE=C7=D8=BA=B8=BC=BC=BF=E4.</div>
+   <div>=B9=E6=B9=AE=C7=CF=B1=E2&gt;&gt;&gt; <a href=3D"https://soo.gd/TvW=
+c" target=3D"_blank">https://soo.gd/TvWc</a></div>
+   </p>
+cb jnkdjnph
+ 
+ 
+cxndm bk mrxzyjft
 
-Respectfully!!
-Joseph Choondak
-Account Executive.
+--_B5D_DECAABC44A_BA_--
+
