@@ -2,73 +2,77 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C45B5461518
-	for <lists+linux-x25@lfdr.de>; Mon, 29 Nov 2021 13:31:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D37E464CD9
+	for <lists+linux-x25@lfdr.de>; Wed,  1 Dec 2021 12:34:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348152AbhK2Met (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 29 Nov 2021 07:34:49 -0500
-Received: from no-data ([111.160.120.54]:56313 "HELO 23.128.96.18"
-        rhost-flags-OK-FAIL-FAIL-FAIL) by vger.kernel.org with SMTP
-        id S236408AbhK2Mcp (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Mon, 29 Nov 2021 07:32:45 -0500
-X-Greylist: delayed 17613 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Nov 2021 07:32:42 EST
-Received: from [178.88.101.204] by 23.128.96.18 with ESMTP id 23100309; Mon, 29 Nov 2021 11:27:27 -0100
-Message-ID: <h-i--tb4dc$84-$h-n4@8luckq0z2>
-From:    =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
-         <hgds2142ajh@hanmail.net>
-Reply-To:  =?ISO-8859-1?Q?=20=22=C8=AB=BF=B5=C8=C6=B4=EB=B8=AE=22?= 
-           <hgds2142ajh@hanmail.net>
-To:     linux-nilfs@vger.kernel.org
-Subject:  =?ISO-8859-1?Q?=20=B1=B8=C0=CE/=B1=B8=C1=F7=C1=DF=C0=CC=BD=C3=B6?= =?ISO-8859-1?Q?=F3=B8?=
-        =?ISO-8859-1?Q?=E9?=  =?ISO-8859-1?Q?=20=B9=DD=B5=E5=BD=C3?=  =?ISO-8859-1?Q?=20=B9=E6=B9=AE=C7?=
-        =?ISO-8859-1?Q?=D8=BC=AD?=  =?ISO-8859-1?Q?=20=C8=AE=C0=CE=C7=D8=BA=B8=BC=BC=BF=E4.?= sna n 
-Date:   Mon, 29 Nov 2021 11:27:27 -0100
-X-Mailer: Microsoft Outlook Express 5.50.4133.2400
+        id S1348963AbhLALhk (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 1 Dec 2021 06:37:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33524 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348970AbhLALhg (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 1 Dec 2021 06:37:36 -0500
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A417DC0613F1
+        for <linux-x25@vger.kernel.org>; Wed,  1 Dec 2021 03:34:10 -0800 (PST)
+Received: by mail-qv1-xf2f.google.com with SMTP id jo22so21220011qvb.13
+        for <linux-x25@vger.kernel.org>; Wed, 01 Dec 2021 03:34:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=nKE9e+4jEQRb21OhoYPSbxPLfJ2IuSmNXU0U6wmcP4ykCacrWpdbtE0jjuz/hSLLGi
+         3CHjeG+lFmWzoULwCsmlhVFgDEk5dLFaYb51pw7bXGjZ9H8t0j91dP9aL17MRQYkMPZK
+         Snvty/Yp8/ZrWZr2EuFXHqBxUdbU8X39ik45viERJ1Dn7qW8BPCFp2vlafV2okU0kn5j
+         QPTIDY8QJSy8zAVbK10d6+AY0lky+mrQRAAg0uS1DacQStzD/dQtt/uBz/RlGIdZCai/
+         BHep24kmiLdl1nvBvHYMFonu8NoJvJlErv7lbZlg2+2c277BpkzmDA4WwPZoxzlIf0Mh
+         Af5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to;
+        bh=l4J9Z+m4hmgZbWtQHlC70w1zjUmiI7wjClCwm6dHAnY=;
+        b=5bkwvARTCrbA3+MxPTh876TODcdpVTfYQcMsOkSgGZOyt7sww+ZH6YByGqdCbofNNc
+         i/cLMQXH9d4Ld1BxXHlGvagQe4a6FtPszQgmY5GSGOWtx9MZeu9pFaxb/Gbb7R5Yu31A
+         ukCLKir+ZYcGG/YAQp+GnPRqr3i5TZhfiWliMd73+NXz7gZIi8bXi1qIrnfoKWKfO0Hr
+         1xXh1CvESA8cINVMirnyThgpDbrJ5U3ybnxHI/GaaM2PFwarGegoIrZFVyHyamr0OOhH
+         TKQepS4Fsco6aj1thR6K8YGgXOGYlVl0iYoc6E8J7Nf1/40S+dBMgg5L7SSXNxiBtsU5
+         DJEg==
+X-Gm-Message-State: AOAM532NBvvk7ZTPOJMPvgObxQ8UD/vU6sZtObD5d51v//T5hP0WOlKV
+        Ih1uIodB5LYnZ8+LnBuYPG5tu6OOIduyrrCVvoWVVsja9sk=
+X-Google-Smtp-Source: ABdhPJwK+H50pzFgfv5CJPfAwBzUdMqIKHh+Ckkuju2lG2knVlJrzqINPiiwPjc/Uz6xuSJez7Fkn5YZPcfa5CPpvro=
+X-Received: by 2002:a67:ef4d:: with SMTP id k13mr6266305vsr.4.1638358439020;
+ Wed, 01 Dec 2021 03:33:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-        boundary="_B5D_DECAABC44A_BA_"
-X-Priority: 3
+Sender: unitednationawardwinner@gmail.com
+Received: by 2002:ab0:6c55:0:0:0:0:0 with HTTP; Wed, 1 Dec 2021 03:33:58 -0800 (PST)
+From:   "Mrs. Orgil Baatar" <mrs.orgilbaatar21@gmail.com>
+Date:   Wed, 1 Dec 2021 03:33:58 -0800
+X-Google-Sender-Auth: uTQ_nfkzXaWGWaTWp1BSFqK3Ucs
+Message-ID: <CAJ4dHaSrD-X=xpfKNZV-hXSiMV6mNYrgy5vWCNkKm6iu5RQStg@mail.gmail.com>
+Subject: Your long awaited part payment of $2.5.000.00Usd
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
+Attention: Beneficiary, Your long awaited part payment of
+$2.5.000.00Usd (TWO MILLION FIVE Hundred Thousand United State
+Dollars) is ready for immediate release to you, and it was
+electronically credited into an ATM Visa Card for easy delivery.
 
---_B5D_DECAABC44A_BA_
-Content-Type: text/plain;
-Content-Transfer-Encoding: quoted-printable
+Your new Payment Reference No.- 6363836,
+Pin Code No: 1787
+Your Certificate of Merit Payment No: 05872,
 
-<p>=BE=C8=B3=E7=C7=CF=BC=BC=BF=E4. =C8=B8=BF=F8=B4=D4=B5=E9~~~!!
-   <div>=B0=A8=B1=E2,=C4=DA=B7=CE=B3=AA
-=C1=B6=BD=C9=C7=CF=BD=C3=B0=ED=BF=E4=
-,</div>
-   <div>=C0=A5=BC=AD=C7=CE=C7=CF=B4=D9 =B1=B8=C0=CE/=B1=B8=C1=F7=BF=A1 =B0=
-=FC=C7=D1 =C1=C1=C0=BA =C1=A4=BA=B8=B0=A1 =C0=D6=BE=EE
-=B0=F8=C0=AF=C7=D5=B4=
-=CF=B4=D9.</div>
-   <div>
-      <br />=C1=F7=C1=BE/=C6=C4=C6=AE/=BA=D0=B7=F9=BA=B0=B7=CE
-=C6=C4=C6=AE=
-=C5=B8=C0=D3,=BE=CB=B9=D9,=C1=A4=C1=F7=BF=F8 =B1=B8=C0=CE
-=B1=B8=C1=F7=C0=CC=
- =B0=A1=B4=C9=C7=D1
-   </div>
-   <div>=BE=E0 300=BF=A9=B0=B3 =BB=E7=C0=CC=C6=AE =C0=FC=BF=EB
-=BE=EE=C7=C3=
-=B8=AE=C4=C9=C0=CC=BC=C7=C0=D4=B4=CF=B4=D9.</div>
-   <div>
-      <br />=B4=A9=B1=BA=B0=A1 =B9=AB=BE=F9=C0=BB =C3=A3=B5=E7=C1=F6
-=B9=DD=
-=B5=E5=BD=C3 "=C0=E2=B9=EA=B5=E5 =C0=FC=BF=EB=BE=DB"=BF=A1=B4=C2 =C0=D6=B4=
-=D9=B0=ED =C0=DA=BD=C5=C7=D5=B4=CF=B4=D9.
-   </div>
-   <div>=B2=C0 =C7=D1=B9=F8 =B9=E6=B9=AE=C7=D8=BA=B8=BC=BC=BF=E4.</div>
-   <div>=B9=E6=B9=AE=C7=CF=B1=E2&gt;&gt;&gt; <a href=3D"https://soo.gd/TvW=
-c" target=3D"_blank">https://soo.gd/TvWc</a></div>
-   </p>
-cb jnkdjnph
- 
- 
-cxndm bk mrxzyjft
+Your Names: |
+Address: |
 
---_B5D_DECAABC44A_BA_--
+Person to Contact:MR KELLY HALL the Director of the International
+Audit unit ATM Payment Center,
 
+Email: uba-bf@e-ubabf.com
+TELEPHONE: +226 64865611 You can whatsApp the bank
+
+Regards.
+Mrs ORGIL BAATAR
