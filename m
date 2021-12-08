@@ -2,92 +2,85 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7058146CC30
-	for <lists+linux-x25@lfdr.de>; Wed,  8 Dec 2021 05:13:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A202D46CE46
+	for <lists+linux-x25@lfdr.de>; Wed,  8 Dec 2021 08:20:59 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233762AbhLHERT (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 7 Dec 2021 23:17:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41592 "EHLO
+        id S244493AbhLHHYX (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 8 Dec 2021 02:24:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244187AbhLHERS (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 7 Dec 2021 23:17:18 -0500
-Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECC6C0617A2
-        for <linux-x25@vger.kernel.org>; Tue,  7 Dec 2021 20:13:46 -0800 (PST)
-Received: by mail-il1-x141.google.com with SMTP id s11so1082409ilv.3
-        for <linux-x25@vger.kernel.org>; Tue, 07 Dec 2021 20:13:46 -0800 (PST)
+        with ESMTP id S244506AbhLHHYS (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 8 Dec 2021 02:24:18 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20F49C061574;
+        Tue,  7 Dec 2021 23:20:47 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id y13so5037552edd.13;
+        Tue, 07 Dec 2021 23:20:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
-        b=cGWxDwe8B66FlIrZtrergIqE5+JvdqJ48sEvPTrvhBJ9xEqZLGyWZmuSPdCEFce/7D
-         /sVR44uqtlb2dmBH+iwgt0kboAu4/HTy3OZt9J6nwOu1H5twbKwVBnMykOKrBLHcBBEb
-         cgMJ7/59oMUtMggaQ9x/N1xe+U0YzN1k+xfCXkO5L7YIW30RFDnvCB0PrD7sMExliX7S
-         joeNtgfdJmxv3l42BA4cQp1HveXj/LpauGoYMsZKrrlYurvW6FC9Nrn9v/z7yklCLUv+
-         2uZJGSHlx+O0Rg+LxyFVcXJ8erZC2O96QnEFLkA1QmSl94RBUxOevwSkF8rG8CDqN06m
-         KdcQ==
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7BIJQrNbvC3Sfrj3cs08TIKsWWE8pnsGwEpOQkIeNTQ=;
+        b=iNgLrgO2lyyj6vxqeTpSAwlpYCUYwSlSjSTZS7GHEDo68M2k5PavylSd/HFXX+Z8Wi
+         iNKzzTHmYo3QuUR5t1FkZD+SujxkppOIrWYv4L+MdrFekZvh6zMbiDqzmYsBqvV/yMFE
+         LUw48epfCfSoRz3wPIs93n9PEigtayN4QoPHu5HBw/vS2hR5p3+DZE45wHhIuyHfK3+2
+         wPhQOH3c42Qk+LxRQCfdpA+CW2uhkCll4xNy+2tXRyMdOTlMIdxnEzwyvdCzs9Yequud
+         TmH0UcrcaXpPG/Z3vAN+N4DqLEkyPvkJL3NBDjndTnaB1gR9svnomEH9lRfQg8sxQUfc
+         RhuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
-        b=4Wud6gHKbTDDuLzMHYHU22tsUY1sl1A5XiekgzQNkxGsyMYB+m4Q6qlHc26ALUgYGe
-         w6gyV4r3NP1LsP64wbHvnJIgozyU6v0+Y3iFVoA4M3rB/RhWOkxqSxymxFFNLNYHiOF/
-         uD5sQlmCh1C6TtIA7AB/4CUl9F3Rkl+904MRamFY6oCGfhzkHcURUEnKQqb3XqNzvjRx
-         U2DcJ2icxm+eJVN7V8BDrESpe9xMm/zeK/+8omSaQ74XLfzUJwkaBxngAUzddthn9eDJ
-         8S6yTJupdcMa5ox/LEmdJAMIVwXqwk0MFH1RnFiZ30utYVMCZV30N62TItQZqfKYx1y+
-         OWGQ==
-X-Gm-Message-State: AOAM531aIbFAhEYQoLsRHTuBrVx4eVgLUuTQAoiBZosglg6AGHsBqj4n
-        HcIYdTbYnRbqilfx4H+nPdm6/sNYhAkz9r7QRTNKFZqsltp4Gw==
-X-Google-Smtp-Source: ABdhPJx498jQ3rDCAEAukf875uPMCUUvAAHHJyp/169nhahBv8dg1ZTt80/LmlBc7j967yPpWx87fZn4PQyrL4JX27A=
-X-Received: by 2002:a92:600f:: with SMTP id u15mr3954317ilb.292.1638936815828;
- Tue, 07 Dec 2021 20:13:35 -0800 (PST)
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=7BIJQrNbvC3Sfrj3cs08TIKsWWE8pnsGwEpOQkIeNTQ=;
+        b=F8vbuh3dLJeTfmdaesx4Q8WJRjgLqmsegsBRwzeInQAR6qcLwxzAtlDGnQcx3p/QkD
+         FkClLhPggpQ+Z8vfaOQz49hyuz0izRzT47Fh2QSbrqcY5l2Kvh+EKj3UbD6ZvTa/RUpl
+         /mWW3gzd1SgJJX7elOH2VBx7qyrwpOO+Fn6mKjsPnwKPWm1Q2jBEIrRTd9niS69uGfkO
+         VT2JhKxm4Ovd0QOcJb8Zm2PtmLkrfhZ8yFBiw/poR8j4YaG5FRfICqhIRCxXre6bb62i
+         s7vwjsE173BlVe9H9bQ3uXV05dD1bHth5JZWqbo2LV/815Jo28wXMrw75U6rZxEBPDpI
+         8yZA==
+X-Gm-Message-State: AOAM532h+lXUXPu6yiFuvDMpKbL1Kc+i8IoTHCrUrY69o+TmmtAIVwiU
+        exGQrS/LEWEmkbzPBEcIoGxRjdOBfmvJGg==
+X-Google-Smtp-Source: ABdhPJxiwIWly/70RIrm2aHCk0z5clhMwpQt58wbrMPOxfwbm/6LcBBbKdD57wNoL0q9qLnPOA0euw==
+X-Received: by 2002:a17:907:1b11:: with SMTP id mp17mr5290024ejc.374.1638948045764;
+        Tue, 07 Dec 2021 23:20:45 -0800 (PST)
+Received: from localhost ([81.17.18.62])
+        by smtp.gmail.com with ESMTPSA id e1sm964969ejy.82.2021.12.07.23.20.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Dec 2021 23:20:45 -0800 (PST)
+From:   =?UTF-8?q?J=CE=B5an=20Sacren?= <sakiwit@gmail.com>
+To:     ms@dev.tdt.de, davem@davemloft.net, kuba@kernel.org,
+        linux-x25@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH net-next] net: x25: drop harmless check of !more
+Date:   Wed,  8 Dec 2021 00:20:25 -0700
+Message-Id: <20211208024732.142541-5-sakiwit@gmail.com>
+X-Mailer: git-send-email 2.32.0
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Received: by 2002:a05:6e02:1a07:0:0:0:0 with HTTP; Tue, 7 Dec 2021 20:13:35
- -0800 (PST)
-Reply-To: dj0015639@gmail.com
-From:   David Jackson <enkenpaul@gmail.com>
-Date:   Wed, 8 Dec 2021 05:13:35 +0100
-Message-ID: <CAG7-cQ_JEx-8fDdxn0Ex314ViSE32kaUjoR=sUvV7wmCUiKRGw@mail.gmail.com>
-Subject: FEDERAL BUREAU OF INVESTIGATION
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Our Ref: RTB /SNT/STB
-To: Beneficiary
+From: Jean Sacren <sakiwit@gmail.com>
 
-This is FBI special agents, David Jackson. I was delegated along side
-others by the United Nations to investigate scammers who has been in
-the business of swindling foreigners especially those that has one
-form of transaction/contracts and another. Please be informed that in
-the course of our investigation, we detected that your name and
-details in our Scammed Monitoring Network. We also found out that you
-were scammed of a huge sum of money by scammers via Western union and
-MoneyGram. Be informed here that in a bid to alleviate the suffering
-of scammed victims, the United Nations initiated this compensation
-program and therefore, you are entitled to the sum of Five Million Two
-Hundred Thousand United States Dollars ($5,200,000.00 USD) for being a
-victim.
+'more' is checked first.  When !more is checked immediately after that,
+it is always true.  We should drop this check.
 
-Note that the said fund will be transfer to you via the Citibank being
-the paying bank mandated by the United Nations officials.
+Signed-off-by: Jean Sacren <sakiwit@gmail.com>
+---
+ net/x25/x25_in.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-However, we have to inform you that we have been able to arrest some
-of the swindlers who has been in this illicit business and will all be
-prosecuted accordingly. Be informed as well that we have limited time
-to stay back here, so we will advice that you urgently respond to this
-message ASAP. And do not inform any of the people that collected money
-from you before now about this new development to avoid jeopardizing
-our investigation. All you need to do is to follow our instruction and
-receive your compensation accordingly as directed by the United
-Nations.
-
-We urgently wait to receive your response.
-
-Regards,
-DAVID JACKSON
-FEDERAL BUREAU OF INVESTIGATION
-INVESTIGATION ON ALL ONLINE WIRE TRANSFER
+diff --git a/net/x25/x25_in.c b/net/x25/x25_in.c
+index e1c4197af468..b981a4828d08 100644
+--- a/net/x25/x25_in.c
++++ b/net/x25/x25_in.c
+@@ -41,7 +41,7 @@ static int x25_queue_rx_frame(struct sock *sk, struct sk_buff *skb, int more)
+ 		return 0;
+ 	}
+ 
+-	if (!more && x25->fraglen > 0) {	/* End of fragment */
++	if (x25->fraglen > 0) {	/* End of fragment */
+ 		int len = x25->fraglen + skb->len;
+ 
+ 		if ((skbn = alloc_skb(len, GFP_ATOMIC)) == NULL){
