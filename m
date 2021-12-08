@@ -2,158 +2,92 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A07E546A4AF
-	for <lists+linux-x25@lfdr.de>; Mon,  6 Dec 2021 19:34:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 7058146CC30
+	for <lists+linux-x25@lfdr.de>; Wed,  8 Dec 2021 05:13:58 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239363AbhLFSiQ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 6 Dec 2021 13:38:16 -0500
-Received: from mail-bn1nam07hn2221.outbound.protection.outlook.com ([52.100.160.221]:34878
-        "EHLO NAM02-BN1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S239007AbhLFSiP (ORCPT <rfc822;linux-x25@vger.kernel.org>);
-        Mon, 6 Dec 2021 13:38:15 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CZpDjgDDnNHonPfJ4DAXzVsHAYjgpR2RLVK+4IwDf2hKIG1uJsvo5+OpNEVhJc3AbosI+2R9HsQQXkXtRElR5qIK3wFPe97lxPBBbk1dkWbZE8L0SmP8rEpuKWP7KjNJFgisBgMCFfN/AJnoBgnqFIEzkdZr/sB3jYZ1NozLgsKRddhBBMRGd4JcKid8f02QYyHfVaGXoC7BLv8sRXd/x/DTEYLcoIpYXI9sjvEHDZsD8TO/qC6mjtvqxOxFhAR5jHmVZ1FIw5PTZjboXIPmAC7MAnvmp0bmWRySI6QtLbckI9SrObR3682AU+cPB5a5AsHICy7QRpo4T3QKJEA2/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=NTkULZ5UHExQp4+lt+mjKcEqTWLs4cv4821EJcQtSYE=;
- b=MiXyvBRLklEqtANT6W6/zJvdQx8fDTbPCeuDVmrHAQ3zDNa30Wp3IbvkhC5bqVBF8/fSWtrmeY7q1yHS0aPxnzqkJ2kOsk9rDOu3G3fIilPRlD0HEqACAVodNETBBIcpTPVeCTkocVHUc4rAnBu4FbDH34kF2yz7qk0M2MnB2hDL6U9ZLD1z3GHaVNha0xibH1MzXWZbfT7JEMXy/CNOw4Kdf/yr1ogDZcXpBUhsesHGHNok0xA2MYY96UxYdBLjtDXyAsTFoO064UbOzLmki+Gp+kypauazX81hS4BpACcju1nC/ryxyyYgy1sOADPSgHQ1xNk589YTH0vm5c6HWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=softfail (sender ip
- is 146.201.107.145) smtp.rcpttodomain=rrcs-208-125-244-67.nys.biz.rr.com
- smtp.mailfrom=msn.com; dmarc=fail (p=none sp=quarantine pct=100) action=none
- header.from=msn.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fsu.onmicrosoft.com;
- s=selector2-fsu-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=NTkULZ5UHExQp4+lt+mjKcEqTWLs4cv4821EJcQtSYE=;
- b=MMqo//24mO3/YcBvyqnpCnfQeOCYVGQzr6aBiyElIhvb4vje7v0DXzTc9smu/6cGhmwnFbasuPoaFHcuZZb91eGFekXoFgGIJh8ESa2InYxEXsyUD2ZpxdQvDsiamhnc66GS+5z2Gf0zHSDilnIvewVZZhr6NZGKTnRKb69ohY4=
-Received: from MWHPR08CA0040.namprd08.prod.outlook.com (2603:10b6:300:c0::14)
- by DM8P220MB0672.NAMP220.PROD.OUTLOOK.COM (2603:10b6:8:3a::11) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4755.14; Mon, 6 Dec 2021 18:34:35 +0000
-Received: from MW2NAM04FT053.eop-NAM04.prod.protection.outlook.com
- (2603:10b6:300:c0:cafe::cf) by MWHPR08CA0040.outlook.office365.com
- (2603:10b6:300:c0::14) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4755.14 via Frontend
- Transport; Mon, 6 Dec 2021 18:34:35 +0000
-X-MS-Exchange-Authentication-Results: spf=softfail (sender IP is
- 146.201.107.145) smtp.mailfrom=msn.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=none header.from=msn.com;
-Received-SPF: SoftFail (protection.outlook.com: domain of transitioning
- msn.com discourages use of 146.201.107.145 as permitted sender)
-Received: from mailrelay03.its.fsu.edu (146.201.107.145) by
- MW2NAM04FT053.mail.protection.outlook.com (10.13.31.186) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.4755.13 via Frontend Transport; Mon, 6 Dec 2021 18:34:34 +0000
-Received: from [10.0.0.200] (ani.stat.fsu.edu [128.186.4.119])
-        by mailrelay03.its.fsu.edu (Postfix) with ESMTP id F00749519A;
-        Mon,  6 Dec 2021 13:33:57 -0500 (EST)
-Content-Type: text/plain; charset="utf-8"
+        id S233762AbhLHERT (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 7 Dec 2021 23:17:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41592 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244187AbhLHERS (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 7 Dec 2021 23:17:18 -0500
+Received: from mail-il1-x141.google.com (mail-il1-x141.google.com [IPv6:2607:f8b0:4864:20::141])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EECC6C0617A2
+        for <linux-x25@vger.kernel.org>; Tue,  7 Dec 2021 20:13:46 -0800 (PST)
+Received: by mail-il1-x141.google.com with SMTP id s11so1082409ilv.3
+        for <linux-x25@vger.kernel.org>; Tue, 07 Dec 2021 20:13:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
+        b=cGWxDwe8B66FlIrZtrergIqE5+JvdqJ48sEvPTrvhBJ9xEqZLGyWZmuSPdCEFce/7D
+         /sVR44uqtlb2dmBH+iwgt0kboAu4/HTy3OZt9J6nwOu1H5twbKwVBnMykOKrBLHcBBEb
+         cgMJ7/59oMUtMggaQ9x/N1xe+U0YzN1k+xfCXkO5L7YIW30RFDnvCB0PrD7sMExliX7S
+         joeNtgfdJmxv3l42BA4cQp1HveXj/LpauGoYMsZKrrlYurvW6FC9Nrn9v/z7yklCLUv+
+         2uZJGSHlx+O0Rg+LxyFVcXJ8erZC2O96QnEFLkA1QmSl94RBUxOevwSkF8rG8CDqN06m
+         KdcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=w0n14T57zPuvlg1YaFYy3gRfrUPFN1bDHGIrct+fXgc=;
+        b=4Wud6gHKbTDDuLzMHYHU22tsUY1sl1A5XiekgzQNkxGsyMYB+m4Q6qlHc26ALUgYGe
+         w6gyV4r3NP1LsP64wbHvnJIgozyU6v0+Y3iFVoA4M3rB/RhWOkxqSxymxFFNLNYHiOF/
+         uD5sQlmCh1C6TtIA7AB/4CUl9F3Rkl+904MRamFY6oCGfhzkHcURUEnKQqb3XqNzvjRx
+         U2DcJ2icxm+eJVN7V8BDrESpe9xMm/zeK/+8omSaQ74XLfzUJwkaBxngAUzddthn9eDJ
+         8S6yTJupdcMa5ox/LEmdJAMIVwXqwk0MFH1RnFiZ30utYVMCZV30N62TItQZqfKYx1y+
+         OWGQ==
+X-Gm-Message-State: AOAM531aIbFAhEYQoLsRHTuBrVx4eVgLUuTQAoiBZosglg6AGHsBqj4n
+        HcIYdTbYnRbqilfx4H+nPdm6/sNYhAkz9r7QRTNKFZqsltp4Gw==
+X-Google-Smtp-Source: ABdhPJx498jQ3rDCAEAukf875uPMCUUvAAHHJyp/169nhahBv8dg1ZTt80/LmlBc7j967yPpWx87fZn4PQyrL4JX27A=
+X-Received: by 2002:a92:600f:: with SMTP id u15mr3954317ilb.292.1638936815828;
+ Tue, 07 Dec 2021 20:13:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Re: From Fred!
-To:     Recipients <fred128@msn.com>
-From:   "Fred Gamba." <fred128@msn.com>
-Date:   Mon, 06 Dec 2021 19:33:14 +0100
-Reply-To: fred_gamba@yahoo.co.jp
-Message-ID: <a391b411-3523-4f41-ae87-297c33175a4c@MW2NAM04FT053.eop-NAM04.prod.protection.outlook.com>
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 51a54d65-46a5-4eef-f5d0-08d9b8e70d50
-X-MS-TrafficTypeDiagnostic: DM8P220MB0672:EE_
-X-Microsoft-Antispam-PRVS: <DM8P220MB067277C8401F99AEB8B5E54EEB6D9@DM8P220MB0672.NAMP220.PROD.OUTLOOK.COM>
-X-MS-Oob-TLC-OOBClassifiers: OLM:10000;
-X-MS-Exchange-SenderADCheck: 2
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Forefront-Antispam-Report: CIP:146.201.107.145;CTRY:US;LANG:en;SCL:5;SRV:;IPV:CAL;SFV:SPM;H:mailrelay03.its.fsu.edu;PTR:mailrelay03.its.fsu.edu;CAT:OSPM;SFS:(4636009)(84050400002)(46966006)(40470700001)(26005)(82310400004)(5660300002)(2860700004)(31686004)(508600001)(8676002)(35950700001)(6666004)(83380400001)(7116003)(40460700001)(70586007)(956004)(7406005)(7366002)(786003)(86362001)(8936002)(31696002)(3480700007)(2906002)(6266002)(316002)(82202003)(47076005)(6200100001)(70206006)(6862004)(356005)(336012)(7416002)(7596003)(9686003)(480584002);DIR:OUT;SFP:1501;
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?M0o4cVhTR0p0c2YvZjVCc29hZW9xeDY0ZFJPNXB5U0c1bmwxWEx6bUZXNjlM?=
- =?utf-8?B?bWhhRnNvTTRxbWRhVlJpMGNBQUtZWmJzd0Z5K1dyZ0dDSkEraFUyQmZyeVU3?=
- =?utf-8?B?cWZnc09aQzVCQzQzUTV5d3lBSHdDZE1nR3NwYnlFMnd6b3ErSWJ0MlN4eFFn?=
- =?utf-8?B?ekFKYzArWjJZTXpKOWhYYUJoRWIyaE81djhrUVdYaFkrazUwTWtva2F1VHhP?=
- =?utf-8?B?alUxaGVLajFlRTRMRGtiVmtnbEQzWXJhSnd2T2NtQmRvMDJyby9yeW1UR2FD?=
- =?utf-8?B?bWNvejdoVmlBQVh2aXFpZDBLQWFlWHV1SDIvUWdRMXMxVVBqNlRHdXhiMUVO?=
- =?utf-8?B?TDVRcmpIS2dYL3kwbDV6TTFmYTJwSmJRUzJycHJxMkszOVpydWJGNG5iaTBm?=
- =?utf-8?B?YzdQSWQ4ZjFFNy9oS0JXRmZqbjQvajVrY3podTBNVGwyWVc3ZlFncnBFa3F0?=
- =?utf-8?B?MVpXZEU1YlV2enhtanJmdHZoRW9GaFZEMndtb2ZERFFRMm05eHB4ZUhpOGpX?=
- =?utf-8?B?VmdzY0UzNm9nMndlcUVLMzM4a0kvdnVlZXpvdytLUXdjS21QWitkVWM2VU9V?=
- =?utf-8?B?Q0lNSlAxck1QZmVudmluQmJHbTJVcUZKeGJkdXBwRzJFMFFLejJ5aXJUMG5E?=
- =?utf-8?B?Z1Z5MmtZTThIQmdybEY1NU5obVFFbGdieWJYdnZ6RXFUL29CUUJhR2FDdEln?=
- =?utf-8?B?VVEvU0ZSQkM0UmdFMStwU2paSDFnNXpFWFNpRTJaRDg5Y1NHaElUUWNGQUNi?=
- =?utf-8?B?WGVYZGk3SGI2eVA1RGFCUHZhZyt5ZFlQTW1PNXlKNXN1UUxxSlJBbXhrbmVC?=
- =?utf-8?B?aXVUMHYvc0loNXFGY09pelVKM0p5aUY0YkxyeW5JeUFYcG1nbHJpd1RPdllP?=
- =?utf-8?B?UUVhWHhPenRnYnZlNW5JaHEzUUVFWFo2YlkxYXEvRThEVVdoZFNTTHM3SzMy?=
- =?utf-8?B?QnJnWkRwMUxDalBvYjVOVWhaL1hYVnZpS3FSZFJMZm1qYkl3RlplM0VjV3Bs?=
- =?utf-8?B?Z1hnS3g5Uy9ZcWNTTlR5OEJmZDRjT3FGRGRGV0JVVHg4QWJmYUlGcXRmK2ZM?=
- =?utf-8?B?S2tQN0tmbURTNVY0NTJUT2tWczVIQm9SNURaRjlTSHBET2dJWmdsUUl5RUNH?=
- =?utf-8?B?QlFOdHhZaGkwcEJwUlZmVFlvVGZHOXRaWVZFOXJNQmlDcFcvdVM5NGZ1aWEx?=
- =?utf-8?B?TGlmenFvU1RqOTJuY29COXh2Y1dtaXVmYTBxV1J2bVFzSkxWZnlmMUgzMFY2?=
- =?utf-8?B?eEZiN2dESW84WGg0Y3Jib05Wb1NFYTRkOCtsVndrTzhJV3lQNG5yYWNmQzNi?=
- =?utf-8?B?WVpmU3hqamx3K0JKMlFXWFF3NEVUZ2k4UlZUNDU4YWdtVzY3VDNhdDgrb1Nj?=
- =?utf-8?B?bHRLd3FZdjFCdGxMTWNFQ2hnRHNmRWN0SE1aaVd6VHhSeThQRWovcG5McUk1?=
- =?utf-8?Q?G4JNrhol?=
-X-OriginatorOrg: fsu.edu
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2021 18:34:34.8085
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51a54d65-46a5-4eef-f5d0-08d9b8e70d50
-X-MS-Exchange-CrossTenant-Id: a36450eb-db06-42a7-8d1b-026719f701e3
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=a36450eb-db06-42a7-8d1b-026719f701e3;Ip=[146.201.107.145];Helo=[mailrelay03.its.fsu.edu]
-X-MS-Exchange-CrossTenant-AuthSource: MW2NAM04FT053.eop-NAM04.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8P220MB0672
+Received: by 2002:a05:6e02:1a07:0:0:0:0 with HTTP; Tue, 7 Dec 2021 20:13:35
+ -0800 (PST)
+Reply-To: dj0015639@gmail.com
+From:   David Jackson <enkenpaul@gmail.com>
+Date:   Wed, 8 Dec 2021 05:13:35 +0100
+Message-ID: <CAG7-cQ_JEx-8fDdxn0Ex314ViSE32kaUjoR=sUvV7wmCUiKRGw@mail.gmail.com>
+Subject: FEDERAL BUREAU OF INVESTIGATION
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello,
+Our Ref: RTB /SNT/STB
+To: Beneficiary
 
-I decided to write you this proposal in good faith, believing that you will=
- not betray me. I have been in search of someone with the same last name of=
- our late customer and close friend of mine (Mr. Richard), heence I contact=
-ed you Because both of you bear the same surname and coincidentally from th=
-e same country, and I was pushed to contact you and see how best we can ass=
-ist each other. Meanwhile I am Mr. Fred Gamba, a reputable banker here in A=
-ccra Ghana.
+This is FBI special agents, David Jackson. I was delegated along side
+others by the United Nations to investigate scammers who has been in
+the business of swindling foreigners especially those that has one
+form of transaction/contracts and another. Please be informed that in
+the course of our investigation, we detected that your name and
+details in our Scammed Monitoring Network. We also found out that you
+were scammed of a huge sum of money by scammers via Western union and
+MoneyGram. Be informed here that in a bid to alleviate the suffering
+of scammed victims, the United Nations initiated this compensation
+program and therefore, you are entitled to the sum of Five Million Two
+Hundred Thousand United States Dollars ($5,200,000.00 USD) for being a
+victim.
 
-On the 15 January 2009, the young millionaire (Mr. Richard) a citizen of yo=
-ur country and Crude Oil dealer made a fixed deposit with my bank for 60 ca=
-lendar months, valued at US $ 6,500,000.00 (Six Million, Five Hundred Thous=
-and US Dollars) and The mature date for this deposit contract was on 15th o=
-f January, 2015. But sadly he was among the death victims in the 03 March 2=
-011, Earthquake disaster in Japan that killed over 20,000 people including =
-him. Because he was in Japan on a business trip and that was how he met his=
- end.
+Note that the said fund will be transfer to you via the Citibank being
+the paying bank mandated by the United Nations officials.
 
-My bank management is yet to know about his death, but I knew about it beca=
-use he was my friend and I am his Account Relationship Officer, and he did =
-not mention any Next of Kin / Heir when the account was opened, because he =
-was not married and no children. Last week my Bank Management reminded me a=
-gain requested that Mr. Richard should give instructions on what to do abou=
-t his funds, if to renew the contract or not.
+However, we have to inform you that we have been able to arrest some
+of the swindlers who has been in this illicit business and will all be
+prosecuted accordingly. Be informed as well that we have limited time
+to stay back here, so we will advice that you urgently respond to this
+message ASAP. And do not inform any of the people that collected money
+from you before now about this new development to avoid jeopardizing
+our investigation. All you need to do is to follow our instruction and
+receive your compensation accordingly as directed by the United
+Nations.
 
-I know this will happen and that is why I have been looking for a means to =
-handle the situation, because if my Bank Directors happens to know that he =
-is dead and do not have any Heir, they will take the funds for their person=
-al use, That is why I am seeking your co-operation to present you as the Ne=
-xt of Kin / Heir to the account, since you bear same last name with the dec=
-eased customer.
+We urgently wait to receive your response.
 
-There is no risk involved; the transaction will be executed under a legitim=
-ate arrangement that will protect you from any breach of law okay. So It's =
-better that we claim the money, than allowing the Bank Directors to take it=
-, they are rich already. I am not a greedy person, so I am suggesting we sh=
-are the funds in this ratio, 50% 50, ie equal.
-
-Let me know your mind on this and please do treat this information highly c=
-onfidential.
-
-I will review further information to you as soon as I receive your
-positive response.
-
-Have a nice day and I anticipating your communication.
-
-With Regards,
-Fred Gamba.
+Regards,
+DAVID JACKSON
+FEDERAL BUREAU OF INVESTIGATION
+INVESTIGATION ON ALL ONLINE WIRE TRANSFER
