@@ -2,77 +2,78 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8D1D471010
-	for <lists+linux-x25@lfdr.de>; Sat, 11 Dec 2021 03:00:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 33619471709
+	for <lists+linux-x25@lfdr.de>; Sat, 11 Dec 2021 22:59:00 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235740AbhLKCEQ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 10 Dec 2021 21:04:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47746 "EHLO
+        id S231678AbhLKV6c (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sat, 11 Dec 2021 16:58:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345617AbhLKCEO (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 10 Dec 2021 21:04:14 -0500
-Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9ECC061D5F
-        for <linux-x25@vger.kernel.org>; Fri, 10 Dec 2021 18:00:38 -0800 (PST)
-Received: by mail-lf1-x144.google.com with SMTP id c32so21198205lfv.4
-        for <linux-x25@vger.kernel.org>; Fri, 10 Dec 2021 18:00:38 -0800 (PST)
+        with ESMTP id S231686AbhLKV6a (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sat, 11 Dec 2021 16:58:30 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14680C061A72
+        for <linux-x25@vger.kernel.org>; Sat, 11 Dec 2021 13:58:30 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id v11so20802272wrw.10
+        for <linux-x25@vger.kernel.org>; Sat, 11 Dec 2021 13:58:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=UB8HPXfiFrSS8lJHVD9imqT8IM8lXgQeVTQMVTTdoew=;
-        b=JCsw4jOipMM2NQNMZXp6QizwJUHIwDzeO2Y8iQAOjp+Jha/m6XSK1Mp0rSo5X4xj5/
-         ra62wA9M29Kv3v26XdhtYfHl78HWfdHAzWZoawQBmD/f5HctnV3IDOhopHsfUEVKdc3U
-         zjgTs8kaP1GhoPoSSRRMs2H48YL4whQ07Q9gL+TKLR3Ej/+NXmB6gktiiQtCGROuxCip
-         azRcgSpJPEVAmzBSIGs8uTeu5gSEROUAGTlDnvAO293BRFtxBT6pH2u6lqSxSWYO1mdi
-         OgUvbMvACUi3QhA01V+Fa5ongtyngGSTsG3iTMSWnQqmHYynLlOpPl52O41EVB0FfiQa
-         lw2g==
+        h=mime-version:reply-to:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=SOBkDHN1upt351fJGA10IENq8Lskn6OtfiA/mtFXWwbxNo6rK0VqMIikUbNdR10QL9
+         NEz57nH7+DwD4ui2QjR5G0PDUg/x30DeYlpAViKmfLpj6c8owgTXHIRe2HlXrWJIYspc
+         p1qexb7VgQzyxOs2U317jKWC2PVt5FsJQNP/qzuU8HlodfKZxoIrg2Y5u0+UlgiuF7n+
+         KF6xHlFhNhhV0WZH+n1XpQNFkro1//sIniT/eC7+Qq7omDixZHJ42uWefxucVRQsgqoP
+         MP9jAyQEdDJw2KiXunMshfyB4wcDGfWvxehuLHSr6op0i/Er4qRI4zT2OKxsbV2QjSnP
+         PYpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=UB8HPXfiFrSS8lJHVD9imqT8IM8lXgQeVTQMVTTdoew=;
-        b=p6Q9tYjD3ACe2FqOLnpB0gL+PcM9XBBe3Zb1tjdkXiUBH65qiigIXXl27Rai9MSpmh
-         +uzxwDGeQv0Fu+iIfq81efxpUxZZilaVYfNYCRDb2fcU+Te8EHbPjdtp635POufMbi1y
-         d2SczP39LApsre2Y+3NcCM60sDvlBx2n1L2Qf0SF0PBEWCk6dlkVa7XBw58VSGE4dR6V
-         vAdloAaPGEkuJXv4FGe8HJV2iUiHyh0Oo+VHTJx+DkZjPT5QaaOMkBm46GbkF4Zq1afd
-         z9RVc+sBaDo3B3fzqHtqHpi6GrqQB5yFcPC+qgFmkhAzthasZ7QCegQQHdLrwIMSzGN5
-         L2DQ==
-X-Gm-Message-State: AOAM531+EAgzKK/sfDJdkXJAbEkxW/pUXXDJRGi+xBlPGIG1Q2iKPtje
-        95/KIn4HCzx3x2qyS/yXt8hF1WBtQL/przMSNdo=
-X-Google-Smtp-Source: ABdhPJyhXjcWPQSJn2BIAWx1wPs1aT43EsGt8LpVsp+ZiGbG+YkA+4EsSistpTPGdfJjrWjDwUlXhweFa5fipF4Svk8=
-X-Received: by 2002:a05:6512:6cb:: with SMTP id u11mr15747983lff.626.1639188035818;
- Fri, 10 Dec 2021 18:00:35 -0800 (PST)
+        h=x-gm-message-state:mime-version:reply-to:sender:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=hD0jfu1MWy/UXBkBYsVvOAZPApZLyir6gKavdc4BceI=;
+        b=ZnZ3GR+ZBHyZ6zmvHX9b3a7sEjc4QtOS42FRd+OVC7wrKuCEW7WCMpdEatE2Q+Pmxe
+         nSropfaeXnG2QOjwty0MB12kusZhMYS4gy2SKUQU+0PoZEayedCM0Lg6l8IaWW8K2EM1
+         V9bWambe4raV0u06Vd2Inv88s+iycK2TADTg9vAFIqSs4LaV7XUJwn2w7EQ4IgU4tmqJ
+         1rKAmf0NEvKo+hWeFwpT5I6YmH7ei9af0FDF97znKWHiKOVEYLDeKEM6rUjljXrAIt3E
+         lbT8ookv9iD5TP4J2YCgcGLVl+yFm9pA+VBc5k55ngGQf6CW+XkFSqlXzcGMR2TRQq5C
+         i1aQ==
+X-Gm-Message-State: AOAM531Fhm1BL2lmmtcltsDG9OW6PKBcOkz2JlOoqU5NeTyTXFQMDXZU
+        59r9/6XDe6i3IMAZG4T+pPUVG5MBzmemXXcEciMoUgndQwyXTyCiBx0=
+X-Google-Smtp-Source: ABdhPJxTVLquc00JfCv8xmVg6F+Df36Ax6F8m8eI1vWHtjjPBaUzu2dvtxl/29t2QJINStCFpJhLct20UqzajIEroTA=
+X-Received: by 2002:a17:907:6da2:: with SMTP id sb34mr33325880ejc.509.1639259897490;
+ Sat, 11 Dec 2021 13:58:17 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:6512:12c7:0:0:0:0 with HTTP; Fri, 10 Dec 2021 18:00:34
+Reply-To: martinafrancis022@gmail.com
+Sender: rebeccaalhajidangombe@gmail.com
+Received: by 2002:a17:907:94d3:0:0:0:0 with HTTP; Sat, 11 Dec 2021 13:58:16
  -0800 (PST)
-Reply-To: internationallmonetary695@gmail.com
-From:   International Monetary fund <abubakarsadiq1297@gmail.com>
-Date:   Fri, 10 Dec 2021 18:00:34 -0800
-Message-ID: <CAHXNoSg31e+rkvOac1aWFWRjy_1TohUzLuRX4cOSGPtScWYE6w@mail.gmail.com>
-Subject: Dear Beneficiary,
+From:   Martina Francis <martinafrancis61@gmail.com>
+Date:   Sat, 11 Dec 2021 13:58:16 -0800
+X-Google-Sender-Auth: QI6h_ccu4Os7HpLN5lf7FmNkMqQ
+Message-ID: <CANadOMYJBdKak2aObykULF4gdU88=OTR03g+XDqpCofMfFracg@mail.gmail.com>
+Subject: Bom Dia meu querido
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
--- 
- I.M.F Head Office
-#1900 Pennsylvania Ave NW,
-Washington, DC 20431
-INTERNATIONAL MONETARY FUND.
-REF:-XVGNN82010
-internationallmonetary695@gmail.com
-Telephone : +12062785473
+--=20
+Bom Dia meu querido,
+Como vai voc=C3=AA hoje, meu nome =C3=A9 Dona Martina Francis, uma vi=C3=BA=
+va doente.
+Eu tenho um fundo de doa=C3=A7=C3=A3o de ($ 2.700.000,00 USD) MILH=C3=95ES =
+que quero
+doar atrav=C3=A9s de voc=C3=AA para ajudar os =C3=B3rf=C3=A3os, vi=C3=BAvas=
+, deficientes
+f=C3=ADsicos e casas de caridade.
 
-This message is from International Monetary fund (IMF) I am Mr Bo Li
-deputy to  Kristalina Georgieva the current president of International
-  Monetary fund (IMF) We are aware of the stress you have been passing
-through and how you have lost your money trying to claim your fund ,
-you have to worry no more for the international monetary fund is fully
- in-charge of your fund now, contact  me for more info on how you will
-receive your fund( internationallmonetary695@gmail.com) or call me
-on-Telephone : +12062785473 for more info.
+Por favor, volte para mim imediatamente ap=C3=B3s ler esta mensagem para
+obter mais detalhes sobre esta agenda humanit=C3=A1ria.
 
-Regards,
-Mr Bo Li
+Deus te aben=C3=A7oe enquanto espero sua resposta.
+Sua irm=C3=A3.
+
+Sra. Martina Francis.
