@@ -2,73 +2,77 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E25946F98B
-	for <lists+linux-x25@lfdr.de>; Fri, 10 Dec 2021 04:20:14 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id D8D1D471010
+	for <lists+linux-x25@lfdr.de>; Sat, 11 Dec 2021 03:00:44 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231235AbhLJDXr (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Thu, 9 Dec 2021 22:23:47 -0500
-Received: from sin.source.kernel.org ([145.40.73.55]:60376 "EHLO
-        sin.source.kernel.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231207AbhLJDXr (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Thu, 9 Dec 2021 22:23:47 -0500
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 71D60CE29D7;
-        Fri, 10 Dec 2021 03:20:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 6BAB4C341D0;
-        Fri, 10 Dec 2021 03:20:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1639106409;
-        bh=uBG2Sn7JzS43WffLO6b1Tg2/7OY8U5FlKnHBjN0YOBM=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ESQpxcwCEK0l04NBxk8OedN7fkrkcyFOFS9s03nKseUiV6R0KqXQSPsIEr0wlftmX
-         nZ8xt8FtEFPF53i4ajvR59nHj0WYac2/hZzDCnB6bTiA1AFfRuAhhKkXc+SHEOb1Cn
-         JwbPhfPIPgDbkV8TQ2CJFICDzzjWXmKo7dgfDVjn1FTmDUXch0qqiJv3gf+grrbzg0
-         aooTVwD+0pqFcVPyaKHRclFZdAwAqc3maqg1HyC8lFhU/NiPTkK4RN9XHofgw7NWL5
-         R4AWt3cLGWGK6hcXSWZQGrYfrSoWChtFQgiIVQ3E+vQZZsdHN0B7E4gvQSr/VzeM06
-         998RNb58v/esg==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 542E460A54;
-        Fri, 10 Dec 2021 03:20:09 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        id S235740AbhLKCEQ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 10 Dec 2021 21:04:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345617AbhLKCEO (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 10 Dec 2021 21:04:14 -0500
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F9ECC061D5F
+        for <linux-x25@vger.kernel.org>; Fri, 10 Dec 2021 18:00:38 -0800 (PST)
+Received: by mail-lf1-x144.google.com with SMTP id c32so21198205lfv.4
+        for <linux-x25@vger.kernel.org>; Fri, 10 Dec 2021 18:00:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=UB8HPXfiFrSS8lJHVD9imqT8IM8lXgQeVTQMVTTdoew=;
+        b=JCsw4jOipMM2NQNMZXp6QizwJUHIwDzeO2Y8iQAOjp+Jha/m6XSK1Mp0rSo5X4xj5/
+         ra62wA9M29Kv3v26XdhtYfHl78HWfdHAzWZoawQBmD/f5HctnV3IDOhopHsfUEVKdc3U
+         zjgTs8kaP1GhoPoSSRRMs2H48YL4whQ07Q9gL+TKLR3Ej/+NXmB6gktiiQtCGROuxCip
+         azRcgSpJPEVAmzBSIGs8uTeu5gSEROUAGTlDnvAO293BRFtxBT6pH2u6lqSxSWYO1mdi
+         OgUvbMvACUi3QhA01V+Fa5ongtyngGSTsG3iTMSWnQqmHYynLlOpPl52O41EVB0FfiQa
+         lw2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=UB8HPXfiFrSS8lJHVD9imqT8IM8lXgQeVTQMVTTdoew=;
+        b=p6Q9tYjD3ACe2FqOLnpB0gL+PcM9XBBe3Zb1tjdkXiUBH65qiigIXXl27Rai9MSpmh
+         +uzxwDGeQv0Fu+iIfq81efxpUxZZilaVYfNYCRDb2fcU+Te8EHbPjdtp635POufMbi1y
+         d2SczP39LApsre2Y+3NcCM60sDvlBx2n1L2Qf0SF0PBEWCk6dlkVa7XBw58VSGE4dR6V
+         vAdloAaPGEkuJXv4FGe8HJV2iUiHyh0Oo+VHTJx+DkZjPT5QaaOMkBm46GbkF4Zq1afd
+         z9RVc+sBaDo3B3fzqHtqHpi6GrqQB5yFcPC+qgFmkhAzthasZ7QCegQQHdLrwIMSzGN5
+         L2DQ==
+X-Gm-Message-State: AOAM531+EAgzKK/sfDJdkXJAbEkxW/pUXXDJRGi+xBlPGIG1Q2iKPtje
+        95/KIn4HCzx3x2qyS/yXt8hF1WBtQL/przMSNdo=
+X-Google-Smtp-Source: ABdhPJyhXjcWPQSJn2BIAWx1wPs1aT43EsGt8LpVsp+ZiGbG+YkA+4EsSistpTPGdfJjrWjDwUlXhweFa5fipF4Svk8=
+X-Received: by 2002:a05:6512:6cb:: with SMTP id u11mr15747983lff.626.1639188035818;
+ Fri, 10 Dec 2021 18:00:35 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net-next] net: x25: drop harmless check of !more
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <163910640934.13476.8421043107129227133.git-patchwork-notify@kernel.org>
-Date:   Fri, 10 Dec 2021 03:20:09 +0000
-References: <20211208024732.142541-5-sakiwit@gmail.com>
-In-Reply-To: <20211208024732.142541-5-sakiwit@gmail.com>
-To:     =?utf-8?q?J=CE=B5an_Sacren_=3Csakiwit=40gmail=2Ecom=3E?=@ci.codeaurora.org
-Cc:     ms@dev.tdt.de, davem@davemloft.net, kuba@kernel.org,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org
+Received: by 2002:a05:6512:12c7:0:0:0:0 with HTTP; Fri, 10 Dec 2021 18:00:34
+ -0800 (PST)
+Reply-To: internationallmonetary695@gmail.com
+From:   International Monetary fund <abubakarsadiq1297@gmail.com>
+Date:   Fri, 10 Dec 2021 18:00:34 -0800
+Message-ID: <CAHXNoSg31e+rkvOac1aWFWRjy_1TohUzLuRX4cOSGPtScWYE6w@mail.gmail.com>
+Subject: Dear Beneficiary,
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net-next.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
-
-On Wed,  8 Dec 2021 00:20:25 -0700 you wrote:
-> From: Jean Sacren <sakiwit@gmail.com>
-> 
-> 'more' is checked first.  When !more is checked immediately after that,
-> it is always true.  We should drop this check.
-> 
-> Signed-off-by: Jean Sacren <sakiwit@gmail.com>
-> 
-> [...]
-
-Here is the summary with links:
-  - [net-next] net: x25: drop harmless check of !more
-    https://git.kernel.org/netdev/net-next/c/9745177c9489
-
-You are awesome, thank you!
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+ I.M.F Head Office
+#1900 Pennsylvania Ave NW,
+Washington, DC 20431
+INTERNATIONAL MONETARY FUND.
+REF:-XVGNN82010
+internationallmonetary695@gmail.com
+Telephone : +12062785473
 
+This message is from International Monetary fund (IMF) I am Mr Bo Li
+deputy to  Kristalina Georgieva the current president of International
+  Monetary fund (IMF) We are aware of the stress you have been passing
+through and how you have lost your money trying to claim your fund ,
+you have to worry no more for the international monetary fund is fully
+ in-charge of your fund now, contact  me for more info on how you will
+receive your fund( internationallmonetary695@gmail.com) or call me
+on-Telephone : +12062785473 for more info.
 
+Regards,
+Mr Bo Li
