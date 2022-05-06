@@ -2,100 +2,129 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 058B651B412
-	for <lists+linux-x25@lfdr.de>; Thu,  5 May 2022 02:08:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C92E951DE21
+	for <lists+linux-x25@lfdr.de>; Fri,  6 May 2022 19:08:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236673AbiEEAGY (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 4 May 2022 20:06:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41664 "EHLO
+        id S1444088AbiEFRLz (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 6 May 2022 13:11:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348992AbiEDX6w (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 4 May 2022 19:58:52 -0400
-Received: from mail-yb1-xb44.google.com (mail-yb1-xb44.google.com [IPv6:2607:f8b0:4864:20::b44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C7153B4C
-        for <linux-x25@vger.kernel.org>; Wed,  4 May 2022 16:54:12 -0700 (PDT)
-Received: by mail-yb1-xb44.google.com with SMTP id i38so5017182ybj.13
-        for <linux-x25@vger.kernel.org>; Wed, 04 May 2022 16:54:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=Dn1MT8x7p4Rbn+pctwVkt7IgIdUxT0LRLjox/JaF9ttsZ2N8sUUglHFRxQa3sl75aK
-         h1U1JpCoOjPff8rV+LL0edQuBh+YvYlTbZ4zx127Qa80qMcS49J0d2nS2s7mVVadwp/M
-         vGp6wV8qQhR9tMRiQjyWHIJslgvG4HigF7p24aLxixJ1l99K68kLikab9Y0HgtSpkDYW
-         0+riuhXlj9dAnGs04evyYz4sFXKtm0FlJKiBI2Dtbo7ebvKr6E7XJkxgxzCXhReMwL1D
-         yv9OUeo9KjH+/RIlVXefhsYivAQRdlwo604eWoXrrvRFVxcSgXwgPis+UtVhyLpBWx3z
-         WyWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=ampHH5WJLIBWSsxWwzVjbk5pO9UBFxn81pZ6QIDzZtY=;
-        b=3PlwfS3yvWkqMjSKl1mZK3kIzmU9W7huxyzmqQWsZ6gPrPg45p5e5DAhJ5ZxKs51SA
-         W1hCFkF07HpxkQ46dh3IRUYapcVdrEx7vU6Wi8EkBsKQV+FcgjI/7mLvj3hxU0HZMy1u
-         YTKlfo5t31fdy31uiDdfVFttx5Rbvc/4rxyuw4XWXEo12jPxHLBSAKwW5Y+mYo4o8zrV
-         8Q5Bk/YImu+ydeP+SANh3e3E4xIuMWeGMEISGs3aGnki67795dt551t5YJHxEiwfN3LR
-         KS9p0v0jdDFpvCi7dR62WvgGJbONCvJCc3JILp4uP9Oq2bLvoJeyRnTu9dhKfbmc7Pv5
-         +Qng==
-X-Gm-Message-State: AOAM533Ib8BuyFOMUzR5Ptmr7SPjI2MjX24gQ1wf+/R9tPB1e6nERvFP
-        ZnFPAFLQ/B7Js03jmx8QE2xDwaaBy3YwZ+ITgt3/TdvRf5lQ7g==
-X-Google-Smtp-Source: ABdhPJyXbFHNtxfp8+qt+M9kuv/iG7XfFeFFPd7I4/fmpdxuycMtmf6dIJw5ghtZAT2CwgvAVE/kUl0HxsirxLIU8v0=
-X-Received: by 2002:a9d:6b16:0:b0:605:e0eb:d3d6 with SMTP id
- g22-20020a9d6b16000000b00605e0ebd3d6mr8263208otp.213.1651708440302; Wed, 04
- May 2022 16:54:00 -0700 (PDT)
+        with ESMTP id S1444104AbiEFRLu (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 6 May 2022 13:11:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C38C36EC64;
+        Fri,  6 May 2022 10:08:02 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5F73C620A8;
+        Fri,  6 May 2022 17:08:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A57DC385B1;
+        Fri,  6 May 2022 17:08:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1651856881;
+        bh=S2T+9Y6sl30nIpo8x3GVqzVKOXcUQSwRlOt6wQSeijw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=GCHLpI/HNWsKKkKAkHDcq/gsdg8FVt13ED0xc2YEjMbBmqbLlaOTGp3H7mXAyYXZM
+         wce0IxFX6wB5+PmqSphf7WNGNAUFz6m1dmbhdCJv4EX34Yr8rzaBslFUl3mPGqGUvU
+         NOlyIlRfpnl87BSV2ERv0dGqz0EIgoO/iuAASl0oPMark/dY7pxNSvvNgur7nyM/FC
+         QkIyktDpQvXj7iyHlp2+/Bq9I7wxWxG/WirBeSC3peCgyltveo2UBrmQtEQQP+XcVk
+         DivkCltAealVLCW5lCFVg3CwgrBDUfaBgly4Bd8fKUMctN16HA7DEswnEaMs5hsovu
+         HOVpdY/mKwqgA==
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     davem@davemloft.net
+Cc:     netdev@vger.kernel.org, pabeni@redhat.com, edumazet@google.com,
+        Jakub Kicinski <kuba@kernel.org>, qiang.zhao@nxp.com,
+        khc@pm.waw.pl, ms@dev.tdt.de, linuxppc-dev@lists.ozlabs.org,
+        linux-x25@vger.kernel.org
+Subject: [PATCH net-next 6/6] net: wan: switch to netif_napi_add_weight()
+Date:   Fri,  6 May 2022 10:07:51 -0700
+Message-Id: <20220506170751.822862-7-kuba@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220506170751.822862-1-kuba@kernel.org>
+References: <20220506170751.822862-1-kuba@kernel.org>
 MIME-Version: 1.0
-Received: by 2002:a05:6802:1a9:0:0:0:0 with HTTP; Wed, 4 May 2022 16:53:59
- -0700 (PDT)
-Reply-To: ortegainvestmmentforrealinvest@gmail.com
-From:   Info <joybhector64@gmail.com>
-Date:   Thu, 5 May 2022 05:23:59 +0530
-Message-ID: <CAP7KLYgH9LcKHS-KgR0zObHAgC6Fr3D+dOJSbDKurTc_12+iFw@mail.gmail.com>
-Subject: 
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:b44 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5003]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [joybhector64[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [joybhector64[at]gmail.com]
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  3.5 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
--- 
-I am an investor. I came from the USA and I have many investments all
-over the world.
+A handful of WAN drivers use custom napi weights,
+switch them to the new API.
 
-I want you to partner with me to invest in your country I am into many
-investment such as real Estate or buying of properties i can also
-invest money in any of existing business with equity royalty or by %
-percentage so on,
-Warm regards
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+---
+CC: qiang.zhao@nxp.com
+CC: khc@pm.waw.pl
+CC: ms@dev.tdt.de
+CC: linuxppc-dev@lists.ozlabs.org
+CC: linux-x25@vger.kernel.org
+---
+ drivers/net/wan/fsl_ucc_hdlc.c | 2 +-
+ drivers/net/wan/hd64572.c      | 3 ++-
+ drivers/net/wan/ixp4xx_hss.c   | 2 +-
+ drivers/net/wan/lapbether.c    | 2 +-
+ 4 files changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
+index 5ae2d27b5da9..22edea6ca4b8 100644
+--- a/drivers/net/wan/fsl_ucc_hdlc.c
++++ b/drivers/net/wan/fsl_ucc_hdlc.c
+@@ -1231,7 +1231,7 @@ static int ucc_hdlc_probe(struct platform_device *pdev)
+ 	dev->watchdog_timeo = 2 * HZ;
+ 	hdlc->attach = ucc_hdlc_attach;
+ 	hdlc->xmit = ucc_hdlc_tx;
+-	netif_napi_add(dev, &uhdlc_priv->napi, ucc_hdlc_poll, 32);
++	netif_napi_add_weight(dev, &uhdlc_priv->napi, ucc_hdlc_poll, 32);
+ 	if (register_hdlc_device(dev)) {
+ 		ret = -ENOBUFS;
+ 		pr_err("ucc_hdlc: unable to register hdlc device\n");
+diff --git a/drivers/net/wan/hd64572.c b/drivers/net/wan/hd64572.c
+index b89b03a6aba7..534369ffe5de 100644
+--- a/drivers/net/wan/hd64572.c
++++ b/drivers/net/wan/hd64572.c
+@@ -173,7 +173,8 @@ static void sca_init_port(port_t *port)
+ 	sca_out(DIR_EOME, DIR_TX(port->chan), card); /* enable interrupts */
+ 
+ 	sca_set_carrier(port);
+-	netif_napi_add(port->netdev, &port->napi, sca_poll, NAPI_WEIGHT);
++	netif_napi_add_weight(port->netdev, &port->napi, sca_poll,
++			      NAPI_WEIGHT);
+ }
+ 
+ /* MSCI interrupt service */
+diff --git a/drivers/net/wan/ixp4xx_hss.c b/drivers/net/wan/ixp4xx_hss.c
+index 863c3e34e136..e46b7f5ee49e 100644
+--- a/drivers/net/wan/ixp4xx_hss.c
++++ b/drivers/net/wan/ixp4xx_hss.c
+@@ -1504,7 +1504,7 @@ static int ixp4xx_hss_probe(struct platform_device *pdev)
+ 	port->clock_reg = CLK42X_SPEED_2048KHZ;
+ 	port->id = pdev->id;
+ 	port->dev = &pdev->dev;
+-	netif_napi_add(ndev, &port->napi, hss_hdlc_poll, NAPI_WEIGHT);
++	netif_napi_add_weight(ndev, &port->napi, hss_hdlc_poll, NAPI_WEIGHT);
+ 
+ 	err = register_hdlc_device(ndev);
+ 	if (err)
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index 282192b82404..960f1393595c 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -408,7 +408,7 @@ static int lapbeth_new_device(struct net_device *dev)
+ 	spin_lock_init(&lapbeth->up_lock);
+ 
+ 	skb_queue_head_init(&lapbeth->rx_queue);
+-	netif_napi_add(ndev, &lapbeth->napi, lapbeth_napi_poll, 16);
++	netif_napi_add_weight(ndev, &lapbeth->napi, lapbeth_napi_poll, 16);
+ 
+ 	rc = -EIO;
+ 	if (register_netdevice(ndev))
+-- 
+2.34.1
+
