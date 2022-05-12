@@ -2,104 +2,72 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D8B7522B30
-	for <lists+linux-x25@lfdr.de>; Wed, 11 May 2022 06:39:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 367A4524DA0
+	for <lists+linux-x25@lfdr.de>; Thu, 12 May 2022 14:59:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238592AbiEKEjb (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 11 May 2022 00:39:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43010 "EHLO
+        id S1354017AbiELM7s (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 12 May 2022 08:59:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237887AbiEKEj0 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 11 May 2022 00:39:26 -0400
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 154BF14C74D
-        for <linux-x25@vger.kernel.org>; Tue, 10 May 2022 21:39:23 -0700 (PDT)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-edf9ddb312so1470241fac.8
-        for <linux-x25@vger.kernel.org>; Tue, 10 May 2022 21:39:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
-        b=nrkBIDyCffFbQz5WNhQU88q5l+bx8m1CoLNL/nRcxBFZRgp3B2RwRJzpJi69hjmFPQ
-         Eotn36CVTQor8sTwq84btYhQQ+OsypTpYdHIfGkC/Ekjg8a9U0HkQq0T/gbcQg5/if4Y
-         i1yzcJYhTRMm8ny1NIiOYUNRazrfloxlCC/1XVxW2+TG0ItQpx2/G3cXjgMuOALgO1Rc
-         auxKHXwS3ghK6vFFIfR8essc70JXfRi2oIpi3YT/VLqISCMTaVWCOI/Xf0rWfpfTmlnw
-         XgqCFC8jOuHD5AjsEtox3h0b9tzcHlVM0fA1RrJyDFubK9aS707t1BYf/K43qSc4slo4
-         wrQw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=s3Cdswvtyrq8qHVwuRB9YRoTAIoD9G/2//h6WeFZHzo=;
-        b=T6WEr0Drj8IYh86Cz6J50Z4s69R9jKGtwbbVDrU8OgvT2eITsOQTABxclBbkCONDTc
-         /N03I8+TBhlFiZlFGuB01XAPiEUw2jtvIo+9ssL03bh7hhLH7Yyq1GiZ5fhfCmd3Vj74
-         9s/uXfmRfBifPV/5SIgNB7om6EONttZgf8N7p5U+s57x+K7tI19YNX4z8rWxko5Pw6eo
-         rPYlqly68mXFNIBSOo+OTx1/bj3S40WyfUNdHPHwGN4SO1FleajDbWiETScNWNFYZZR6
-         QhzUh6qu5zxKfP4vmPmze/JaFk/QlU8C8/vrGKEDs8SKUu9u+zt6TJfmpnGkpHjingIV
-         j9Eg==
-X-Gm-Message-State: AOAM533Q/IvbIPdrqzu6CK5MXAYFH3eFJ9Jje+3QUmbBW1CWLOwIyqEA
-        aY3ilpVXXAgKApQFA58Kd5RFl2p9/xopRRNI9v0J2rEzM8bpcw==
-X-Google-Smtp-Source: ABdhPJwbKHmbnZDflMHBZCcp2YbZAAZvFdPcM4owWeuPIkoxodmwIZJ+Xpgi08ylB1RFXLrw63SQRxJzumbwJKMTxhs=
-X-Received: by 2002:a17:90b:1007:b0:1dc:9862:68af with SMTP id
- gm7-20020a17090b100700b001dc986268afmr3261389pjb.205.1652243951499; Tue, 10
- May 2022 21:39:11 -0700 (PDT)
+        with ESMTP id S1353948AbiELM7r (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 12 May 2022 08:59:47 -0400
+Received: from mail.pekanbaru.go.id (mail.pekanbaru.go.id [103.131.245.194])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FFFC205468;
+        Thu, 12 May 2022 05:59:43 -0700 (PDT)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 223D798ADE4;
+        Thu, 12 May 2022 10:45:45 +0700 (WIB)
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id MQD3I4zQrv2b; Thu, 12 May 2022 10:45:44 +0700 (WIB)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by mail.pekanbaru.go.id (Postfix) with ESMTP id 1593198AE0E;
+        Thu, 12 May 2022 10:45:44 +0700 (WIB)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.pekanbaru.go.id 1593198AE0E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pekanbaru.go.id;
+        s=EA5C5C9E-4206-11EC-835B-1ADACEA726A0; t=1652327144;
+        bh=WgQd2bW8hb2KeIDNbeIeW1Bb4lp6m29iibMhAQT/egc=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=HWVIEUt3lCt/VzLFJ8bpl3mEHWGZyWo+hzGHoAt+uorbPddGdwOct0B2yi/4GFTCI
+         o9byfHpnGv7DNbb9656RsgWx4TKCuF+HvYcOhzYAFkill4z3Gti6wo1Ce3dvAAWusp
+         HxYVYQbV/u4WSmA13DHyKF05VCtiXbuSR1p+cYZOtIGl0hw5FA9UYlOaOt41GJv6+o
+         scoJrsKb4yL7gbqaeI0CNWsHEJXkcISdx6Dl5tmAFw2Ax4JRXOegR0agzctrPVH2Lc
+         Kz176ag/uFtCsPuGKbGnm9orxYwNmSVsZ3PQHJp3KezccYzCUkYj1Zz4EZ7wqhWHEw
+         vw5DLXHiigqeA==
+X-Virus-Scanned: amavisd-new at mail.pekanbaru.go.id
+Received: from mail.pekanbaru.go.id ([127.0.0.1])
+        by localhost (mail.pekanbaru.go.id [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 5cufU7KVXFMc; Thu, 12 May 2022 10:45:43 +0700 (WIB)
+Received: from [192.168.15.101] (unknown [41.79.219.176])
+        by mail.pekanbaru.go.id (Postfix) with ESMTPSA id C338298ADF3;
+        Thu, 12 May 2022 10:45:35 +0700 (WIB)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Received: by 2002:a05:6a10:319:0:0:0:0 with HTTP; Tue, 10 May 2022 21:39:10
- -0700 (PDT)
-From:   Private Mail <privatemail1961@gmail.com>
-Date:   Tue, 10 May 2022 21:39:10 -0700
-Message-ID: <CANjAOAiiVcSrSv31FjThCVmeppS54UVvGVj3SRSvMfxOB+T8DA@mail.gmail.com>
-Subject: Have you had this? It is for your Benefit
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.3 required=5.0 tests=ADVANCE_FEE_4_NEW_MONEY,
-        BAYES_50,DEAR_BENEFICIARY,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,
-        DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FREEMAIL_REPLY,
-        LOTS_OF_MONEY,MONEY_FRAUD_5,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNDISC_MONEY autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Level: ****
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Awaiting your response 
+To:     Recipients <waterproject@pekanbaru.go.id>
+From:   waterproject@pekanbaru.go.id
+Date:   Thu, 12 May 2022 04:45:27 +0100
+Reply-To: test@hostnextdoor.com
+Message-Id: <20220512034535.C338298ADF3@mail.pekanbaru.go.id>
+X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_BL_SPAMCOP_NET,
+        RCVD_IN_SBL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Level: **
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Our Ref: BG/WA0151/2022
+Hi =
 
-Dear Beneficiary
 
-Subject: An Estate of US$15.8 Million
+Did you get my previous email? I have attempted over 3 times to open up com=
+munication with you. Please acknowledge if you receive this email. =
 
-Blount and Griffin Genealogical Investigators specializes in probate
-research to locate missing heirs and beneficiaries to estates in the
-United Kingdom and Europe.
 
-We can also help you find wills, obtain copies of certificates, help
-you to administer an estate, as well as calculating how an estate,
-intestacy or trust should be distributed.
-
-You may be entitled to a large pay out for an inheritance in Europe
-worth US$15.8 million. We have discovered an estate belonging to the
-late Depositor has remained unclaimed since he died in 2011 and we
-have strong reasons to believe you are the closest living relative to
-the deceased we can find.
-
-You may unknowingly be the heir of this person who died without
-leaving a will (intestate). We will conduct a probate research to
-prove your entitlement, and can submit a claim on your behalf all at
-no risk to yourselves.
-
-Our service fee of 10% will be paid to us after you have received the estate.
-
-The estate transfer process should take just a matter of days as we
-have the mechanism and expertise to get this done very quickly. This
-message may come to you as a shock, however we hope to work with you
-to transfer the estate to you as quickly as possible.
-
-Feel free to email our senior case worker Mr. Malcolm Casey on email:
-malcolmcasey68@yahoo.com for further discussions.
-
-With warm regards,
-
-Mr. Blount W. Gort, CEO.
-Blount and Griffin Associates Inc
+Regards
+Morten Friis
