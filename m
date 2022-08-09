@@ -2,98 +2,90 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7FD58A5FB
-	for <lists+linux-x25@lfdr.de>; Fri,  5 Aug 2022 08:41:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB10258D28E
+	for <lists+linux-x25@lfdr.de>; Tue,  9 Aug 2022 06:00:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236198AbiHEGlZ (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 5 Aug 2022 02:41:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51338 "EHLO
+        id S233913AbiHIEAi (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 9 Aug 2022 00:00:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235930AbiHEGlZ (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 5 Aug 2022 02:41:25 -0400
-X-Greylist: delayed 1369 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 04 Aug 2022 23:41:23 PDT
-Received: from mxout70.expurgate.net (mxout70.expurgate.net [194.37.255.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95EC8193C9;
-        Thu,  4 Aug 2022 23:41:23 -0700 (PDT)
-Received: from [127.0.0.1] (helo=localhost)
-        by relay.expurgate.net with smtp (Exim 4.92)
-        (envelope-from <prvs=1230fa8b07=ms@dev.tdt.de>)
-        id 1oJqfF-000L0w-30; Fri, 05 Aug 2022 08:18:29 +0200
-Received: from [195.243.126.94] (helo=securemail.tdt.de)
-        by relay.expurgate.net with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.92)
-        (envelope-from <ms@dev.tdt.de>)
-        id 1oJqfE-000D8k-28; Fri, 05 Aug 2022 08:18:28 +0200
-Received: from securemail.tdt.de (localhost [127.0.0.1])
-        by securemail.tdt.de (Postfix) with ESMTP id A0153240049;
-        Fri,  5 Aug 2022 08:18:27 +0200 (CEST)
-Received: from mail.dev.tdt.de (unknown [10.2.4.42])
-        by securemail.tdt.de (Postfix) with ESMTP id 2E793240040;
-        Fri,  5 Aug 2022 08:18:27 +0200 (CEST)
-Received: from mschiller01.dev.tdt.de (unknown [10.2.3.20])
-        by mail.dev.tdt.de (Postfix) with ESMTPSA id AADA028738;
-        Fri,  5 Aug 2022 08:18:26 +0200 (CEST)
-From:   Martin Schiller <ms@dev.tdt.de>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org
-Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Martin Schiller <ms@dev.tdt.de>
-Subject: [PATCH net] net/x25: fix call timeouts in blocking connects
-Date:   Fri,  5 Aug 2022 08:18:10 +0200
-Message-ID: <20220805061810.10824-1-ms@dev.tdt.de>
-X-Mailer: git-send-email 2.20.1
+        with ESMTP id S231346AbiHIEAX (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 9 Aug 2022 00:00:23 -0400
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7343E7A;
+        Mon,  8 Aug 2022 21:00:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by ams.source.kernel.org (Postfix) with ESMTPS id 0D559B81190;
+        Tue,  9 Aug 2022 04:00:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 91DAAC433B5;
+        Tue,  9 Aug 2022 04:00:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1660017614;
+        bh=0uHjm+KGcXAlJ7V6LXwNtiG4SVeDoNJSDLlk7EbtmWI=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=h9pGFWPb+hUeNR7eRF3hmP03hcVneB+7HEaCkkxDhbfCeWuxgUPDoIOs9xJ8ANI6t
+         Uc0O3YbWZz9vT1PzadqJCQZp4UG3qu+iqHI3mCDLigXh+nIOa9ZlsUBzeWn2gIqDjz
+         CrZ/qsd28oJGfzAZJNv+MuxS6xvauIeTtLM7AJHjSBfykx8JSudfZiXP8sSCKW5bQW
+         f6pbwKZOhPWd2GlleTMcR9fwKx4CW//+/PocSzinSIkyi5TBuFcxLQlvSZcyaxfJVL
+         cvkDJ5uCKKFBgzzLT791fOpp3hDG/qiAOBWCTA8PbrO3jGXltAOqu9YeescmAv6prH
+         P5LEv0PVhg4KQ==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 753FAC43144;
+        Tue,  9 Aug 2022 04:00:14 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_PASS,SPF_NONE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net/x25: fix call timeouts in blocking connects
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166001761447.6286.4599664715576942070.git-patchwork-notify@kernel.org>
+Date:   Tue, 09 Aug 2022 04:00:14 +0000
+References: <20220805061810.10824-1-ms@dev.tdt.de>
+In-Reply-To: <20220805061810.10824-1-ms@dev.tdt.de>
+To:     Martin Schiller <ms@dev.tdt.de>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        linux-x25@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Spam-Status: No, score=-7.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
-Content-Transfer-Encoding: quoted-printable
-X-purgate-type: clean
-X-purgate: clean
-X-purgate-ID: 151534::1659680308-95942F7B-D01DC08B/0/0
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-When a userspace application starts a blocking connect(), a CALL REQUEST
-is sent, the t21 timer is started and the connect is waiting in
-x25_wait_for_connection_establishment(). If then for some reason the t21
-timer expires before any reaction on the assigned logical channel (e.g.
-CALL ACCEPT, CLEAR REQUEST), there is sent a CLEAR REQUEST and timer
-t23 is started waiting for a CLEAR confirmation. If we now receive a
-CLEAR CONFIRMATION from the peer, x25_disconnect() is called in
-x25_state2_machine() with reason "0", which means "normal" call
-clearing. This is ok, but the parameter "reason" is used as sk->sk_err
-in x25_disconnect() and sock_error(sk) is evaluated in
-x25_wait_for_connection_establishment() to check if the call is still
-pending. As "0" is not rated as an error, the connect will stuck here
-forever.
+Hello:
 
-To fix this situation, also check if the sk->sk_state changed form
-TCP_SYN_SENT to TCP_CLOSE in the meantime, which is also done by
-x25_disconnect().
+This patch was applied to netdev/net.git (master)
+by Jakub Kicinski <kuba@kernel.org>:
 
-Signed-off-by: Martin Schiller <ms@dev.tdt.de>
----
- net/x25/af_x25.c | 5 +++++
- 1 file changed, 5 insertions(+)
+On Fri,  5 Aug 2022 08:18:10 +0200 you wrote:
+> When a userspace application starts a blocking connect(), a CALL REQUEST
+> is sent, the t21 timer is started and the connect is waiting in
+> x25_wait_for_connection_establishment(). If then for some reason the t21
+> timer expires before any reaction on the assigned logical channel (e.g.
+> CALL ACCEPT, CLEAR REQUEST), there is sent a CLEAR REQUEST and timer
+> t23 is started waiting for a CLEAR confirmation. If we now receive a
+> CLEAR CONFIRMATION from the peer, x25_disconnect() is called in
+> x25_state2_machine() with reason "0", which means "normal" call
+> clearing. This is ok, but the parameter "reason" is used as sk->sk_err
+> in x25_disconnect() and sock_error(sk) is evaluated in
+> x25_wait_for_connection_establishment() to check if the call is still
+> pending. As "0" is not rated as an error, the connect will stuck here
+> forever.
+> 
+> [...]
 
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 6bc2ac8d8146..3b55502b2965 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -719,6 +719,11 @@ static int x25_wait_for_connection_establishment(str=
-uct sock *sk)
- 			sk->sk_socket->state =3D SS_UNCONNECTED;
- 			break;
- 		}
-+		rc =3D -ENOTCONN;
-+		if (sk->sk_state =3D=3D TCP_CLOSE) {
-+			sk->sk_socket->state =3D SS_UNCONNECTED;
-+			break;
-+		}
- 		rc =3D 0;
- 		if (sk->sk_state !=3D TCP_ESTABLISHED) {
- 			release_sock(sk);
---=20
-2.20.1
+Here is the summary with links:
+  - [net] net/x25: fix call timeouts in blocking connects
+    https://git.kernel.org/netdev/net/c/944e594cfa84
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
 
