@@ -2,62 +2,51 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3362B5A468A
-	for <lists+linux-x25@lfdr.de>; Mon, 29 Aug 2022 11:54:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7820D5A6271
+	for <lists+linux-x25@lfdr.de>; Tue, 30 Aug 2022 13:51:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229557AbiH2Jy5 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 29 Aug 2022 05:54:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40308 "EHLO
+        id S229699AbiH3Lv5 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 30 Aug 2022 07:51:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229764AbiH2Jyz (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 29 Aug 2022 05:54:55 -0400
-X-Greylist: delayed 507 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 29 Aug 2022 02:54:54 PDT
-Received: from jkawebhost.nl (jkawebhost.nl [85.214.133.63])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BA31630D
-        for <linux-x25@vger.kernel.org>; Mon, 29 Aug 2022 02:54:52 -0700 (PDT)
-Received: from h2875610.stratoserver.net (localhost.localdomain [127.0.0.1])
-        by jkawebhost.nl (Postfix) with ESMTP id 8DFC4239B3
-        for <linux-x25@vger.kernel.org>; Mon, 29 Aug 2022 11:46:23 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=amsterdamauthentics.nl; s=default; t=1661766384;
-        bh=QAdWtGgMvQu0+o16MV3YIUu8zR1bUhF23pNS22AAi4w=;
-        h=Received:Received:To:Subject:From;
-        b=cb6XVr93juI76d0DbZY4zu1D8aUv3/CEf149CgzwwaJaIjIf7UXiS2AjIxX7qwjZS
-         3GVk6qWPtZ7dWEoI3jQBrsNu6RyMlyr091o/ddcFQBVvcFyAnudv9NUB7ok4oFYrnQ
-         AaqHBlXHapF6eKzhC0xFHY3Uw1JPF0CFyzxV9Ge4=
-Authentication-Results: h2875610.stratoserver.net;
-        spf=pass (sender IP is 127.0.0.1) smtp.mailfrom=amsterdamauthentics@amsterdamauthentics.nl smtp.helo=h2875610.stratoserver.net
-Received-SPF: pass (h2875610.stratoserver.net: localhost is always allowed.) client-ip=127.0.0.1; envelope-from=amsterdamauthentics@amsterdamauthentics.nl; helo=h2875610.stratoserver.net;
-X-Spam-Score: -2.101
-X-Spam-Level: 
-X-Spam-Status: No, score=2.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SCC_BODY_URI_ONLY,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
-Authentication-Results: h2875610.stratoserver.net (amavisd-new);
-        dkim=pass (1024-bit key) header.d=amsterdamauthentics.nl
-Received: from jkawebhost.nl ([127.0.0.1])
-        by h2875610.stratoserver.net (h2875610.stratoserver.net [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id xS87pOeqbHqF for <linux-x25@vger.kernel.org>;
-        Mon, 29 Aug 2022 11:46:23 +0200 (CEST)
-Received: by jkawebhost.nl (Postfix, from userid 10007)
-        id 10310239B0; Mon, 29 Aug 2022 11:46:23 +0200 (CEST)
+        with ESMTP id S229669AbiH3Lv4 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 30 Aug 2022 07:51:56 -0400
+Received: from answer2001.creative-japan.org (unknown [116.80.41.13])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 871BC7FE5B
+        for <linux-x25@vger.kernel.org>; Tue, 30 Aug 2022 04:51:53 -0700 (PDT)
+Received: by answer2001.creative-japan.org (Postfix, from userid 10002)
+        id 5CBBF1ECFB; Tue, 30 Aug 2022 11:51:50 +0000 (UTC)
 To:     linux-x25@vger.kernel.org
-Subject: Forbes: Willst du reich werden? Fahre fort
-Date:   Mon, 29 Aug 2022 09:46:22 +0000
-From:   WordPress <info@amsterdamauthentics.nl>
-Message-ID: <IbuztSGZifh3jyIoCDoGZyG4wxyzDIDUG7CvMn34bN8@amsterdamauthentics.nl>
-X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+Subject: =?ISO-2022-JP?B?GyRCJCpMZCQkOWckbyQ7JCIkaiQsJEgkJiQ0JDYkJCReJDckPyEjGyhCIkJpbGQ6IFdpbGxzdCBkdSByZWljaCB3ZXJkZW4/IEZhaHJlIGZvcnQi?=
+X-PHP-Originating-Script: 10002:class-phpmailer.php
+Date:   Tue, 30 Aug 2022 11:51:50 +0000
+From:   =?ISO-2022-JP?B?GyRCIVozdDwwMnE8UiVHJSMlaSUkJUghWxsoQg==?= 
+        <info@delight2011.com>
+Message-ID: <1dd007cbda3c0c54f697442ecdf26997@delight2011.com>
+X-Mailer: PHPMailer 5.2.22 (https://github.com/PHPMailer/PHPMailer)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-PPP-Message-ID: <166176638298.9027.4803615108424982194@h2875610.stratoserver.net>
-X-PPP-Vhost: amsterdamauthentics.nl
-X-Spam-Level: **
+Content-Type: text/plain; charset=ISO-2022-JP
+X-Spam-Status: No, score=3.1 required=5.0 tests=BAYES_50,KHOP_HELO_FCRDNS,
+        RCVD_IN_MSPIKE_H2,RCVD_IN_VALIDITY_RPBL,SPF_FAIL,SPF_HELO_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_PH_SURBL autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: ***
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Investieren Sie einmal 250 $ und erhalten Sie ab 1000 $ pro Tag http://bitcoin-4th-having.tracemyvideo.com/dayli-news-6736
+メッセージ本文:
+Sind Sie es leid, in Schulden zu leben? Es gibt einen Ausweg und es ist sehr einfach. http://vaue-of-1-bitcoin.krislaczynski.com/news-2076
+
+
+お問い合わせありがとうございました。追って担当者よりご連絡をさせていただきますので、今しばらくお待ちくださいますよう宜しくお願い申し上げます。なお、3営業日が過ぎても当社より返信、返答がない場合は、お客様によりご入力いただいたメールアドレスに誤りがあるなどのトラブルの可能性があります。その際は、お手数ですが再度送信いただくか、お電話（03-6712-0960）までご連絡いただけますと幸いです。
+
+株式会社ディライト
+担当　北川
+TEL 03-6712-0960
+H P http://delight2011.com/
+
+このメールは delight2011 (http://delight2011.com) のお問い合わせフォームから送信されました
 
