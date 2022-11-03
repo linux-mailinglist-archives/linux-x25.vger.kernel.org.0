@@ -2,106 +2,83 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 055835EB156
-	for <lists+linux-x25@lfdr.de>; Mon, 26 Sep 2022 21:31:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6477161793A
+	for <lists+linux-x25@lfdr.de>; Thu,  3 Nov 2022 09:58:34 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbiIZTbE (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 26 Sep 2022 15:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
+        id S229445AbiKCI6c (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Thu, 3 Nov 2022 04:58:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbiIZTbD (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 26 Sep 2022 15:31:03 -0400
-Received: from mail-oo1-xc43.google.com (mail-oo1-xc43.google.com [IPv6:2607:f8b0:4864:20::c43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CD580531
-        for <linux-x25@vger.kernel.org>; Mon, 26 Sep 2022 12:31:02 -0700 (PDT)
-Received: by mail-oo1-xc43.google.com with SMTP id c17-20020a4aa4d1000000b0047653e7c5f3so1276721oom.1
-        for <linux-x25@vger.kernel.org>; Mon, 26 Sep 2022 12:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:from:to:cc:subject:date;
-        bh=rA5xeXD0TyjUhjvsrx6ejmOzOVqFLC9Uf1Of+5mK/os=;
-        b=q1Fcg2Hb4LvoKqu4pMmHkk9FWdIXq8k6TKvB/304rz7Ast8aN60MweBP0RiHUdXQdd
-         MPPE/eq0Ge3Wz+hnqHTukuZe+2LoQSeyzzrldU//jGGOh2jgNHGfxBSbgBtb1Qy3D7XS
-         5TR4RKdGDBkE92U7luJ8HQdfqbtCeeW7QKxr2sBWCmh3jsylmLwr8JGNZsY5C2TqVg69
-         OL9n7ZXgamLenPN5uaTXbxBsxUJW+8VRLvWTYEcyW5FiU0cbOP/ZQWNIAwEk/y1aIDAp
-         qsG6PZje1J8w4RA9DYhyfZbDyxhlsZsBpcmNnjzdHdGzX0YvbJNPNubcVsPWc672a/BI
-         dE+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=rA5xeXD0TyjUhjvsrx6ejmOzOVqFLC9Uf1Of+5mK/os=;
-        b=xN8lMjyfyr0NmzMmw1GUp55WnYlYdrSdcQD66kW0jY/Zdj5U/2y0ZGpBVgEEL1VPeQ
-         KEVEqVAZfzXTpnkR4yYwOlEA1Js7MUcGBSF1et8OGhTS6oJLCAUJSFO8CZbE6RbBEAmE
-         eyP6ZAizUT39DEl3lZmNJvEt+cjTfPFwjphAgvJ80psXU3VFyoQIEalGIDYk0A1Gmy4M
-         CUh5aASf21jwF/U3LMjoxyjpSBzdp3Tvan8+d/bx5Ese2ktDu5zK4jkdm/e5omdgrPkg
-         MiOXorgH4/a+brd0AfAqujkv4+7FCACi1C+DgDvMREixfi1F08IAyHcfiY2a9MkvJmF3
-         UITw==
-X-Gm-Message-State: ACrzQf2li0NEW77lluInDAHraQBHiSlOUtT8utcNX/xJq9Cf09aOSxH2
-        cgTiIK747y/IFgyXBlfNLKpkkRUNtdaYrEtgBAM=
-X-Google-Smtp-Source: AMsMyM7V+UDdY/RC9U7Piet4qS2mnncGXcp0X61yySD1/a3D9TQeYEex4zDo2CQ8xzCu5YwzlyFTH7NC4jdtk8jAkFo=
-X-Received: by 2002:a4a:bc90:0:b0:475:67a4:2bb7 with SMTP id
- m16-20020a4abc90000000b0047567a42bb7mr9233819oop.20.1664220661924; Mon, 26
- Sep 2022 12:31:01 -0700 (PDT)
+        with ESMTP id S229459AbiKCI6b (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Thu, 3 Nov 2022 04:58:31 -0400
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD4E1B9F;
+        Thu,  3 Nov 2022 01:58:28 -0700 (PDT)
+Received: from dggpeml500026.china.huawei.com (unknown [172.30.72.56])
+        by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4N2yGH6shyzRp17;
+        Thu,  3 Nov 2022 16:53:27 +0800 (CST)
+Received: from huawei.com (10.175.101.6) by dggpeml500026.china.huawei.com
+ (7.185.36.106) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Thu, 3 Nov
+ 2022 16:58:26 +0800
+From:   Zhengchao Shao <shaozhengchao@huawei.com>
+To:     <linux-x25@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <ms@dev.tdt.de>, <davem@davemloft.net>, <edumazet@google.com>,
+        <kuba@kernel.org>, <pabeni@redhat.com>
+CC:     <weiyongjun1@huawei.com>, <yuehaibing@huawei.com>,
+        <shaozhengchao@huawei.com>
+Subject: [PATCH net] net: lapbether: fix issue of dev reference count leakage in lapbeth_device_event()
+Date:   Thu, 3 Nov 2022 17:05:37 +0800
+Message-ID: <20221103090537.282969-1-shaozhengchao@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Received: by 2002:a05:6358:7253:b0:c7:f373:780 with HTTP; Mon, 26 Sep 2022
- 12:31:01 -0700 (PDT)
-Reply-To: pointerscott009@gmail.com
-From:   Aminuind Aabawa <aminuindabawa00@gmail.com>
-Date:   Mon, 26 Sep 2022 20:31:01 +0100
-Message-ID: <CAP_Jfyq1Ni=v=Zz=8r_Eaf_PghYr3c8VO14TeZJp6_CPKOcr7A@mail.gmail.com>
-Subject: =?UTF-8?Q?Bussines_offer_Gesch=C3=A4ftsangebot=2E?=
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=5.2 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:c43 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [pointerscott009[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [aminuindabawa00[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [aminuindabawa00[at]gmail.com]
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  3.1 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Type: text/plain
+X-Originating-IP: [10.175.101.6]
+X-ClientProxiedBy: dggems704-chm.china.huawei.com (10.3.19.181) To
+ dggpeml500026.china.huawei.com (7.185.36.106)
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
---=20
-Hello, Do you have a projects that need urgent loan??
-Granting out loans today in 10,000 / 500 Million to Interested
-Investors, Companies & Private Individuals.
-Revert back if you interested.
+When following tests are performed, it will cause dev reference counting
+leakage.
+a)ip link add bond2 type bond mode balance-rr
+b)ip link set bond2 up
+c)ifenslave -f bond2 rose1
+d)ip link del bond2
 
+When new bond device is created, the default type of the bond device is
+ether. And the bond device is up, lapbeth_device_event() receives the
+message and creates a new lapbeth device. In this case, the reference
+count value of dev is hold once. But after "ifenslave -f bond2 rose1"
+command is executed, the type of the bond device is changed to rose. When
+the bond device is unregistered, lapbeth_device_event() will not put the
+dev reference count.
 
-Hallo, haben Sie Projekte, die dringend einen Kredit ben=C3=B6tigen?
-Vergeben Sie heute Kredite in H=C3=B6he von 10.000 / 500 Millionen an
-interessierte Investoren, Unternehmen und Privatpersonen. Kommen Sie
-zur=C3=BCck, wenn Sie interessiert sind.
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+---
+ drivers/net/wan/lapbether.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wan/lapbether.c b/drivers/net/wan/lapbether.c
+index 960f1393595c..cb360dca3250 100644
+--- a/drivers/net/wan/lapbether.c
++++ b/drivers/net/wan/lapbether.c
+@@ -446,7 +446,7 @@ static int lapbeth_device_event(struct notifier_block *this,
+ 	if (dev_net(dev) != &init_net)
+ 		return NOTIFY_DONE;
+ 
+-	if (!dev_is_ethdev(dev))
++	if (!dev_is_ethdev(dev) && !lapbeth_get_x25_dev(dev))
+ 		return NOTIFY_DONE;
+ 
+ 	switch (event) {
+-- 
+2.17.1
+
