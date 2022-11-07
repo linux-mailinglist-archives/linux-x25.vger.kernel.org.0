@@ -2,83 +2,128 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F0F661EF44
-	for <lists+linux-x25@lfdr.de>; Mon,  7 Nov 2022 10:40:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 413F861F046
+	for <lists+linux-x25@lfdr.de>; Mon,  7 Nov 2022 11:22:03 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231590AbiKGJkc (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 7 Nov 2022 04:40:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34786 "EHLO
+        id S231510AbiKGKV7 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 7 Nov 2022 05:21:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231587AbiKGJkT (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 7 Nov 2022 04:40:19 -0500
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBB01BCBF;
-        Mon,  7 Nov 2022 01:40:18 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by sin.source.kernel.org (Postfix) with ESMTPS id 491EACE118B;
-        Mon,  7 Nov 2022 09:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 69C6BC433B5;
-        Mon,  7 Nov 2022 09:40:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1667814015;
-        bh=eGeEgr0/KwhblYgi5vtUy4mDQ1/GCwRgKOb0nMCdRFI=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=DoFnS8+GAdtVtqK4E447+mL47anTSPVWtZ0KR/3cNJ1VaCRHC/SbbpzrSkGzapTBg
-         A4c4lbLm7W8OkXtiN8SN8olJC3OIaClwFRNjWJR25D92FR8SoZ1keuPOjl+1x5LB26
-         nWBchFAsOUqqVp/lz4pnwa7YyrjdmdjQwiYF7Rf8wmF3HGN3ebHgW0o+cIyGik8rWF
-         RVddaEGYqm04/PvHWbrbpCl14ZyCUZiB4eHPT44+a/XATL/d8ouyed0r8IlGGDqb21
-         r2kBmrpIE6n3+63nVm7q6EqyD4U0AbH1CImgGKIkbsUCa5Eaye8Mkbi+wxrSrbm+32
-         J6xoPtEGwIJkg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 4FF2DE270CE;
-        Mon,  7 Nov 2022 09:40:15 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S230475AbiKGKVt (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 7 Nov 2022 05:21:49 -0500
+Received: from mail-oi1-x243.google.com (mail-oi1-x243.google.com [IPv6:2607:f8b0:4864:20::243])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C00918E2A
+        for <linux-x25@vger.kernel.org>; Mon,  7 Nov 2022 02:21:26 -0800 (PST)
+Received: by mail-oi1-x243.google.com with SMTP id n83so11608713oif.11
+        for <linux-x25@vger.kernel.org>; Mon, 07 Nov 2022 02:21:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AOmtRIzmF5dcnWrT0j3skK83MYTC+QvduwZ6ndeN2Ks=;
+        b=L9okY7Icb0Gf5ctoFsS3m7Ms6FyffuhIG/wumllqb99pGSDM0eKoVdXRomu4k2Vvje
+         vaAAA5b5CG4T9vL3DYzTbt6i7ilTYVRiZHeAf51qWroCKMi/06UV8twkwYbbvcb58b0c
+         O8aiXYIeKLPGKFxD8AeTNjdm9XiiwAwYXXYnxXnBzQtt4ZaPQYbu2mn3d4/wBF5dq0sI
+         fYgKey8dWac3TMQ3pm+aZLL8XgADS0c8wc9DQhJYDoGLimjkDspSigMMA/pe1/be4Mmf
+         FTMTprRtatoAeN10/4e16TIuQYPcJ6zZ7AsqjnUqg8Bde3BWUPkO4V20s/KjpolOjYbD
+         1dVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AOmtRIzmF5dcnWrT0j3skK83MYTC+QvduwZ6ndeN2Ks=;
+        b=RC3wDMOuJDttwdQeQMjJiSc7CjYcluByRjzOl8nq9GUNlQs5yJlt3uXNow6T/Ohdo3
+         21oCzBEguJJoj58Dzmaki6U+oF0oliZzohLVmRgGHwoa2NWf6WbTzcSPXdxLn4WJG+/1
+         Vj7nPTuPTbtixlw9n6RB9jz290RUpvFEVZNMLaxBEkN5ehK+shfLeHJuW5N9dGgx/Tp+
+         jy/cZt6OluM5zYYZjs1zn3yXdKYaNBtV6k/kR946lTS80Xvn5Zc+u5+eajyi9/+u9sEn
+         2dyIXvaQbBtJubJNK+HGNuAd1rzlup4saLHiMQCHs3/bUVY4v2Km87VSV0FmPmyFa5D2
+         u6hQ==
+X-Gm-Message-State: ACrzQf1Q3hrU7dbeSJ0OjtpYYi6rk5lqRoLBF4y5+/W1gsP8etqjhCR2
+        AIoDTaiIAe1LAw4+Aj8RBhWFPsC/L/O95FN2av1emsCTuzI=
+X-Google-Smtp-Source: AMsMyM4Z92xjGZXgCyg2wym9Bu3/u65n6EL2ZpWI9kWf7s8xWZden0QG/zdZVfFd3uCVmOfceIs+YigxV7lXSF4Af+Y=
+X-Received: by 2002:a17:90b:2393:b0:213:ecb2:2e04 with SMTP id
+ mr19-20020a17090b239300b00213ecb22e04mr38944517pjb.100.1667816475223; Mon, 07
+ Nov 2022 02:21:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net: lapbether: fix issue of dev reference count leakage
- in lapbeth_device_event()
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166781401532.17779.17066719090536498926.git-patchwork-notify@kernel.org>
-Date:   Mon, 07 Nov 2022 09:40:15 +0000
-References: <20221103090537.282969-1-shaozhengchao@huawei.com>
-In-Reply-To: <20221103090537.282969-1-shaozhengchao@huawei.com>
-To:     Zhengchao Shao <shaozhengchao@huawei.com>
-Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org, ms@dev.tdt.de,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, weiyongjun1@huawei.com, yuehaibing@huawei.com
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Received: by 2002:a05:6a06:925:b0:587:19e0:c567 with HTTP; Mon, 7 Nov 2022
+ 02:21:14 -0800 (PST)
+Reply-To: contact@ammico.it
+From:   =?UTF-8?Q?Mrs=2E_Monika_Everenov=C3=A1?= <977638ib@gmail.com>
+Date:   Mon, 7 Nov 2022 11:21:14 +0100
+Message-ID: <CAHAXD+Z_SoFK+TjW_6apBCCLtc_awXEjaqOdf77jdLRxxup3TA@mail.gmail.com>
+Subject: Re:
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=6.6 required=5.0 tests=ADVANCE_FEE_2_NEW_MONEY,
+        BAYES_50,DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        FREEMAIL_FROM,FROM_STARTS_WITH_NUMS,LOTS_OF_MONEY,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:243 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        *  0.7 FROM_STARTS_WITH_NUMS From: starts with several numbers
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [977638ib[at]gmail.com]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  3.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+        *  2.0 ADVANCE_FEE_2_NEW_MONEY Advance Fee fraud and lots of money
+X-Spam-Level: ******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
-
-This patch was applied to netdev/net.git (master)
-by David S. Miller <davem@davemloft.net>:
-
-On Thu, 3 Nov 2022 17:05:37 +0800 you wrote:
-> When following tests are performed, it will cause dev reference counting
-> leakage.
-> a)ip link add bond2 type bond mode balance-rr
-> b)ip link set bond2 up
-> c)ifenslave -f bond2 rose1
-> d)ip link del bond2
-> 
-> [...]
-
-Here is the summary with links:
-  - [net] net: lapbether: fix issue of dev reference count leakage in lapbeth_device_event()
-    https://git.kernel.org/netdev/net/c/531705a76549
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Hei ja miten voit?
+Nimeni on rouva Evereen, l=C3=A4het=C3=A4n t=C3=A4m=C3=A4n viestin suurella=
+ toivolla
+v=C3=A4lit=C3=B6n vastaus, koska minun on teht=C3=A4v=C3=A4 uusi syd=C3=A4n=
+leikkaus
+t=C3=A4ll=C3=A4 hetkell=C3=A4 huonokuntoinen ja v=C3=A4h=C3=A4iset mahdolli=
+suudet selviyty=C3=A4.
+Mutta ennen kuin min=C3=A4
+Tee toinen vaarallinen operaatio, annan sen sinulle
+Minulla on 6 550 000 dollaria yhdysvaltalaisella pankkitilill=C3=A4
+sijoittamista, hallinnointia ja k=C3=A4ytt=C3=B6=C3=A4 varten
+voittoa hyv=C3=A4ntekev=C3=A4isyysprojektin toteuttamiseen. Tarkoitan saira=
+iden auttamista
+ja k=C3=B6yh=C3=A4t ovat viimeinen haluni maan p=C3=A4=C3=A4ll=C3=A4, sill=
+=C3=A4 minulla ei ole niit=C3=A4
+kenelt=C3=A4 perii rahaa.
+Vastaa minulle nopeasti
+terveisi=C3=A4
+Rouva Monika Evereen
+Florida, Amerikan Yhdysvallat
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+Hi and how are you?
+My name is Mrs. Evereen, I am sending this message with great hope for
+an immediate response, as I have to undergo heart reoperation in my
+current poor health with little chance of survival. But before I
+undertake the second dangerous operation, I will give you the
+$6,550,000 I have in my US bank account to invest well, manage and use
+the profits to run a charity project for me. I count helping the sick
+and the poor as my last wish on earth, because I have no one to
+inherit money from.
+Please give me a quick reply
+regards
+Mrs. Monika Evereen
+Florida, United States of America
