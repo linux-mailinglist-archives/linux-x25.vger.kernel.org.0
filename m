@@ -2,97 +2,99 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EED616210A3
-	for <lists+linux-x25@lfdr.de>; Tue,  8 Nov 2022 13:30:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8CF8D6210B6
+	for <lists+linux-x25@lfdr.de>; Tue,  8 Nov 2022 13:30:31 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234152AbiKHMaI (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 8 Nov 2022 07:30:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48178 "EHLO
+        id S233928AbiKHMa2 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 8 Nov 2022 07:30:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233957AbiKHMaH (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 8 Nov 2022 07:30:07 -0500
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6022ED6D
-        for <linux-x25@vger.kernel.org>; Tue,  8 Nov 2022 04:30:06 -0800 (PST)
-Received: by mail-qk1-x732.google.com with SMTP id s20so8949388qkg.5
-        for <linux-x25@vger.kernel.org>; Tue, 08 Nov 2022 04:30:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=cigNPlEtEE1k5xiZ9PvVBazoo9lUtOBUwB6YZSwBfhiXaLfnGYlViGJ/CkI7QbpyRc
-         DUkc/pXyGXkzwxwNKmQ/AVr17gtcnro/HIxn3z8V8Vc+39bff1bepY3CjxGya/RlhJQD
-         pm03SLH1zh1vk5Et08W05yayJWnxdxRnbNjb7jCohrMzy/0/FJWKkATniYBbpKgsaBKE
-         Z+OGb8Lsc3JgCU/vlNmJzwFukVrY1yODwKOWdcEffdpTGbLPgR5Erg+jlwzjZKljWkGx
-         l6m9q0cv+BGPJ+GX+X1NDb4hrmrYY0d2qQvBndPhFSr7mcH+QfGu5TnM80huZaOEkW4m
-         IdPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=yca3W+qyO0rR+BALwTFPY1gf6Wwxto/jz+oFFiJbJ7SAx+9swA93GkE0zJxRC7N+r4
-         4qDbPjy7fd3SAdFdcwFnFWLX0ke/YmeWlNT1L+uIVkc6iCNNEcE6wj/2DAU4YattNbB7
-         aaVqjcrSdDQ1zBg2NnhzTUFyY0j4UFtKSXii1XO8WfN2e4iHha1B1AX4p4Vc7xq99msY
-         gH0Hg7/IuZtO5M2hgJ3xabP9/aZWa4fIH1aCWr4p4X+wRmh0x4brwaLyH+yzh1Ra0Nmf
-         2C1BNiQJPSeNVfYYZBaXEpJj7lHOts0GxVxvIUhrQmZRF2Lz4X/5tCQqk2e/uKZaxEAK
-         7zGw==
-X-Gm-Message-State: ACrzQf1A73vPaXl0w5dZO5RfVA91S8Vako2BRDwQF61Ts/rRi5vQUwvY
-        Zu3O/7dz0RFgG2V7xqWWWF1iKkwbu9A8fhxSzAk=
-X-Google-Smtp-Source: AMsMyM58hZ1EPsKu7coHtKEAadQRfLUwq2/6MbLEjdgMZ+NpfmCkJjte0dLlRzUMReSpEc0nbvrKDwByTED+/niEF+4=
-X-Received: by 2002:ae9:eb48:0:b0:6fa:d61:4510 with SMTP id
- b69-20020ae9eb48000000b006fa0d614510mr37684535qkg.768.1667910605712; Tue, 08
- Nov 2022 04:30:05 -0800 (PST)
+        with ESMTP id S234236AbiKHMaT (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 8 Nov 2022 07:30:19 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96544877A;
+        Tue,  8 Nov 2022 04:30:16 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 167146153F;
+        Tue,  8 Nov 2022 12:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 688E5C433D7;
+        Tue,  8 Nov 2022 12:30:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1667910615;
+        bh=SonIbouVyw/qkHMHGtqoXYaelFJP7EQ3+xGcdErC0FA=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=plBR5rVswRpwN9LGq1vX3pDPetOc11uyihNDnQuDA/wIKjEeswmCFvOxR24xXZGwP
+         cbGqKp6wHxp2D2IwMevRWPFrG2a+k6/psjHlswvZfseMiYHwnbdX4jhx7m+/UyzYA0
+         N6KyWp/N1t76C4gqsLVRdOzdwI9bFOtx9rGUOVq+8VqShLt5hx8zPRrmJIBp2059LZ
+         N3qzzmCQ+7NIsvO+sAJxo6F3O/W56o4pxVDXIlP62lRZkireP6Rne92bnnfNTk7qCT
+         NmlzFFGny01fxAISjtDZLBxooUqsm+LEymOPYjvOvQuD1m8jA2qmlFLctyoyWgHk1P
+         jrkOTu+1+0X7Q==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 497B0E270D0;
+        Tue,  8 Nov 2022 12:30:15 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Received: by 2002:a05:6214:2f8a:b0:4bb:6e86:8303 with HTTP; Tue, 8 Nov 2022
- 04:30:05 -0800 (PST)
-Reply-To: mr.abraham022@gmail.com
-From:   Mr Abraham <mr.abraham2021@gmail.com>
-Date:   Tue, 8 Nov 2022 12:30:05 +0000
-Message-ID: <CAJ2UK+YqK-OgWa-GbqjTU89edKqVZ5nqmL-j=gKpwP5uFtkvUA@mail.gmail.com>
-Subject: Greeting
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:732 listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4987]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mr.abraham022[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [mr.abraham2021[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [mr.abraham2021[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH net] net: lapbether: fix issue of invalid opcode in
+ lapbeth_open()
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <166791061529.27754.528965881676739737.git-patchwork-notify@kernel.org>
+Date:   Tue, 08 Nov 2022 12:30:15 +0000
+References: <20221107011445.207372-1-shaozhengchao@huawei.com>
+In-Reply-To: <20221107011445.207372-1-shaozhengchao@huawei.com>
+To:     Zhengchao Shao <shaozhengchao@huawei.com>
+Cc:     linux-x25@vger.kernel.org, netdev@vger.kernel.org, ms@dev.tdt.de,
+        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, xie.he.0141@gmail.com, weiyongjun1@huawei.com,
+        yuehaibing@huawei.com
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-My Greeting, Did you receive the letter i sent to you. Please answer me.
-Regard, Mr.Abraham
+Hello:
+
+This patch was applied to netdev/net.git (master)
+by Paolo Abeni <pabeni@redhat.com>:
+
+On Mon, 7 Nov 2022 09:14:45 +0800 you wrote:
+> If lapb_register() failed when lapb device goes to up for the first time,
+> the NAPI is not disabled. As a result, the invalid opcode issue is
+> reported when the lapb device goes to up for the second time.
+> 
+> The stack info is as follows:
+> [ 1958.311422][T11356] kernel BUG at net/core/dev.c:6442!
+> [ 1958.312206][T11356] invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+> [ 1958.315979][T11356] RIP: 0010:napi_enable+0x16a/0x1f0
+> [ 1958.332310][T11356] Call Trace:
+> [ 1958.332817][T11356]  <TASK>
+> [ 1958.336135][T11356]  lapbeth_open+0x18/0x90
+> [ 1958.337446][T11356]  __dev_open+0x258/0x490
+> [ 1958.341672][T11356]  __dev_change_flags+0x4d4/0x6a0
+> [ 1958.345325][T11356]  dev_change_flags+0x93/0x160
+> [ 1958.346027][T11356]  devinet_ioctl+0x1276/0x1bf0
+> [ 1958.346738][T11356]  inet_ioctl+0x1c8/0x2d0
+> [ 1958.349638][T11356]  sock_ioctl+0x5d1/0x750
+> [ 1958.356059][T11356]  __x64_sys_ioctl+0x3ec/0x1790
+> [ 1958.365594][T11356]  do_syscall_64+0x35/0x80
+> [ 1958.366239][T11356]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+> [ 1958.377381][T11356]  </TASK>
+> 
+> [...]
+
+Here is the summary with links:
+  - [net] net: lapbether: fix issue of invalid opcode in lapbeth_open()
+    https://git.kernel.org/netdev/net/c/3faf7e14ec0c
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
