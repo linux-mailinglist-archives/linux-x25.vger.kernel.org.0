@@ -2,97 +2,91 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ADAE46216BE
-	for <lists+linux-x25@lfdr.de>; Tue,  8 Nov 2022 15:32:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id CB0EA627B70
+	for <lists+linux-x25@lfdr.de>; Mon, 14 Nov 2022 12:04:55 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233684AbiKHOcR (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 8 Nov 2022 09:32:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36222 "EHLO
+        id S236503AbiKNLEy (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 14 Nov 2022 06:04:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234076AbiKHObM (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 8 Nov 2022 09:31:12 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03EF111A11
-        for <linux-x25@vger.kernel.org>; Tue,  8 Nov 2022 06:31:05 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id d10so13955065pfh.6
-        for <linux-x25@vger.kernel.org>; Tue, 08 Nov 2022 06:31:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=plCZMl07mNxOy4FwEnJyPWecERqsJQyrHYHIsHPByWrtU1k24II845ABLvzsZ/utuV
-         xrfZ6D/e/ZRoyRjpbZ5oMDY9h9ndbu6gtWFiQs/CjHcVVSqci/vjYPMMyy1pnVJ69u5N
-         OM2Kwkcs/9db1KNzWi4t4Kki8xmdjDy37F969+9phg4q7Iutyq/zyteGqROU9T6wdO4n
-         lS/c2RFkn8H1h3UlswE5jNY6oMt5wQG8oq965L41J8fDh6fe1zek7KZifUk151Do70De
-         k9oKwcRkEhDvguAg4zcTYagV5rrGsvTLwyNtdWlzI5EY/CPrjAga8S7nNTzf3DHImH9S
-         a/jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=pFE0ns4OK1nrj3mojbR4FPdymQ4TnEn+OZ+8oSnJxvfwpK3/1+isC0oA7IqejVBbjg
-         86oH8rXJe9kfV7oBv9yIdYTb+l9HyykMNaR89maKWwJ7yEVJrdFU+kgFbA7jRAxcAhCB
-         B+CaG2nKyS+oz7rcxQnlmimj9ykTpsmqv6lwBiDPzrHL5r9skmy/coiWKlllOataRZg7
-         OOhHOfJ/FZzh5jqn6KkDITIjsBVOq81INKP2rUVxepq4BOgBXmAUOLbOLuPN8OmawKqM
-         3zz+8Bl0vO1Fz1IpJyqhT0lQ8nKUyeGHk3FKawFLsz/qVLLMMZ4N26lo0FUKM4SfajKt
-         mbRg==
-X-Gm-Message-State: ACrzQf320UhkViKbDe1/gppoariRwYg4DrmhWPLtAhPVrXOLtOS3iaSn
-        iSVGi5s17PUfGoiC8/BmQionp6tTSCuhooTw9p8=
-X-Google-Smtp-Source: AMsMyM5cpw1VKvG8gEasOMmG4UhkblJY7gBReqfbYX80x9OXEWSZokzXOm90JDY4L5h3JbfU+3ckCU+QNWhG8SGrNVo=
-X-Received: by 2002:a05:6a00:1da6:b0:56c:318a:f8ab with SMTP id
- z38-20020a056a001da600b0056c318af8abmr56843835pfw.82.1667917864342; Tue, 08
- Nov 2022 06:31:04 -0800 (PST)
+        with ESMTP id S236478AbiKNLEy (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 14 Nov 2022 06:04:54 -0500
+Received: from dggsgout12.his.huawei.com (dggsgout12.his.huawei.com [45.249.212.56])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BB3E8C;
+        Mon, 14 Nov 2022 03:04:52 -0800 (PST)
+Received: from mail02.huawei.com (unknown [172.30.67.153])
+        by dggsgout12.his.huawei.com (SkyGuard) with ESMTP id 4N9mfd3B5mz4f3tgW;
+        Mon, 14 Nov 2022 19:04:41 +0800 (CST)
+Received: from huaweicloud.com (unknown [10.175.102.38])
+        by APP4 (Coremail) with SMTP id gCh0CgB3m9jKIHJjuicLAg--.21880S4;
+        Mon, 14 Nov 2022 19:04:44 +0800 (CST)
+From:   Wei Yongjun <weiyongjun@huaweicloud.com>
+To:     Martin Schiller <ms@dev.tdt.de>,
+        "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Andrew Hendry <andrew.hendry@gmail.com>,
+        Matthew Daley <mattjd@gmail.com>
+Cc:     Wei Yongjun <weiyongjun1@huawei.com>, linux-x25@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: [PATCH net] net/x25: Fix skb leak in x25_lapb_receive_frame()
+Date:   Mon, 14 Nov 2022 11:05:19 +0000
+Message-Id: <20221114110519.514538-1-weiyongjun@huaweicloud.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Received: by 2002:ac4:c8c2:0:b0:56a:d900:eb11 with HTTP; Tue, 8 Nov 2022
- 06:31:03 -0800 (PST)
-Reply-To: mr.abraham022@gmail.com
-From:   "Mr.Abraham" <davidbraddy01@gmail.com>
-Date:   Tue, 8 Nov 2022 14:31:03 +0000
-Message-ID: <CAHGOU4PvdrNhE2KifzdPkFxZTCG5gy+23qf130PwnSmJcLRSew@mail.gmail.com>
-Subject: Greeting
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.0 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
-        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:42d listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.4794]
-        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
-        *      digit
-        *      [mr.abraham022[at]gmail.com]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [davidbraddy01[at]gmail.com]
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [davidbraddy01[at]gmail.com]
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.0 T_HK_NAME_FM_MR_MRS No description available.
-        *  2.9 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-X-Spam-Level: *****
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: gCh0CgB3m9jKIHJjuicLAg--.21880S4
+X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4fCrW7GFy8JF17AFykuFg_yoW3ZwbE9F
+        yxJws7Xw47Kryxt3yfua13Xas7Zw1ku3yvqr42yFykXry8ur95ur97XryruFy8W3y2yrsI
+        y3Z7XrZ3Cw1SgjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUIcSsGvfJTRUUUb7AYFVCjjxCrM7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E6xAIw20E
+        Y4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwV
+        A0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x02
+        67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
+        0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
+        x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
+        0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lFIxGxcIEc7CjxVA2Y2ka0xkIwI1l42xK82IY
+        c2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG67AKxVWUJVWUGwC20s
+        026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MIIYrxkI7VAKI48JMIIF
+        0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E14v26r1j6r4UMIIF0x
+        vE42xK8VAvwI8IcIk0rVWrZr1j6s0DMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2
+        jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1zuWJUUUUU==
+X-CM-SenderInfo: 5zhl50pqjm3046kxt4xhlfz01xgou0bp/
+X-CFilter-Loop: Reflected
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-My Greeting, Did you receive the letter i sent to you. Please answer me.
-Regard, Mr.Abraham
+From: Wei Yongjun <weiyongjun1@huawei.com>
+
+x25_lapb_receive_frame() using skb_copy() to get a private copy of
+skb, the new skb should be freed in the undersized/fragmented skb
+error handling path. Otherwise there is a memory leak.
+
+Fixes: cb101ed2c3c7 ("x25: Handle undersized/fragmented skbs")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+---
+ net/x25/x25_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/x25/x25_dev.c b/net/x25/x25_dev.c
+index 5259ef8f5242..748d8630ab58 100644
+--- a/net/x25/x25_dev.c
++++ b/net/x25/x25_dev.c
+@@ -117,7 +117,7 @@ int x25_lapb_receive_frame(struct sk_buff *skb, struct net_device *dev,
+ 
+ 	if (!pskb_may_pull(skb, 1)) {
+ 		x25_neigh_put(nb);
+-		return 0;
++		goto drop;
+ 	}
+ 
+ 	switch (skb->data[0]) {
+-- 
+2.34.1
+
