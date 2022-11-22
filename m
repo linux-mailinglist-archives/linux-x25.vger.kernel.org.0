@@ -2,85 +2,69 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 612CD62B256
-	for <lists+linux-x25@lfdr.de>; Wed, 16 Nov 2022 05:30:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id A6A3263390D
+	for <lists+linux-x25@lfdr.de>; Tue, 22 Nov 2022 10:51:13 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231420AbiKPEaR (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 15 Nov 2022 23:30:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36114 "EHLO
+        id S233412AbiKVJvL (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 22 Nov 2022 04:51:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229495AbiKPEaQ (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 15 Nov 2022 23:30:16 -0500
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2663C13FA2;
-        Tue, 15 Nov 2022 20:30:16 -0800 (PST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AEF9961838;
-        Wed, 16 Nov 2022 04:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 03EDAC433D7;
-        Wed, 16 Nov 2022 04:30:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1668573015;
-        bh=2kZ4aJoGsZm6LAq4RGp2IrLNG7oJ12Koj7oq+oS4yOc=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=iumxwTlO40SCWvBmf2vr3zrKPuw43/+tY0JS5s/cKRL9QPjpibYaUcFlX3GMhCkv5
-         Qh0H8mVUaHRjtozRV3eT+FbMAmvYQJ/ft3h9oFniDBHYGvWoOELJURwIPuw6xBeOlN
-         vhBXzQo4cyxhOOPU3RKXo/9P+DJVQh2+nCC50fi3vQ6Ob0BvDcjX3oPkaZuvM+jUFo
-         WQVe/URMND5vrzSc3cwpfxACMoroAMb5BSkxd94prJ6J/Y6T0ws99W3tVVrETmtcFv
-         Qcr2i224gXWqUreHGIFLMQ/vD2fbFW8NT/FznbkgY1Xa4NT66o3bwx2QOnISI4z8F3
-         czHq9S+x91QXw==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id D42A6E21EFE;
-        Wed, 16 Nov 2022 04:30:14 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S233455AbiKVJvD (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 22 Nov 2022 04:51:03 -0500
+X-Greylist: delayed 1198 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 22 Nov 2022 01:51:02 PST
+Received: from mail.axisfairfi.com (mail.axisfairfi.com [94.177.230.134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6DE551C18
+        for <linux-x25@vger.kernel.org>; Tue, 22 Nov 2022 01:51:02 -0800 (PST)
+Received: by mail.axisfairfi.com (Postfix, from userid 1001)
+        id 6F70382617; Tue, 22 Nov 2022 09:15:27 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=axisfairfi.com;
+        s=mail; t=1669108529;
+        bh=0BgaW9t8GFER5QecxVkFsHrVi3gO/4V5KAZgJaiRYBs=;
+        h=Date:From:To:Subject:From;
+        b=LeTwwie8j9XJqFuWfBeuc3S9bD2HvE7oQPi+3+K9wKqCjs/jOtEnfsKNRN/cUJhox
+         /mdwiYrDmnjHXRphyKjI50JP0Ci9jFKDSgyn6aqp0THQ0s5dADe2xTGN8Uox02JTj+
+         2sX6MGBCrQjh3AjqBurSrnPxKaCE0Y0SUqiJK/rpVrgJuTTzNLoHDkGzY27A5C6+Tj
+         bpEr4mDNgWJlGBXsAfhv947NTOckcvr89CZlukY9MEvbpn5Xcooaj4ndoW8/Zp7yPg
+         qnKGEDbj+441VCmxQujsOybU9bH6eq9fFR2pkbBFJRi3rhNCWByIkymbOzz3/xpUh4
+         HYXqFK9BPVNFg==
+Received: by mail.axisfairfi.com for <linux-x25@vger.kernel.org>; Tue, 22 Nov 2022 09:15:27 GMT
+Message-ID: <20221122074500-0.1.d.o83.0.mo3re7q6ri@axisfairfi.com>
+Date:   Tue, 22 Nov 2022 09:15:27 GMT
+From:   "Zbynek Spacek" <zbynek.spacek@axisfairfi.com>
+To:     <linux-x25@vger.kernel.org>
+Subject: Silikonmischungen
+X-Mailer: mail.axisfairfi.com
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH net] net/x25: Fix skb leak in x25_lapb_receive_frame()
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <166857301485.26862.5354209271873264892.git-patchwork-notify@kernel.org>
-Date:   Wed, 16 Nov 2022 04:30:14 +0000
-References: <20221114110519.514538-1-weiyongjun@huaweicloud.com>
-In-Reply-To: <20221114110519.514538-1-weiyongjun@huaweicloud.com>
-To:     Wei Yongjun <weiyongjun@huaweicloud.com>
-Cc:     ms@dev.tdt.de, davem@davemloft.net, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, andrew.hendry@gmail.com,
-        mattjd@gmail.com, weiyongjun1@huawei.com,
-        linux-x25@vger.kernel.org, netdev@vger.kernel.org
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=1.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_FMBLA_NEWDOM14,
+        SPF_HELO_NONE,SPF_PASS,URIBL_RED autolearn=no autolearn_force=no
+        version=3.4.6
+X-Spam-Level: *
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+Good morning,
 
-This patch was applied to netdev/net.git (master)
-by Jakub Kicinski <kuba@kernel.org>:
+do you need intermediates for processing, plastics (e.g. rubber) or silic=
+one mixtures?
 
-On Mon, 14 Nov 2022 11:05:19 +0000 you wrote:
-> From: Wei Yongjun <weiyongjun1@huawei.com>
-> 
-> x25_lapb_receive_frame() using skb_copy() to get a private copy of
-> skb, the new skb should be freed in the undersized/fragmented skb
-> error handling path. Otherwise there is a memory leak.
-> 
-> Fixes: cb101ed2c3c7 ("x25: Handle undersized/fragmented skbs")
-> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-> 
-> [...]
+We provide a wide range of silicone rubbers with various properties, sili=
+cone mixtures from renowned manufacturers such as Wacker, Elastosil LR an=
+d dyes, stabilizers, primers and anti-adhesive additives.
 
-Here is the summary with links:
-  - [net] net/x25: Fix skb leak in x25_lapb_receive_frame()
-    https://git.kernel.org/netdev/net/c/2929cceb2fcf
+We also produce technical silicone compounds with increased resistance to=
+ oils, resistant to high temperatures and water vapor, conductive and man=
+y more.
 
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
+We provide fast order fulfillment, timely deliveries and cost optimizatio=
+n.
+
+Can I introduce what we can offer you?
 
 
+Zbynek Spacek
