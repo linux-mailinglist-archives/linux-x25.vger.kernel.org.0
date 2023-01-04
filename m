@@ -2,62 +2,61 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2C1664448A
-	for <lists+linux-x25@lfdr.de>; Tue,  6 Dec 2022 14:31:57 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 912BA65D353
+	for <lists+linux-x25@lfdr.de>; Wed,  4 Jan 2023 13:56:29 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234171AbiLFNb4 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 6 Dec 2022 08:31:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34638 "EHLO
+        id S239291AbjADMz3 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Wed, 4 Jan 2023 07:55:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233795AbiLFNbz (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 6 Dec 2022 08:31:55 -0500
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E21EA222BE
-        for <linux-x25@vger.kernel.org>; Tue,  6 Dec 2022 05:31:53 -0800 (PST)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-3bfd998fa53so151754437b3.5
-        for <linux-x25@vger.kernel.org>; Tue, 06 Dec 2022 05:31:53 -0800 (PST)
+        with ESMTP id S239135AbjADMy4 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Wed, 4 Jan 2023 07:54:56 -0500
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F2721DDF8
+        for <linux-x25@vger.kernel.org>; Wed,  4 Jan 2023 04:54:53 -0800 (PST)
+Received: by mail-qt1-x831.google.com with SMTP id j16so27086932qtv.4
+        for <linux-x25@vger.kernel.org>; Wed, 04 Jan 2023 04:54:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=OeyCMsHYScRvVh8RXebzMnb6pRDfFrPhGFM5Oo/oZrwyoa5Qe6A4MFoFU3Mp0QEA1i
-         SYxbR4sBY6B2f4vL1OEJybUifemEqA8IjQX2J09dxjCQRODPxlkwi9ZEZSAu9TEhort/
-         rwllpgNt60odz5Nl0j8spOK2S4UH94zHMFD6KX6br/bHNI2fZHIzqWvZlcUTMKyD9vqw
-         pbBkxrH6eRDakHg6i3SDW/XG3pxdEfflEK99JxjqsHbJ7YAIkEj/5S6ueT5UYlPSmqQ/
-         Hub6z0zknduscVyttBCDKyxn8xzrz/kgtfd7lHkiDU9nHicul2vZth5Aja6oh/8jcMGO
-         G90g==
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=BQfo1+41q2NZR57Q7BFlMODaOza2AgrRvUpAp3daCd4t1w84OEhFtXAM1g7CkVTr/y
+         mvXWkJvXCDM96Iy3cSf9E37Th3uZX5TzmwlIsHFzK3DAyLuSjJ8d3uR9drr/ahkzPGkt
+         iW+sw+gZOJCd7bumtfoM4UR2xOfXz6tdmGq2f+IJJhoSBazdofAm5Gs9PxuweXnk264c
+         knSGf1CtrqZScdeov1GoaGbl2sApMUXYjJGPCObPVA0UTlHx2t6+wdp4VOKHmsqLWM8X
+         lQt15zqigA6uJCG+q37n0r4mLK1MKtsniT1i9jhRA9qlN9E2Mf0sYN4W9Jd0n+39BoCK
+         yzWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=to:subject:message-id:date:from:reply-to:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SzBlYeGeT15Xra75w9IZDBjQ7Da3XKSmRdlnDJDYrko=;
-        b=8NC0wcuCyNe3bpEf1vGMXkmoOQHjQNpkUMUzHEI8RLlQkfbXL+V3l1ugVwJAzVm9+g
-         Bmx5RD176GwQh8jY67aGqreqQehR3lSoBcw5etCpCIhhxN2QTvZFHagqcMasnylkZ9Wd
-         VtchMp30djzPtXBrJ/bqUmweJbfmxvgd8DSpEjSH+j5gSx+A86Ph9v/abMi9JeL1zGlA
-         +llthGOb+N6mrezW0YHWGjFs+QH62U/9Ro8gi/6vOx1ifqpv1Yw6ASLEzbKUQeMzFJOo
-         q1i10fv1lyFbkdGsCIk6rbm1Xu98kpwhmxfzPjlZplMKumAO3sdXtY2zzw2z7aN8fHjM
-         +oSQ==
-X-Gm-Message-State: ANoB5pkxYS9oBtpD71C9B7Qns+Gt3iGYvyXlT/K8LXOBbYJQPxqgu6ag
-        xR594W3Itp4GF5RUMW0SFDgBl1QTlPALSUtpQVk=
-X-Google-Smtp-Source: AA0mqf7Z2Y5k3chtNt8kbVNLNOAPCXtgRbw0oMU6LK5Q/RiR2Ia6QNch2ZuKx5+xFv9D2teTY/76/SaSp4zD3zNfpik=
-X-Received: by 2002:a81:5243:0:b0:3d2:2098:c5fb with SMTP id
- g64-20020a815243000000b003d22098c5fbmr31214777ywb.121.1670333513086; Tue, 06
- Dec 2022 05:31:53 -0800 (PST)
+        bh=g2m/uNsCm/OsAUZxAnJOSdXXDa9Gh4wg88n4VPL2lMU=;
+        b=DvnEZm+2kjjzSNiC3KBK1tqmpwrAT2pMLpU2gmZuNJYxXGM04whzatijv/6yepy4QZ
+         oIsbzF9bqoDLQO4E6F8lg+Kov2ptSnZV8r5y3tZpJ59Xz6GWi51dkn0cqf40NEUQcZRL
+         WM9TWW+hfeJz+hixd0+9wzR+qoWoLI+Hr+1WZP3qJNMof/tuvozBzBJd7b2mXNJxKc/k
+         i8Z2yMXUJDOyuXg8RaVIhsmyPKSZXyjwmUC4G7Famo1JJze5bIQECAXmmeDEFkNcclJk
+         Guck5q1otWd7jwIKE1SLO3GbM4ChP8QL8fRUpzBWMBjOTuHR0xTD30M21Ycn1vZIIIvd
+         VqPQ==
+X-Gm-Message-State: AFqh2koFfBS6vn4dImjz+FwlOFrk8huOBppgeRZ4e/3Qyw126VEFvSQm
+        X0zWxYb5/1IhwMnfA/rjXi/ju5plfWz52YesgipwUofRl9E=
+X-Google-Smtp-Source: AMrXdXuKXTvNK0aSB9vnyjtdhrZfKmRzvU9Jw1W0zhcD7x19AMFVNgTh5oL+8ilZBOfTDf/bL64QVz1mYULxa/ftADs=
+X-Received: by 2002:ac8:568a:0:b0:3a9:688d:fad2 with SMTP id
+ h10-20020ac8568a000000b003a9688dfad2mr1976067qta.646.1672836882017; Wed, 04
+ Jan 2023 04:54:42 -0800 (PST)
 MIME-Version: 1.0
-Received: by 2002:a05:7010:a205:b0:314:d2a3:70a with HTTP; Tue, 6 Dec 2022
- 05:31:52 -0800 (PST)
-Reply-To: mr.abraham022@gmail.com
-From:   "Mr.Abraham" <mrkojofofone01@gmail.com>
-Date:   Tue, 6 Dec 2022 13:31:52 +0000
-Message-ID: <CACJtp8vgE8Nrmo+zWDrnXRqoM_o=MmruUY09Qi=4vFfLMPDrtA@mail.gmail.com>
-Subject: Hi
+Received: by 2002:a05:6200:5d91:b0:4a5:78e9:2012 with HTTP; Wed, 4 Jan 2023
+ 04:54:41 -0800 (PST)
+Reply-To: Gregdenzell9@gmail.com
+From:   Greg Denzell <mzsophie@gmail.com>
+Date:   Wed, 4 Jan 2023 12:54:41 +0000
+Message-ID: <CAEoj5=ZpJ15GRz-U33Ocbu5-P3Va+3bNv3476+mmJJ52cwx7tA@mail.gmail.com>
+Subject: 
 To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=4.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_HK_NAME_FM_MR_MRS,
+X-Spam-Status: No, score=4.6 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
         UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,5 +65,7 @@ Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-My Greeting, Did you receive the letter i sent to you. Please answer me.
-Regard, Mr.Abraham
+Seasons Greetings!
+
+This will remind you again that I have not yet received your reply to
+my last message to you.
