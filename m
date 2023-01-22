@@ -2,195 +2,103 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FE7166D0EA
-	for <lists+linux-x25@lfdr.de>; Mon, 16 Jan 2023 22:28:56 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D95E676BC9
+	for <lists+linux-x25@lfdr.de>; Sun, 22 Jan 2023 10:05:38 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232403AbjAPV2x (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Mon, 16 Jan 2023 16:28:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35498 "EHLO
+        id S229636AbjAVJFh (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sun, 22 Jan 2023 04:05:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233904AbjAPV2v (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Mon, 16 Jan 2023 16:28:51 -0500
-Received: from mail-il1-f200.google.com (mail-il1-f200.google.com [209.85.166.200])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F4F29E34
-        for <linux-x25@vger.kernel.org>; Mon, 16 Jan 2023 13:28:49 -0800 (PST)
-Received: by mail-il1-f200.google.com with SMTP id i14-20020a056e020d8e00b003034b93bd07so21662943ilj.14
-        for <linux-x25@vger.kernel.org>; Mon, 16 Jan 2023 13:28:49 -0800 (PST)
+        with ESMTP id S229480AbjAVJFh (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sun, 22 Jan 2023 04:05:37 -0500
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE396EAA
+        for <linux-x25@vger.kernel.org>; Sun, 22 Jan 2023 01:05:36 -0800 (PST)
+Received: by mail-oi1-x235.google.com with SMTP id v17so8001051oie.5
+        for <linux-x25@vger.kernel.org>; Sun, 22 Jan 2023 01:05:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NK4DjyGQpMqw10x+mS5KkcoMyzskXFHKTg9WGMfZ5sk=;
+        b=QjG4bt2fvOg1E8cHu2HdZltpga5a3/c0rkI9iLtZtGf/cMEUI5P98brq4WwCsUSCbA
+         b7jTa0JJcW7SbzuDcd9whFm68gAnsgNmscvM+O05UL7+mXtLyD0NBhUYWgV5rvCfI3nE
+         GyieAJbqfr/MsYp2r/fd1wlk46ijbDmYgb2/pSSWh4y6ysfz/Cmz9XKFv4uRHoT/r63L
+         kT3L92FyJDVI0vw7fE0Tz3g0MWV7uDkm/dsOwSBvsK0HnRTFosn/McO5DSY3og7735yH
+         Vmpv8GkeJhq9VXDYGBpys5MzLRsd1EPRrSrhlg30h+Ss0NKzPU1GjC6pU8uk2Ix0qbng
+         1NFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:from:subject:message-id:date:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2XCwDhtAn7jFlbT/UnBt4PISFMusnU1tJQ4/TMA1T0g=;
-        b=w1MXk4bRKJbUeLwNoANDTkhWjOySwIAZtdE+PGGWvQgdwrWCr+p/c2qfma+xD731V8
-         9DDuJWt9lVQkU1UPCfzp/ti/UqzjPlNybaITCN6tuZ/KDhIxha/Iicj2MdaGXyEFg3PO
-         X5FbhqLL09H9bkRe/SFFpweQ1s9kyJevEsntvsO/woiOKT+59/SZ+KuFCQa6gmRNFSTP
-         wbwc2m/Ye1vcjvyfyM66AjH0/vCz1jSOCB7vGrd8i4HZ6uX3RJ7YmPj9/m7WHrxfwGGU
-         sabrOl/8W2qBei3Gca6Zp2Gyf9xs06BmDQpwrc5jb1/TUDOExsL0Y8825iU2eKZKAQO7
-         PYRw==
-X-Gm-Message-State: AFqh2ko5h+x2rMXATnLtCqR34qj14iRRZHR0mKs+ZCEQn5gTGK/lY0Du
-        Aq7oSMguXzbPGu3THhIYDFy/AE/+bG3OL3PnPLPjGg3Xn9zI
-X-Google-Smtp-Source: AMrXdXv482S15UmyPtDD+qmSxm86zoKq+p8wQhtrV8IVRZtWPlwG6GH7RPwh600RvablVQVxhYvjTrblXD1FEi5oW00bSJFBcgZR
+        h=content-transfer-encoding:to:subject:message-id:date:from:reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NK4DjyGQpMqw10x+mS5KkcoMyzskXFHKTg9WGMfZ5sk=;
+        b=PlJtjb7Myxww20VrQcBCbNJblYIEY+HaXcuV4ltlhTkGfLt6KOrnY1S33XBW9hRuX1
+         gw0XKBuPhv8SRdir+nuKdbptcs0rJTodz6U4to2AdQ/s+CghrakDjHmjDDsXdmahQ3uy
+         IYf+68ISXSLd+xcWqp/9Xfc4SAT3wCM7JDlCZYOdkWL9n9S2mqkdo0VyFMXiWv+AunXg
+         jnkanY8nUMwFpKvD2svbIaj6kxFb30dD/4BOcxA926EiZPa0a8xXwys/9x4gk5Rd47y6
+         hNsMOdImlslvgh4bfRNPgDfMlJ1BaXUMeA96ax5+IDWQxe2NNzNiZXBdprCDJ442QclC
+         D05Q==
+X-Gm-Message-State: AFqh2ko5zYUU2pIgQgDXL15A6v3UWkla3pakJ2a672QeAxNuxdAz9tiu
+        tp7F0S54jb3nQreDkkV9WaL8RVEajgd07TmO/5U=
+X-Google-Smtp-Source: AMrXdXsg3oVEC5KkHHTBdzoQYg6EI5byOOQmuzMouNEIUnCq57NwSv5OKRyZMxl5evwq/VrQkbQq79xbfvo5dYFNClA=
+X-Received: by 2002:a05:6808:1688:b0:364:96ed:920e with SMTP id
+ bb8-20020a056808168800b0036496ed920emr1140786oib.297.1674378335796; Sun, 22
+ Jan 2023 01:05:35 -0800 (PST)
 MIME-Version: 1.0
-X-Received: by 2002:a92:d74c:0:b0:30d:a23a:604f with SMTP id
- e12-20020a92d74c000000b0030da23a604fmr105030ilq.139.1673904529168; Mon, 16
- Jan 2023 13:28:49 -0800 (PST)
-Date:   Mon, 16 Jan 2023 13:28:49 -0800
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <000000000000d9606605f2684493@google.com>
-Subject: [syzbot] possible deadlock in lapb_disconnect_request
-From:   syzbot <syzbot+c9450e09c6b15886782c@syzkaller.appspotmail.com>
-To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        linux-kernel@vger.kernel.org, linux-x25@vger.kernel.org,
-        ms@dev.tdt.de, netdev@vger.kernel.org, pabeni@redhat.com,
-        syzkaller-bugs@googlegroups.com
+Received: by 2002:a05:6839:6807:b0:5cc:4cd2:5e41 with HTTP; Sun, 22 Jan 2023
+ 01:05:35 -0800 (PST)
+Reply-To: charleswjacksonjr32@gmail.com
+From:   Charles W Jackson Jr <daharatugabduljalil@gmail.com>
+Date:   Sun, 22 Jan 2023 01:05:35 -0800
+Message-ID: <CABGy7hk5b_LXqDq5kidKWrwx9z7U0Esh6B+bJc61fMA7Mxpung@mail.gmail.com>
+Subject: 
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=0.9 required=5.0 tests=BAYES_00,FROM_LOCAL_HEX,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SORTED_RECIPS,SPF_HELO_NONE,SPF_PASS autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: Yes, score=7.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FREEMAIL_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,LOTS_OF_MONEY,MONEY_FREEMAIL_REPTO,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_FREEM,UNDISC_MONEY
+        autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:235 listed in]
+        [list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5001]
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.2 FREEMAIL_REPLYTO_END_DIGIT Reply-To freemail username ends in
+        *      digit
+        *      [charleswjacksonjr32[at]gmail.com]
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [daharatugabduljalil[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.0 LOTS_OF_MONEY Huge... sums of money
+        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
+        *  0.0 MONEY_FREEMAIL_REPTO Lots of money from someone using free
+        *      email?
+        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
+        *      different freemails
+        *  2.9 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *******
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello,
-
-syzbot found the following issue on:
-
-HEAD commit:    358a161a6a9e Merge branch 'for-next/fixes' into for-kernelci
-git tree:       git://git.kernel.org/pub/scm/linux/kernel/git/arm64/linux.git for-kernelci
-console output: https://syzkaller.appspot.com/x/log.txt?x=150ef54a480000
-kernel config:  https://syzkaller.appspot.com/x/.config?x=2573056c6a11f00d
-dashboard link: https://syzkaller.appspot.com/bug?extid=c9450e09c6b15886782c
-compiler:       Debian clang version 13.0.1-++20220126092033+75e33f71c2da-1~exp1~20220126212112.63, GNU ld (GNU Binutils for Debian) 2.35.2
-userspace arch: arm64
-syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=1760c716480000
-C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=10a8500e480000
-
-Downloadable assets:
-disk image: https://storage.googleapis.com/syzbot-assets/99d14e0f4c19/disk-358a161a.raw.xz
-vmlinux: https://storage.googleapis.com/syzbot-assets/23275b612976/vmlinux-358a161a.xz
-kernel image: https://storage.googleapis.com/syzbot-assets/ed79195fac61/Image-358a161a.gz.xz
-
-IMPORTANT: if you fix the issue, please add the following tag to the commit:
-Reported-by: syzbot+c9450e09c6b15886782c@syzkaller.appspotmail.com
-
-8021q: adding VLAN 0 to HW filter on device bond1475
-============================================
-WARNING: possible recursive locking detected
-6.2.0-rc3-syzkaller-16369-g358a161a6a9e #0 Not tainted
---------------------------------------------
-syz-executor129/7388 is trying to acquire lock:
-ffff0000fff929c0 (&lapb->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:355 [inline]
-ffff0000fff929c0 (&lapb->lock){+.-.}-{2:2}, at: lapb_disconnect_request+0xc0/0x1d4 net/lapb/lapb_iface.c:356
-
-but task is already holding lock:
-ffff0000fff571c0 (&lapb->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:355 [inline]
-ffff0000fff571c0 (&lapb->lock){+.-.}-{2:2}, at: lapb_device_event+0x108/0x380 net/lapb/lapb_iface.c:471
-
-other info that might help us debug this:
- Possible unsafe locking scenario:
-
-       CPU0
-       ----
-  lock(&lapb->lock);
-  lock(&lapb->lock);
-
- *** DEADLOCK ***
-
- May be due to missing lock nesting notation
-
-7 locks held by syz-executor129/7388:
- #0: ffff80000da1a2f8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock net/core/rtnetlink.c:75 [inline]
- #0: ffff80000da1a2f8 (rtnl_mutex){+.+.}-{3:3}, at: rtnetlink_rcv_msg+0x458/0x82c net/core/rtnetlink.c:6138
- #1: ffff0000fff571c0 (&lapb->lock){+.-.}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:355 [inline]
- #1: ffff0000fff571c0 (&lapb->lock){+.-.}-{2:2}, at: lapb_device_event+0x108/0x380 net/lapb/lapb_iface.c:471
- #2: ffff80000d645548 (rcu_read_lock_bh){....}-{1:2}, at: rcu_lock_acquire+0x18/0x54 include/linux/rcupdate.h:324
- #3: ffff80000d645520 (rcu_read_lock){....}-{1:2}, at: rcu_lock_acquire+0x10/0x4c include/linux/rcupdate.h:324
- #4: ffff80000d645548 (rcu_read_lock_bh){....}-{1:2}, at: rcu_lock_acquire+0x18/0x54 include/linux/rcupdate.h:324
- #5: ffff0000ff325ed8 (_xmit_X25#2){+...}-{2:2}, at: spin_lock include/linux/spinlock.h:350 [inline]
- #5: ffff0000ff325ed8 (_xmit_X25#2){+...}-{2:2}, at: __netif_tx_lock include/linux/netdevice.h:4316 [inline]
- #5: ffff0000ff325ed8 (_xmit_X25#2){+...}-{2:2}, at: __dev_queue_xmit+0x79c/0xdb8 net/core/dev.c:4245
- #6: ffff0000ffd76cc0 (&lapbeth->up_lock){+...}-{2:2}, at: spin_lock_bh include/linux/spinlock.h:355 [inline]
- #6: ffff0000ffd76cc0 (&lapbeth->up_lock){+...}-{2:2}, at: lapbeth_xmit+0x30/0x2b0 drivers/net/wan/lapbether.c:190
-
-stack backtrace:
-CPU: 0 PID: 7388 Comm: syz-executor129 Not tainted 6.2.0-rc3-syzkaller-16369-g358a161a6a9e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call trace:
- dump_backtrace+0x1c4/0x1f0 arch/arm64/kernel/stacktrace.c:156
- show_stack+0x2c/0x3c arch/arm64/kernel/stacktrace.c:163
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x104/0x16c lib/dump_stack.c:106
- dump_stack+0x1c/0x58 lib/dump_stack.c:113
- __lock_acquire+0x808/0x3084
- lock_acquire+0x100/0x1f8 kernel/locking/lockdep.c:5668
- __raw_spin_lock_bh include/linux/spinlock_api_smp.h:126 [inline]
- _raw_spin_lock_bh+0x54/0x6c kernel/locking/spinlock.c:178
- spin_lock_bh include/linux/spinlock.h:355 [inline]
- lapb_disconnect_request+0xc0/0x1d4 net/lapb/lapb_iface.c:356
- lapbeth_xmit+0x8c/0x2b0 drivers/net/wan/lapbether.c:211
- __netdev_start_xmit include/linux/netdevice.h:4865 [inline]
- netdev_start_xmit include/linux/netdevice.h:4879 [inline]
- xmit_one net/core/dev.c:3583 [inline]
- dev_hard_start_xmit+0xd4/0x1ec net/core/dev.c:3599
- __dev_queue_xmit+0x83c/0xdb8 net/core/dev.c:4249
- bond_start_xmit+0x708/0xca0 drivers/net/bonding/bond_main.c:5457
- __netdev_start_xmit include/linux/netdevice.h:4865 [inline]
- netdev_start_xmit include/linux/netdevice.h:4879 [inline]
- xmit_one net/core/dev.c:3583 [inline]
- dev_hard_start_xmit+0xd4/0x1ec net/core/dev.c:3599
- __dev_queue_xmit+0x83c/0xdb8 net/core/dev.c:4249
- dev_queue_xmit include/linux/netdevice.h:3035 [inline]
- lapbeth_data_transmit+0xd0/0xe4 drivers/net/wan/lapbether.c:259
- lapb_data_transmit+0x3c/0x60 net/lapb/lapb_iface.c:447
- lapb_transmit_buffer+0x154/0x1a0 net/lapb/lapb_out.c:149
- lapb_send_control+0x170/0x18c net/lapb/lapb_subr.c:251
- lapb_establish_data_link+0x50/0x70
- lapb_device_event+0x2ac/0x380
- notifier_call_chain kernel/notifier.c:87 [inline]
- raw_notifier_call_chain+0x7c/0x108 kernel/notifier.c:455
- call_netdevice_notifiers_info net/core/dev.c:1944 [inline]
- call_netdevice_notifiers_extack net/core/dev.c:1982 [inline]
- call_netdevice_notifiers net/core/dev.c:1996 [inline]
- dev_open+0xec/0x168 net/core/dev.c:1458
- bond_enslave+0x7cc/0x1824 drivers/net/bonding/bond_main.c:1963
- do_set_master net/core/rtnetlink.c:2617 [inline]
- do_setlink+0x564/0x17a4 net/core/rtnetlink.c:2820
- __rtnl_newlink net/core/rtnetlink.c:3590 [inline]
- rtnl_newlink+0x98c/0xa08 net/core/rtnetlink.c:3637
- rtnetlink_rcv_msg+0x484/0x82c net/core/rtnetlink.c:6141
- netlink_rcv_skb+0xfc/0x1e8 net/netlink/af_netlink.c:2564
- rtnetlink_rcv+0x28/0x38 net/core/rtnetlink.c:6159
- netlink_unicast_kernel+0xfc/0x1dc net/netlink/af_netlink.c:1330
- netlink_unicast+0x164/0x248 net/netlink/af_netlink.c:1356
- netlink_sendmsg+0x484/0x584 net/netlink/af_netlink.c:1932
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0x2f8/0x440 net/socket.c:2476
- ___sys_sendmsg net/socket.c:2530 [inline]
- __sys_sendmsg+0x1ac/0x228 net/socket.c:2559
- __do_sys_sendmsg net/socket.c:2568 [inline]
- __se_sys_sendmsg net/socket.c:2566 [inline]
- __arm64_sys_sendmsg+0x2c/0x3c net/socket.c:2566
- __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
- invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
- el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
- do_el0_svc+0x48/0x140 arch/arm64/kernel/syscall.c:197
- el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:637
- el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:584
-bond1475: (slave lapb2942): Enslaving as an active interface with an up link
-
-
----
-This report is generated by a bot. It may contain errors.
-See https://goo.gl/tpsmEJ for more information about syzbot.
-syzbot engineers can be reached at syzkaller@googlegroups.com.
-
-syzbot will keep track of this issue. See:
-https://goo.gl/tpsmEJ#status for how to communicate with syzbot.
-syzbot can test patches for this issue, for details see:
-https://goo.gl/tpsmEJ#testing-patches
+--=20
+IHR E-MAIL-KONTO WURDE F=C3=9CR EINE SPENDE IN H=C3=96HE VON 3.500.000,00 U=
+SD
+F=C3=9CR CHARITY AUSGEW=C3=84HLT. BITTE KONTAKTIEREN SIE UNS F=C3=9CR WEITE=
+RE
+INFORMATIONEN.
