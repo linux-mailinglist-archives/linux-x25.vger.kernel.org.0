@@ -2,66 +2,54 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 124F267B0AC
-	for <lists+linux-x25@lfdr.de>; Wed, 25 Jan 2023 12:09:12 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id EB9D967F572
+	for <lists+linux-x25@lfdr.de>; Sat, 28 Jan 2023 08:20:37 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235535AbjAYLJK (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 25 Jan 2023 06:09:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34906 "EHLO
+        id S231575AbjA1HUh (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Sat, 28 Jan 2023 02:20:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234911AbjAYLIo (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 25 Jan 2023 06:08:44 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E5974EFF
-        for <linux-x25@vger.kernel.org>; Wed, 25 Jan 2023 03:08:43 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id y3-20020a17090a390300b00229add7bb36so1640717pjb.4
-        for <linux-x25@vger.kernel.org>; Wed, 25 Jan 2023 03:08:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=theori.io; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1TZ9HgFaUKxGS7c+lLSxsI3P/cyPJN6ga8wsZCYuGY=;
-        b=RqurFXTSNH1gTEosFbblzxWowqr1IVNJgjVZWBR+k+2ptzeUtGV8DfzWd4Z/wd2Zjl
-         4dbmqWQciRUyE5DdwECInD4DtG52J1ip6ycrE4nKizPm3Z0jmjzOt6z984niv8kWskFb
-         qJxy7WDLQ43ZkAjzYpgWmFkEGaDSx/GShBcMk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p1TZ9HgFaUKxGS7c+lLSxsI3P/cyPJN6ga8wsZCYuGY=;
-        b=JsRuIlZndCkOpzy/1DOsI2jkMdUSG7dkqVMztJt7CDz4Lva9cw0SurstCzUPa7I41t
-         Ch8KEg26TgDhXHzso0OuDmvbeh/BXJBwkGQ1N/BhRdp97Vf6gG9tzn73PhVWDrGfIjdd
-         rkgtZd7VLJKOlyPx1C753BOg7Jq46I1BJqNkJ6JuNWtSmXabcKtERJWXEmRZyU6uOQ61
-         EpC14QTnBQ+hEQ5Lfo3mvaIb+zRzlQ6/BvSKus39W0P9aXNyY2/1M1ghaRaCWQOq3y3X
-         F6Yznzjw8QQuMEfV3vzXPl86JlTt8K7/ExU1diyGCph54oRdrxdxmY9TN/byoFfWQnPK
-         XBEA==
-X-Gm-Message-State: AFqh2kqqEAt1H04mzCeeCwTnUrj8j3+on4MKUPzLpa3R2UkLTrlGK4++
-        wAWNSSc34r25rtyvq/IrSEx1Yg==
-X-Google-Smtp-Source: AMrXdXvmeDWUgmAe8r/0jNtSomPn1ELkUhmgwqGY9Sq8MnDE/IJKwtX93wF1nwDeAc4QEzIo0aCimg==
-X-Received: by 2002:a17:902:bd07:b0:194:9331:3d79 with SMTP id p7-20020a170902bd0700b0019493313d79mr32118890pls.32.1674644922650;
-        Wed, 25 Jan 2023 03:08:42 -0800 (PST)
-Received: from ubuntu ([39.115.108.115])
-        by smtp.gmail.com with ESMTPSA id jc11-20020a17090325cb00b00189c62eac37sm3384683plb.32.2023.01.25.03.08.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jan 2023 03:08:42 -0800 (PST)
-Date:   Wed, 25 Jan 2023 03:08:37 -0800
-From:   Hyunwoo Kim <v4bel@theori.io>
-To:     patchwork-bot+netdevbpf@kernel.org
+        with ESMTP id S231158AbjA1HUg (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Sat, 28 Jan 2023 02:20:36 -0500
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B664E7E6CC;
+        Fri, 27 Jan 2023 23:20:35 -0800 (PST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4EEFE60A25;
+        Sat, 28 Jan 2023 07:20:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A0893C4339B;
+        Sat, 28 Jan 2023 07:20:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1674890434;
+        bh=MeyRTq/arodCF8K5T7IZpkPAOx4UAPBza5Pct0eGIjI=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=FDCdhCzLMvi+7ovTVkyKQFAYh5K740tEV1O/iDNCTjEN5w6tjO5fFG0pLWPx1uyby
+         vTy839buesfXbrUiRHPSSnDFn7oyPUbXsDHXenEWIMfB3i3GevzxQBYyGWUNDChJuN
+         dgcl7FyMMEVyz0kYZHecmaG2OBHdmVWR6q95P72QDQqRdm/2AnojhafuosjXKK1HaH
+         Kd/HwtTTtZi4A9yVho8adWOPmWGTvNh8fmmfVU2kTL/o08tPFC7eYziARBQr3JZtcd
+         4541dsQ2bsQSLxZEr+zKTyTzqffTdeaUegGLs2mhiyZ60u+RegdQZpNNFauIZ25VwB
+         +bNKaz9KdcGVg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 87D24E54D2D;
+        Sat, 28 Jan 2023 07:20:34 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3] net/x25: Fix to not accept on connected socket
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <167489043455.16992.12517633627951269745.git-patchwork-notify@kernel.org>
+Date:   Sat, 28 Jan 2023 07:20:34 +0000
+References: <20230125110514.GA134174@ubuntu>
+In-Reply-To: <20230125110514.GA134174@ubuntu>
+To:     Hyunwoo Kim <v4bel@theori.io>
 Cc:     ms@dev.tdt.de, davem@davemloft.net, edumazet@google.com,
-        kuba@kernel.org, pabeni@redhat.com, v4bel@theori.io,
+        kuba@kernel.org, pabeni@redhat.com, kuniyu@amazon.com,
         imv4bel@gmail.com, linux-x25@vger.kernel.org,
         netdev@vger.kernel.org
-Subject: Re: [PATCH v2] net/x25: Fix to not accept on connected socket
-Message-ID: <20230125110837.GA134263@ubuntu>
-References: <20230123194323.GA116515@ubuntu>
- <167464081679.8627.16186557969987796753.git-patchwork-notify@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <167464081679.8627.16186557969987796753.git-patchwork-notify@kernel.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,13 +57,28 @@ Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Dear,
+Hello:
 
-This patch's description is incorrect and should not be applied.
+This patch was applied to netdev/net-next.git (master)
+by David S. Miller <davem@davemloft.net>:
 
-Newly submitted corrected v3 patch:
-https://lore.kernel.org/all/20230125110514.GA134174@ubuntu/
+On Wed, 25 Jan 2023 03:05:14 -0800 you wrote:
+> If you call listen() and accept() on an already connect()ed
+> x25 socket, accept() can successfully connect.
+> This is because when the peer socket sends data to sendmsg,
+> the skb with its own sk stored in the connected socket's
+> sk->sk_receive_queue is connected, and x25_accept() dequeues
+> the skb waiting in the sk->sk_receive_queue.
+> 
+> [...]
+
+Here is the summary with links:
+  - [v3] net/x25: Fix to not accept on connected socket
+    https://git.kernel.org/netdev/net-next/c/f2b0b5210f67
+
+You are awesome, thank you!
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
 
-Regards,
-Hyunwoo Kim
