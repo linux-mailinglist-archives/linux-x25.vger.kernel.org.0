@@ -2,68 +2,95 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6981D6A1830
-	for <lists+linux-x25@lfdr.de>; Fri, 24 Feb 2023 09:46:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTP id B6DAE6ABC11
+	for <lists+linux-x25@lfdr.de>; Mon,  6 Mar 2023 11:25:16 +0100 (CET)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229833AbjBXIqA (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Fri, 24 Feb 2023 03:46:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58194 "EHLO
+        id S230334AbjCFKZO (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 6 Mar 2023 05:25:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbjBXIp7 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Fri, 24 Feb 2023 03:45:59 -0500
-Received: from mail.surechiers.com (mail.surechiers.com [80.211.239.236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16E6663A06
-        for <linux-x25@vger.kernel.org>; Fri, 24 Feb 2023 00:45:58 -0800 (PST)
-Received: by mail.surechiers.com (Postfix, from userid 1002)
-        id 7CC6683646; Fri, 24 Feb 2023 09:45:49 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=surechiers.com;
-        s=mail; t=1677228355;
-        bh=xg3VVY9SU+I+f+ynMyY8e0Lum0EY/KrTvpy5BYTg7yw=;
-        h=Date:From:To:Subject:From;
-        b=RcIvmdxLETL2cF8PaGkk+RhPCfezxHmbNT6nh/Bq9/S3UMFZFuJK85MfWVEH7Vsw+
-         iBtvsj1uPxI1t7wTEz0Ea7CrgWbJu5204jxvZKA0i/KtvQkoiNje+BUpE1G2IOXY3i
-         w49sfKLailRIcbnW3mxQdIhPzBZs98ezwl+ulvOrPUPcguC5Gpwe3bsQ+Vwd9j9Qof
-         uS5Eedpru0pSyLysdIVJ8zUIFZ+uRoTHbNy+6gSM0uxHeuzLIaelgOH2/s1h6sw8qW
-         G7kbDajXBoa+I8Dt9HBCJOFet//ZxfMvdJfiTgZJCtDr+DE2kaKWOcvTqYK9tWYeyo
-         hmblHaEQSUGqw==
-Received: by mail.surechiers.com for <linux-x25@vger.kernel.org>; Fri, 24 Feb 2023 08:45:48 GMT
-Message-ID: <20230224084500-0.1.c.haf.0.p1qekgqewn@surechiers.com>
-Date:   Fri, 24 Feb 2023 08:45:48 GMT
-From:   =?UTF-8?Q? "J=C3=A1chym_Zdr=C3=A1hal" ?= 
-        <jachym.zdrahal@surechiers.com>
-To:     <linux-x25@vger.kernel.org>
-Subject: Renovace podlahy
-X-Mailer: mail.surechiers.com
+        with ESMTP id S230004AbjCFKZM (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 6 Mar 2023 05:25:12 -0500
+Received: from mail-ua1-x930.google.com (mail-ua1-x930.google.com [IPv6:2607:f8b0:4864:20::930])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 807E421A2D
+        for <linux-x25@vger.kernel.org>; Mon,  6 Mar 2023 02:25:09 -0800 (PST)
+Received: by mail-ua1-x930.google.com with SMTP id x1so6049056uav.9
+        for <linux-x25@vger.kernel.org>; Mon, 06 Mar 2023 02:25:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1678098308;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
+        b=XLGWJIk9ngr+DzzO288LuvJaM4tXJNvPNwQ2aS9Ags44qiVmrxsinzlSTI373SWvQL
+         +6SgUcT0EwDOIVN2f57batbL6WGkZ2VjHiZD2U0ZfoB3ufKNwLox0AmmmOFBlt9HJ6RH
+         OS5dvcaELSOGwrw7xfZFJ2NbgVH7MQKiyCspd7sI5fG3WOcHvbeWf9pH0zYeQabOYzn3
+         yw9gnSfWn+YHaL2P9olrtireCVfXlHXeG4tpX1ltR43P7LxaSqE8ArqnuABg3RgkQyVT
+         NPOLZ1x9kR7oCsOGhR6lezPY8aiclxT9jA/o8x8OVtbG9/bfL0WUzRZuLJI8IqemKCfK
+         Id5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1678098308;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Vh7FN/ulAdnmY8O0LKz7bqpIFk4oOSQ9iCZ8VQ/AkNo=;
+        b=XyOcaOdXRTHUXJ3rJtZsL7/u4NHxj9J7GKdVHLG1rE6Dkmx9pmCzH+K0ESYucXTJOj
+         9Pv4VZP5PONucPIK3XuCQcM4FtfBmQt1C0zveA4kWdsfcKO877FYsPMQlOQe9f71IEax
+         GnMB5Y4A4o+7XHGLYYWRhVTTHNjDs08QG8EDeg66G/caUBcgQ10DZAQxX0CVlutkRTzF
+         DO9sucSZw7rX0It/k+e+5nHX1qonkaWcZqSfjtTIIHvBAfXm3U87cgK8ZJ9hUxKmDqls
+         vdRwsB5Y9cJH3+B2srFmZUsL2hTmWauL61k8CccvaD/R4SzrltdEH3aHIYtYzq2uOIKJ
+         Nptw==
+X-Gm-Message-State: AO0yUKWsca7wlePCZftHM/HM4Zg7C00s6j7dVGxslaE27K0bN2Zs6/0j
+        mNiEnD0k8BAGXjfmsJMzfXufi42hgR/4+tsBe1I=
+X-Google-Smtp-Source: AK7set+HbxOG8fRWYdSd2Spe8YgeAHrZJbrwpyn/MCNLktCdTFpedrqR91TU0+OXtW6ZaqP/6B7py4FyO7omWVyWxwo=
+X-Received: by 2002:a1f:1752:0:b0:401:f65:99c2 with SMTP id
+ 79-20020a1f1752000000b004010f6599c2mr6566336vkx.3.1678098308425; Mon, 06 Mar
+ 2023 02:25:08 -0800 (PST)
 MIME-Version: 1.0
+Received: by 2002:a59:ce6f:0:b0:3ae:930b:3e70 with HTTP; Mon, 6 Mar 2023
+ 02:25:08 -0800 (PST)
+Reply-To: madis.scarl@terlera.it
+From:   "Ms Eve from U.N" <denisagotou@gmail.com>
+Date:   Mon, 6 Mar 2023 11:25:08 +0100
+Message-ID: <CAD6bNBj=acZn6jpkuAhuMAxbq=prud3DvWJUd6YsqM0swBt35Q@mail.gmail.com>
+Subject: Re: Claim of Fund:
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_FMBLA_NEWDOM14,
-        RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,URIBL_CSS_A,URIBL_DBL_SPAM
-        autolearn=no autolearn_force=no version=3.4.6
-X-Spam-Level: ****
+X-Spam-Status: Yes, score=5.8 required=5.0 tests=BAYES_80,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_SCAM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,UNDISC_MONEY autolearn=no
+        autolearn_force=no version=3.4.6
+X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
+        *      https://www.dnswl.org/, no trust
+        *      [2607:f8b0:4864:20:0:0:0:930 listed in]
+        [list.dnswl.org]
+        *  2.0 BAYES_80 BODY: Bayes spam probability is 80 to 95%
+        *      [score: 0.8772]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
+        *      provider
+        *      [denisagotou[at]gmail.com]
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  2.0 HK_SCAM No description available.
+        *  2.0 UNDISC_MONEY Undisclosed recipients + money/fraud signs
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Dobr=C3=A9 r=C3=A1no,
+Hello Good Morning,
+This is to bring to your notice that all our efforts to contact you
+through this your email ID failed Please Kindly contact Barrister.
+Steven Mike { mbarrsteven@gmail.com } on his private email for the
+claim of your compensation entitlement
 
-m=C4=9Bli byste z=C3=A1jem o beze=C5=A1v=C3=A9, chemicky, n=C3=A1razu a o=
-t=C4=9Bru odoln=C3=A9 podlahy?
-
-Zaji=C5=A1=C5=A5uj=C3=AD spolehlivost bez ohledu na to, zda je pou=C5=BE=C3=
-=ADv=C3=A1te v n=C3=A1ro=C4=8Dn=C3=BDch v=C3=BDrobn=C3=ADch prostorech, s=
-kladech, komunika=C4=8Dn=C3=ADch tras=C3=A1ch nebo komer=C4=8Dn=C3=ADch p=
-rostor=C3=A1ch.
-
-Navrhli jsme snadno =C4=8Distiteln=C3=A9, hygienick=C3=A9 a protiskluzov=C3=
-=A9 podlahy pro pr=C5=AFmyslov=C3=A9 i komer=C4=8Dn=C3=AD pou=C5=BEit=C3=AD=
-=2E
-
-Mohu nab=C3=ADdnout bezplatn=C3=BD audit va=C5=A1ich podlah spolu s kompl=
-exn=C3=AD anal=C3=BDzou podkladu. Mohu o tomhle zavolat?
-
-
-J=C3=A1chym Zdr=C3=A1hal
+Note: You have to pay for the delivery fee.
+Yours Sincerely
+Mrs EVE LEWIS
