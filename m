@@ -2,74 +2,66 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6FC06E58E7
-	for <lists+linux-x25@lfdr.de>; Tue, 18 Apr 2023 07:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88B0E6EC76E
+	for <lists+linux-x25@lfdr.de>; Mon, 24 Apr 2023 09:51:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbjDRF7i (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Tue, 18 Apr 2023 01:59:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43568 "EHLO
+        id S230339AbjDXHvC (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 24 Apr 2023 03:51:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229669AbjDRF7c (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Tue, 18 Apr 2023 01:59:32 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307AC2125
-        for <linux-x25@vger.kernel.org>; Mon, 17 Apr 2023 22:59:31 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id bz21so5099244ljb.11
-        for <linux-x25@vger.kernel.org>; Mon, 17 Apr 2023 22:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1681797569; x=1684389569;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
-        b=h93ZV8iCnACjT9Rji+sssoi6qBTNUtQ2UX4Z6JhphjwlO0mP6IvefLUdC9/HHPEdzc
-         MK5k3eArSOeFghXkzo2gSg9AoDbFuAZK+msa231LeywpuY4PrQKG5tEmDv84Uq/0L62F
-         9moX8TsQWHcxVWMubQsJavssOjpaWROCZHeVo6SQmnd1gjtX9kxW/y2+8ZZ5BlddX+sa
-         qfTGVBuRTU5F9lqeBp7iUoCnzXRuFhbqlG8s1wLX1jCTc9f7SzpJFgzPfn6ezn/L4fc4
-         zSBpG/DWehvbOkgIrsEF5uyEFo1iRxghu86NrvhenIlTajuBQ61kQEyGX8hc9WUZCdwh
-         ol6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681797569; x=1684389569;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dQlu0Oc2Q0nPMBCNq5iTPUZpwrRZlsMdPt2zjra8+VI=;
-        b=TFinP1f22I1O6GoMMumOuoSPVejmg+LFj4/mNzVOc+qyXoaS/9G2subx8hng89DhhJ
-         ZlH8aYaLEfDPODjQSK31GWNTGRl7ebMouWVwuRGgKoi8QBJu1wUK8UgANcWb+wmkdlr/
-         4T1T+9UPUKKDzMSZ2rGnQkqu98E/V/0T297NGI6lEC3cGH1JtDw/jDoq5wzTE0Yg8hos
-         fkY8AM6sV/TopJNg2Z2e+YsgyRsBtAsJyVlCGH94eKZq54+9Z1TiA+K2iQtRO4H5xTwa
-         XKOmTp8gIFEKYJfl7ophe7LHhQCZOnUo7mJjet34Wf3sEK2V5/IaRV1wyYtkg9NYdRQw
-         3igQ==
-X-Gm-Message-State: AAQBX9eZa+kQRfbaD/XGYm6CKslf9c4vdE3iZflFsXF1NSr4r4ikEmWD
-        ESFwy95s7i27ImbbSB4vmFtWeFl3WVa8mM0g2Nk4UXt7nmi3cw==
-X-Google-Smtp-Source: AKy350bnV2AANFzQljOKJaGQFVn/8imkXjDUIcslYQf4S5+RAKT61mjLdEI4wBIlnDu6vs7eANQIsl8DJ7DmLEQ/06E=
-X-Received: by 2002:a2e:8547:0:b0:2a7:6e5a:42c5 with SMTP id
- u7-20020a2e8547000000b002a76e5a42c5mr462145ljj.0.1681797568709; Mon, 17 Apr
- 2023 22:59:28 -0700 (PDT)
+        with ESMTP id S231465AbjDXHvA (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 24 Apr 2023 03:51:00 -0400
+Received: from mail.mahavavy.com (mail.mahavavy.com [92.222.170.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 336021708
+        for <linux-x25@vger.kernel.org>; Mon, 24 Apr 2023 00:50:58 -0700 (PDT)
+Received: by mail.mahavavy.com (Postfix, from userid 1002)
+        id E0BA1222C0; Mon, 24 Apr 2023 07:50:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mahavavy.com; s=mail;
+        t=1682322656; bh=IfqQW79nVX/qUpmHcJiWDpV9BQnOf/s+Zcq9ON74QJY=;
+        h=Date:From:To:Subject:From;
+        b=PCL9fJ2a5Ob71/hcMGPxxSjTLcJ3Zsw2eHNCy7mDOtXSZkv6Ox8vwwLbS/6DDLlGf
+         W6+dVce4sVaUvKGgg8CXp1J6Qqi8910b4Nx8xgGODo2RXZZ1cZsrtRH6GJk6S6wDUF
+         bp6RNtCpdumlFVlCfdT1l2hxT4nQF95Di/U6uAgskdZtTXvLnfkJYRYPuTKTgjTnW+
+         htdwesCSW/h4z3vRd6hfhSp6Zlt6bG+nq2Wmo0sdjCv8sR3c52aMilOQ+OjrWKJgn1
+         w7jU2/drS8N7qkBpYv+w4p3fUp2B5u0Nd59diMHKPtPsAOKA3HCupKPPtkGrz+J74Z
+         Ho/CoHoV/DdBA==
+Received: by mail.mahavavy.com for <linux-x25@vger.kernel.org>; Mon, 24 Apr 2023 07:50:40 GMT
+Message-ID: <20230424064500-0.1.25.3fy7.0.gmqvx7skm1@mahavavy.com>
+Date:   Mon, 24 Apr 2023 07:50:40 GMT
+From:   =?UTF-8?Q? "Kristi=C3=A1n_Plet=C3=A1nek" ?= 
+        <kristian.pletanek@mahavavy.com>
+To:     <linux-x25@vger.kernel.org>
+Subject: =?UTF-8?Q?Tlakov=C4=9B_lit=C3=BD?=
+X-Mailer: mail.mahavavy.com
 MIME-Version: 1.0
-Received: by 2002:ab2:2681:0:b0:1b6:840f:9075 with HTTP; Mon, 17 Apr 2023
- 22:59:28 -0700 (PDT)
-Reply-To: mariamkouame.info@myself.com
-From:   Mariam Kouame <mariamkouame1992@gmail.com>
-Date:   Mon, 17 Apr 2023 22:59:28 -0700
-Message-ID: <CADUz=ah5x0s=mUmSzhKu-bRCGOp_37Fiynd3GkEZuBBaAeAtqQ@mail.gmail.com>
-Subject: from mariam kouame
-To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Level: **
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-0.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MIXED_ES,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Dear,
+Dobr=C3=A9 r=C3=A1no,
 
-Please grant me permission to share a very crucial discussion with
-you. I am looking forward to hearing from you at your earliest
-convenience.
+zaji=C5=A1=C5=A5ujeme technologii tlakov=C3=A9ho lit=C3=AD hlin=C3=ADku.
 
-Mrs. Mariam Kouame
+M=C3=A1me v=C3=BDrobn=C3=AD z=C3=A1vody v Polsku, =C5=A0v=C3=A9dsku a =C4=
+=8C=C3=ADn=C4=9B se schopnost=C3=AD flexibiln=C4=9B p=C5=99esouvat v=C3=BD=
+robu mezi lokalitami.
+
+Na=C5=A1e lic=C3=AD bu=C5=88ky jsou v=C4=9Bt=C5=A1inou automatick=C3=A9 n=
+ebo poloautomatick=C3=A9, co=C5=BE umo=C5=BE=C5=88uje v=C3=BDrobu velk=C3=
+=BDch v=C3=BDrobn=C3=ADch s=C3=A9ri=C3=AD s vysokou flexibilitou detail=C5=
+=AF.
+=20
+Poskytujeme podporu v ka=C5=BEd=C3=A9 f=C3=A1zi v=C3=BDvoje projektu, vyv=
+=C3=ADj=C3=ADme strukturu detailu.
+
+Cht=C4=9Bli byste mluvit o spolupr=C3=A1ci v t=C3=A9to oblasti?
+
+Pozdravy
+Kristi=C3=A1n Plet=C3=A1nek
