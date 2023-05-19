@@ -2,84 +2,74 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 446B36FDAEE
-	for <lists+linux-x25@lfdr.de>; Wed, 10 May 2023 11:40:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 656E9709653
+	for <lists+linux-x25@lfdr.de>; Fri, 19 May 2023 13:19:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235484AbjEJJkx (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 10 May 2023 05:40:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47800 "EHLO
+        id S231537AbjESLSq (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Fri, 19 May 2023 07:18:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234507AbjEJJkY (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 10 May 2023 05:40:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3485265BA;
-        Wed, 10 May 2023 02:40:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AD64064853;
-        Wed, 10 May 2023 09:40:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D28C1C433D2;
-        Wed, 10 May 2023 09:40:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683711621;
-        bh=i813gVwW0eh94Hd0e9c4CgUV/9xwc/BrxxEBD+CKKdA=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=NBgL9grkPb/ZTnmxNLJb31JSvXfjPp4ctudvrekaFEBvtxWCLCP6YqU+GsqCTjd9O
-         1XvRJAYv+wSdTN1r5tLgLCK7oiHjlRpVyNFcXkvl6q7kRROhS6TtLHheVYyaZvu3Gx
-         6PFRYzYfRO5cIuAtO8TCKKXjBSYV/XeV8xItUZvfwNQAB65V96tslV+l4pP/UgPoDq
-         yMojXDyz2FbD6+1CTzBnsNWsGYAu4yJiWJFy8N1t6cv4XZIzTMzoMsl2WmXbMm04NT
-         I21opM3P420uSBoiEqa2u2Swg2F3tG928pWZeOPSqmHod1RAe92RjswM/S2e2iFyYP
-         93Y+lWJeX11GA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id B6C7DE270C4;
-        Wed, 10 May 2023 09:40:21 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+        with ESMTP id S232067AbjESLS3 (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Fri, 19 May 2023 07:18:29 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83E17199B
+        for <linux-x25@vger.kernel.org>; Fri, 19 May 2023 04:18:25 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-96f588bc322so146667566b.1
+        for <linux-x25@vger.kernel.org>; Fri, 19 May 2023 04:18:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684495103; x=1687087103;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YmxaI1amCfTksu6ynk2557PwK0HJxrBQmYIx/Pz5hBs=;
+        b=YrB/oM/9+DfdWsBYK5tE+VKexgOscQSdsQfyNuKsAEzaTYQrmV8QTOqw+n6ncFEG7/
+         NrzWtVQUP7+OiIp81BAxWp4/UA25FSfMBP8v31Vr27/6mv+gpWeEjdQtXcTyd5QbQRXQ
+         jQsq3ZZiseoC7dbmEKV/v7W5pMditEv8MtmfbU+xJe27P/r6UpIIOa1tC9UGmpl2zp50
+         MzUJDLpg49H8SzwE6tQuOsZmLJqfmdmj+F1UdmogGeAKG+63if08XOvkcQ3hE8tURB/u
+         e+KtIjmw1bhP1l1fiAyUwAswvZk0EPc4O8/eM+CpYABwaPGP/JS50wZnv1wX2QAcz1gX
+         wwDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684495103; x=1687087103;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YmxaI1amCfTksu6ynk2557PwK0HJxrBQmYIx/Pz5hBs=;
+        b=P7IogJ/5B/zuqZiTw1PfSSH1fM5OQ/qXKFPDa6N2ngZZ+otuh7iMxfAZy2qLHBbdu6
+         HF3ve95+Elz2hN7UzD4f4awIRSDLwwCvU7RFXDSymqTDfo36Bh34SyzyqWX9ND+Blxy5
+         0vQxYLKTl1SHhbbGRlHv53G8tprynxv9tpthpRBKOxvWbplGHksw6ZjFvYaGMbWyg/W9
+         6gEBc6bBHt3fwxCNzuIMrJBFMVhgp/26Keuc2H5HTkQMie4NIW/AmwuazKSVas7iUfeC
+         EkBs3OO4X0WW8ATJ2GdhC691ou1fOj+C9uwxpgpJty3DrNzJz2iM106znscVQnEWT0tT
+         ZTsw==
+X-Gm-Message-State: AC+VfDxOQXQ+GQBzLSZWsQzzsk96jyQ/4l6U43q+PvblpFJQfkC11KT0
+        NrMaMVBHJ7irGjyqp0je1LcZQYmMQHmMXINTUMzsDM9PDtJe8Q==
+X-Google-Smtp-Source: ACHHUZ4u0RD9o3Kl8FtNeecPkKIUUkqQP5EKCQy8Odb3BCVRQ/plvct7PNXp53hldLkfZ7jyXh0W2roGP4wdAWIFYf4=
+X-Received: by 2002:a17:906:af64:b0:966:5730:c3fe with SMTP id
+ os4-20020a170906af6400b009665730c3femr1223003ejb.52.1684495082502; Fri, 19
+ May 2023 04:18:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] docs: networking: fix x25-iface.rst heading & index order
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <168371162174.29703.9835991823894241053.git-patchwork-notify@kernel.org>
-Date:   Wed, 10 May 2023 09:40:21 +0000
-References: <20230510022914.2230-1-rdunlap@infradead.org>
-In-Reply-To: <20230510022914.2230-1-rdunlap@infradead.org>
-To:     Randy Dunlap <rdunlap@infradead.org>
-Cc:     netdev@vger.kernel.org, mchehab@kernel.org, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        corbet@lwn.net, linux-doc@vger.kernel.org, ms@dev.tdt.de,
-        linux-x25@vger.kernel.org
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Received: by 2002:a17:907:7dab:b0:94f:7d03:8e8b with HTTP; Fri, 19 May 2023
+ 04:18:02 -0700 (PDT)
+Reply-To: ninacoulibaly03@myself.com
+From:   nina coulibaly <ninacoulibaly199@gmail.com>
+Date:   Fri, 19 May 2023 04:18:02 -0700
+Message-ID: <CAM7Z2JAs+q6RsD5Hw352ZDFruUVR5ngjAamir+4ZCakNdZyceg@mail.gmail.com>
+Subject: from nina coulibaly
+To:     undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=4.8 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,FREEMAIL_REPLYTO,FREEMAIL_REPLYTO_END_DIGIT,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        UNDISC_FREEM autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Hello:
+Dear,
 
-This patch was applied to netdev/net.git (main)
-by David S. Miller <davem@davemloft.net>:
+Please grant me permission to share a very crucial discussion with
+you. I am looking forward to hearing from you at your earliest
+convenience.
 
-On Tue,  9 May 2023 19:29:14 -0700 you wrote:
-> Fix the chapter heading for "X.25 Device Driver Interface" so that it
-> does not contain a trailing '-' character, which makes Sphinx
-> omit this heading from the contents.
-> 
-> Reverse the order of the x25.rst and x25-iface.rst files in the index
-> so that the project introduction (x25.rst) comes first.
-> 
-> [...]
-
-Here is the summary with links:
-  - docs: networking: fix x25-iface.rst heading & index order
-    https://git.kernel.org/netdev/net/c/77c964dad99a
-
-You are awesome, thank you!
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Mrs. Nina Coulibal
