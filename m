@@ -2,98 +2,108 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA4A7744F70
-	for <lists+linux-x25@lfdr.de>; Sun,  2 Jul 2023 19:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DD4C784E9B
+	for <lists+linux-x25@lfdr.de>; Wed, 23 Aug 2023 04:17:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjGBRz1 (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Sun, 2 Jul 2023 13:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44384 "EHLO
+        id S232206AbjHWCRc (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Tue, 22 Aug 2023 22:17:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229679AbjGBRz0 (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Sun, 2 Jul 2023 13:55:26 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1808E5E;
-        Sun,  2 Jul 2023 10:55:24 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-c13cb2cb428so622377276.0;
-        Sun, 02 Jul 2023 10:55:24 -0700 (PDT)
+        with ESMTP id S230291AbjHWCRb (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Tue, 22 Aug 2023 22:17:31 -0400
+X-Greylist: delayed 906 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 22 Aug 2023 19:17:29 PDT
+Received: from symantec4.comsats.net.pk (symantec4.comsats.net.pk [203.124.41.30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B44E185
+        for <linux-x25@vger.kernel.org>; Tue, 22 Aug 2023 19:17:28 -0700 (PDT)
+X-AuditID: cb7c291e-06dff70000002aeb-55-64e553c5e730
+Received: from iesco.comsatshosting.com (iesco.comsatshosting.com [210.56.28.11])
+        (using TLS with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (Client did not present a certificate)
+        by symantec4.comsats.net.pk (Symantec Messaging Gateway) with SMTP id A4.42.10987.6C355E46; Wed, 23 Aug 2023 05:33:10 +0500 (PKT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns;
+        d=iesco.com.pk; s=default;
+        h=received:content-type:mime-version:content-transfer-encoding
+          :content-description:subject:to:from:date:reply-to;
+        b=lqsUitSeT1wdwRiRe7DYSaONGBwELjeiwVRlptpTHls6FM5gj5aNfpaaWMY+iesfg
+          Vs9fI2tF0eAl3wzYcDXD65zKGoB8GBRVgLCfGdTRVfIDz40wlAisgsV+kHhFDt9jj
+          pG74b7SSBytNiwFbmEEjuLH9dkgKiTP34kwg6c0so=
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1688320524; x=1690912524;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B/346nUIZErMaap4Xzifysw7agxmNBKblpAJllVen+8=;
-        b=HS1Xpu8RutGjzNf2cNefIvO40PuyEyyWN1lXpuUm3Zm6tYXGDXwbDrBzDuJeX7KOHr
-         q1UGGgd94SVTRefQw+1rgl1gQ50uEoBHL2OdSUILUjvF+1ATH9gvheGUN++hFOwLNLid
-         1XMjRZLU+9Ge2en4fJbD50bjnQdqOwyoXZfvhIPbUVY/sq6Vm6BAvUYZPRqmTRzyIG2n
-         JWXOYS2flIDtpE0mu19bw1MyMQp5M6uow+iO1HWzOXqc6Z90+aO2nBs6Bf+FGR5IBS25
-         laBmv/H9uClBFT1isqMjJFlPY+WcanwzxZg1N8ZxZIN6sqfmOEIBN1yT1YF0buNY5Ya/
-         4xig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688320524; x=1690912524;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=B/346nUIZErMaap4Xzifysw7agxmNBKblpAJllVen+8=;
-        b=jXMzier0L+uA9uqJKLdm5TIwgOAhgiAZeSAf6CZ7pSDwvbckdaLE4/JtIdDJA73YLg
-         M1yROHqCUDtrY/d6QM/kLYRfUMkUW39C0xSaijLtk7V/6zkIUKaSdF0bTK5xqzYUOJ21
-         XdMwBdozbMKoKy2GJxu60H09R/zh+jyWANP2/OE6fKdooaiTPggHcKUuaA3MLv/3Jdhv
-         xMdFlk1Uq/jTYzBbOIYSGt4uTRVsHD+zsMsyHJ8qfP+m6a89VPqNNafySDtenOEE0PPW
-         z4AOUwPm5Bd/e0kORptURQp1sAqAxIRYTkl4iPL8RY0mSaU+4n/TgsVND+Kb7gqbxopG
-         V32Q==
-X-Gm-Message-State: ABy/qLbXBRFGQ9vXsWtEkPvP85QWn0z0iO+Pv2E4bf3Lh+XyNrNrqZim
-        170QS63XFk2rmFh6OnNwDK/RIGMcXish1f07JoJTnJKPmcUzgQ==
-X-Google-Smtp-Source: APBJJlGKLhOT4Bu7qJ+9PV6J1mFibevhHpEsj9SgVNCYM6WTAos06S2LRQMzHrHXF1fE6Av0kYh7XbCZNh0JTIxm3q8=
-X-Received: by 2002:a25:2b88:0:b0:bd6:6e3e:3af3 with SMTP id
- r130-20020a252b88000000b00bd66e3e3af3mr4285143ybr.3.1688320523798; Sun, 02
- Jul 2023 10:55:23 -0700 (PDT)
+        d=iesco.com.pk; s=default;
+        h=reply-to:date:from:to:subject:content-description
+          :content-transfer-encoding:mime-version:content-type;
+        bh=GMzYzcyTxDsE6wX/XHG6MHqAdAiHrhqbmmLQ/TZ1QnQ=;
+        b=WHtDYGOcyLtIYOG/18Vza2QfiLJKVNn0mmQ41cTI2W03OxEDpmwNM4v+GMrh4cvB+
+          Ubly2KCSZVZaYD++EJ2gnSNqA0HzYtrBlGb5o8M1iwvlpQWRe+GImgqErDoWr+Oqa
+          nPK2mJR26xHua3MJVdgFkwyAxH5YISiNdaF/cXNAs=
+Received: from [94.156.6.90] (UnknownHost [94.156.6.90]) by iesco.comsatshosting.com with SMTP;
+   Wed, 23 Aug 2023 04:31:09 +0500
+Message-ID: <A4.42.10987.6C355E46@symantec4.comsats.net.pk>
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-From:   Askar Safin <safinaskar@gmail.com>
-Date:   Sun, 2 Jul 2023 20:54:47 +0300
-Message-ID: <CAPnZJGB6gk47Hw-OE2_9eSKJ0DwOzEiL+tncMJyiOD6arw6xag@mail.gmail.com>
-Subject: Re: [PATCH net-next v3 17/18] sock: Remove ->sendpage*() in favour of sendmsg(MSG_SPLICE_PAGES)
-To:     David Howells <dhowells@redhat.com>
-Cc:     netdev@vger.kernel.org,
-        Alexander Duyck <alexander.duyck@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Willem de Bruijn <willemdebruijn.kernel@gmail.com>,
-        David Ahern <dsahern@kernel.org>,
-        Matthew Wilcox <willy@infradead.org>,
-        Jens Axboe <axboe@kernel.dk>, linux-mm@kvack.org,
-        linux-kernel@vger.kernel.org,
-        Marc Kleine-Budde <mkl@pengutronix.de>, bpf@vger.kernel.org,
-        dccp@vger.kernel.org, linux-afs@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-can@vger.kernel.org,
-        linux-crypto@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-fsdevel@vger.kernel.org, linux-hams@vger.kernel.org,
-        linux-nfs@vger.kernel.org, linux-rdma@vger.kernel.org,
-        linux-sctp@vger.kernel.org, linux-wpan@vger.kernel.org,
-        linux-x25@vger.kernel.org, mptcp@lists.linux.dev,
-        rds-devel@oss.oracle.com, tipc-discussion@lists.sourceforge.net,
-        virtualization@lists.linux-foundation.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Re; Interest,
+To:     linux-x25@vger.kernel.org
+From:   "Chen Yun" <pso.chairmanbod@iesco.com.pk>
+Date:   Tue, 22 Aug 2023 16:31:23 -0700
+Reply-To: chnyne@gmail.com
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrDLMWRmVeSWpSXmKPExsVyyUKGW/dY8NMUg5al/BYH9s5ndGD0+LxJ
+        LoAxissmJTUnsyy1SN8ugStjyboLLAW7mSva+hexNDA+Zupi5OSQEDCR+NTdx9zFyMUhJLCH
+        SeLF7KcsIA6LwGpmidfd81ghnIfMEnMuvmQDaRESaGaUOH/UDMTmFbCW2DT/ESuIzSygJ3Fj
+        6hQ2iLigxMmZT1gg4toSyxa+BlrBAWSrSXztKgEJCwuISXyatowdxBYRkJWY1rwRzGYT0JdY
+        8bWZEcRmEVCVeHxwNwvEWimJjVfWs01g5J+FZNssJNtmIdk2C2HbAkaWVYwSxZW5icBQSzbR
+        S87PLU4sKdbLSy3RK8jexAgMw9M1mnI7GJdeSjzEKMDBqMTD+3PdkxQh1sQyoK5DjBIczEoi
+        vNLfH6YI8aYkVlalFuXHF5XmpBYfYpTmYFES57UVepYsJJCeWJKanZpakFoEk2Xi4JRqYNxn
+        fUj+pPvCS8ExzKvz/W4En8hlO1Opt2lv4UQlgwJLkUCvJBXZNR+XPqmXMHlc/iimK+9B+PJv
+        Z9Ut5ucF/7mhcWi308OLUy6prJSoiShn/3zKLc17c4xvTf/BCa3mKklfN2kd2b3p7qTu+r+q
+        V0SOb3iyr69ob//7afrHfx6TEiyIXNvLulGJpTgj0VCLuag4EQByoMHJPwIAAA==
+X-Spam-Status: Yes, score=5.5 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        RCVD_IN_DNSWL_LOW,RCVD_IN_SBL,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Report: *  0.0 URIBL_BLOCKED ADMINISTRATOR NOTICE: The query to URIBL was
+        *      blocked.  See
+        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
+        *      for more information.
+        *      [URIs: iesco.com.pk]
+        *  0.1 RCVD_IN_SBL RBL: Received via a relay in Spamhaus SBL
+        *      [94.156.6.90 listed in zen.spamhaus.org]
+        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
+        * -0.7 RCVD_IN_DNSWL_LOW RBL: Sender listed at https://www.dnswl.org/,
+        *       low trust
+        *      [203.124.41.30 listed in list.dnswl.org]
+        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
+        *      [score: 0.5000]
+        * -0.0 SPF_PASS SPF: sender matches SPF record
+        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        *  2.1 FREEMAIL_FORGED_REPLYTO Freemail in Reply-To, but not From
+X-Spam-Level: *****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-> -/* In some cases, both sendpage() and sendmsg() could have added
-> - * an skb to the write queue, but failed adding payload on it.
-> - * We need to remove it to consume less memory, but more
-> - * importantly be able to generate EPOLLOUT for Edge Trigger epoll()
-> - * users.
-> +/* In some cases, both sendmsg() could have added an skb to the write queue,
-> + * but failed adding payload on it.  We need to remove it to consume less
-> + * memory, but more importantly be able to generate EPOLLOUT for Edge Trigger
-> + * epoll() users.
->   */
+Re; Interest,
 
-There is a typo here. "Both" is redundant now
+I am interested in discussing the Investment proposal as I explained
+in my previous mail. May you let me know your interest and the
+possibility of a cooperation aimed for mutual interest.
 
--- 
-Askar Safin
+Looking forward to your mail for further discussion.
+
+Regards
+
+------
+Chen Yun - Chairman of CREC
+China Railway Engineering Corporation - CRECG
+China Railway Plaza, No.69 Fuxing Road, Haidian District, Beijing, P.R.
+China
+
