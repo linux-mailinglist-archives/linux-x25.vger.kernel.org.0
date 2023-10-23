@@ -2,92 +2,80 @@ Return-Path: <linux-x25-owner@vger.kernel.org>
 X-Original-To: lists+linux-x25@lfdr.de
 Delivered-To: lists+linux-x25@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FDF47A7454
-	for <lists+linux-x25@lfdr.de>; Wed, 20 Sep 2023 09:38:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA14A7D455D
+	for <lists+linux-x25@lfdr.de>; Tue, 24 Oct 2023 04:14:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233862AbjITHiO (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
-        Wed, 20 Sep 2023 03:38:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57012 "EHLO
+        id S231812AbjJXCOK (ORCPT <rfc822;lists+linux-x25@lfdr.de>);
+        Mon, 23 Oct 2023 22:14:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233891AbjITHhy (ORCPT
-        <rfc822;linux-x25@vger.kernel.org>); Wed, 20 Sep 2023 03:37:54 -0400
-X-Greylist: delayed 371 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 20 Sep 2023 00:37:48 PDT
-Received: from mail.venturelinkage.com (mail.venturelinkage.com [80.211.143.151])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69C1A123
-        for <linux-x25@vger.kernel.org>; Wed, 20 Sep 2023 00:37:48 -0700 (PDT)
-Received: by mail.venturelinkage.com (Postfix, from userid 1002)
-        id F0FFE826A3; Wed, 20 Sep 2023 09:31:25 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=venturelinkage.com;
-        s=mail; t=1695195095;
-        bh=7iowqdzve/IIiUUjcEwx8j3uMrVqqiE7R9zbOCKRV9Q=;
-        h=Date:From:To:Subject:From;
-        b=GlbxxOv39rKNF1P52sXhsTqW8w/qyo41saCNLn7WzPZBjONx/ggW+zKFlRzPLq9Sv
-         utxjYeXrJfbxwWYuTUYrxq2ynjf3lWHmolgIOwLSsrvElqWs38va4E0TihTfW1t2wr
-         xeVL/SrYwBkBAaUIhhQfcvWA5y3qPssDIBWZVjfTcLD4Lxwj3lQPq5nmw5vWn+L/uV
-         WNXVFkON7WfmIZIG68K6UfutH7ePg0QxZCbfOdjlwE0MnTQ+AbmGSEuFHCIWqy8CcM
-         ATGacFOqW6m7jB6YaZEQuSI1HSp7TBgrvHTg1ehe/0Faus0tzY8yz0y91ASjRnAX+j
-         qvQMqny4uArlg==
-Received: by mail.venturelinkage.com for <linux-x25@vger.kernel.org>; Wed, 20 Sep 2023 07:31:20 GMT
-Message-ID: <20230920084500-0.1.l.116p.0.876pclwjl8@venturelinkage.com>
-Date:   Wed, 20 Sep 2023 07:31:20 GMT
-From:   "Lukas Varga" <lukas.varga@venturelinkage.com>
-To:     <linux-x25@vger.kernel.org>
-Subject: =?UTF-8?Q?Popt=C3=A1vka?=
-X-Mailer: mail.venturelinkage.com
+        with ESMTP id S229582AbjJXCOJ (ORCPT
+        <rfc822;linux-x25@vger.kernel.org>); Mon, 23 Oct 2023 22:14:09 -0400
+X-Greylist: delayed 12923 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 23 Oct 2023 19:14:06 PDT
+Received: from mail.tehinnovacii.ru (mail.tehinnovacii.ru [185.221.212.125])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4599510C0;
+        Mon, 23 Oct 2023 19:14:06 -0700 (PDT)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.tehinnovacii.ru (Postfix) with ESMTP id 8696E845A2D93;
+        Mon, 23 Oct 2023 23:45:17 +0300 (MSK)
+Received: from mail.tehinnovacii.ru ([127.0.0.1])
+        by localhost (mail.tehinnovacii.ru [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id RHKslmN_gKe2; Mon, 23 Oct 2023 23:45:17 +0300 (MSK)
+Received: from localhost (localhost [127.0.0.1])
+        by mail.tehinnovacii.ru (Postfix) with ESMTP id 3757A81139813;
+        Mon, 23 Oct 2023 23:45:14 +0300 (MSK)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.tehinnovacii.ru 3757A81139813
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tehinnovacii.ru;
+        s=mail; t=1698093914;
+        bh=Ws5TcS6EV4V7aiUY6u9eol5cuGGKUQT0mSrLKF+Le3s=;
+        h=MIME-Version:To:From:Date:Message-Id;
+        b=C6xnXDA6LtbVjj4YPiDbte7OI3KojR1b5ODojEbJ/Yq/XbBfVywETLztW9mHYm0nd
+         2Bhf32PuG4VKOZhUeeR8f+pL8Ym6eSMNkmmyL/Ch8S6V6W1HDNYZSuKoJtC/bw2r9r
+         FB/st/VqmrZGZoBiefZN7xtFeEcKM7O3mfZQOPaV5+1MdkwG2b3ch+a/9LWBW/grpR
+         rowvsSN+WhYpw+Dng2bfjG8cRSaAXMPwEZOk2rwtR7/hI9UFzawfu6RuwUJxkl93tX
+         zYe7zzu+bLdyS8bozSMeIJyGmFPdcEl+5YTy8l9deWjoStDToNaAjO+eeBR3kCZtHe
+         6gMVn1jUjgjYw==
+Received: from mail.tehinnovacii.ru ([127.0.0.1])
+        by localhost (mail.tehinnovacii.ru [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id wRfLkjJtkHoR; Mon, 23 Oct 2023 23:45:14 +0300 (MSK)
+Received: from DESKTOP-0AG4O9B.lan (unknown [41.157.248.166])
+        by mail.tehinnovacii.ru (Postfix) with ESMTPSA id 787CE8615DF9A;
+        Mon, 23 Oct 2023 23:45:02 +0300 (MSK)
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: Yes, score=6.5 required=5.0 tests=BAYES_20,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_FMBLA_NEWDOM28,
-        RCVD_IN_DNSWL_BLOCKED,RCVD_IN_SBL_CSS,SPF_HELO_NONE,SPF_PASS,
-        URIBL_CSS_A,URIBL_DBL_SPAM autolearn=no autolearn_force=no
-        version=3.4.6
-X-Spam-Report: * -0.0 BAYES_20 BODY: Bayes spam probability is 5 to 20%
-        *      [score: 0.1802]
-        *  2.5 URIBL_DBL_SPAM Contains a spam URL listed in the Spamhaus DBL
-        *      blocklist
-        *      [URIs: venturelinkage.com]
-        *  3.3 RCVD_IN_SBL_CSS RBL: Received via a relay in Spamhaus SBL-CSS
-        *      [80.211.143.151 listed in zen.spamhaus.org]
-        *  0.1 URIBL_CSS_A Contains URL's A record listed in the Spamhaus CSS
-        *      blocklist
-        *      [URIs: venturelinkage.com]
-        *  0.0 RCVD_IN_DNSWL_BLOCKED RBL: ADMINISTRATOR NOTICE: The query to
-        *      DNSWL was blocked.  See
-        *      http://wiki.apache.org/spamassassin/DnsBlocklists#dnsbl-block
-        *      for more information.
-        *      [80.211.143.151 listed in list.dnswl.org]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        *  0.8 FROM_FMBLA_NEWDOM28 From domain was registered in last 14-28
-        *      days
-X-Spam-Level: ******
+Content-Description: Mail message body
+Subject: Brauchen Sie einen Kredit?
+To:     Recipients <zp@tehinnovacii.ru>
+From:   Georg Johannes Proksch <zp@tehinnovacii.ru>
+Date:   Mon, 23 Oct 2023 13:44:02 -0700
+Reply-To: kreditschufadeutsch0@gmail.com
+Message-Id: <20231023204502.787CE8615DF9A@mail.tehinnovacii.ru>
+X-Spam-Status: No, score=4.3 required=5.0 tests=BAYES_50,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FORGED_REPLYTO,
+        FREEMAIL_REPLYTO_END_DIGIT,RCVD_IN_BL_SPAMCOP_NET,SPF_HELO_NONE,
+        SPF_PASS autolearn=no autolearn_force=no version=3.4.6
+X-Spam-Level: ****
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-x25.vger.kernel.org>
 X-Mailing-List: linux-x25@vger.kernel.org
 
-Dobr=C3=A9 r=C3=A1no,
+Brauchen Sie einen Kredit?
+Tr=E4umen Sie davon, ein Unternehmen zu gr=FCnden?
+Sie ben=F6tigen Geld f=FCr Ihre Gesch=E4ftsidee, ben=F6tigen aber eine gro=
+=DFe Finanzierung?
+Besitzen Sie ein Unternehmen und m=F6chten expandieren?
 
-Dovolil jsem si V=C3=A1s kontaktovat, proto=C5=BEe m=C3=A1m z=C3=A1jem ov=
-=C4=9B=C5=99it mo=C5=BEnost nav=C3=A1z=C3=A1n=C3=AD spolupr=C3=A1ce.
+Wir bieten Gesch=E4ftskredite, Privatkredite, Projektkredite und Autokredit=
+e mit einem Zinssatz von 2 % an.
 
-Podporujeme firmy p=C5=99i z=C3=ADsk=C3=A1v=C3=A1n=C3=AD nov=C3=BDch obch=
-odn=C3=ADch z=C3=A1kazn=C3=ADk=C5=AF.
+Vollst=E4ndiger Name:
+Kreditbetrag:
+Kreditlaufzeit:
+Land:
+Telefonnummer:
 
-M=C5=AF=C5=BEeme si promluvit a poskytnout podrobnosti?
-
-V p=C5=99=C3=ADpad=C4=9B z=C3=A1jmu V=C3=A1s bude kontaktovat n=C3=A1=C5=A1=
- anglicky mluv=C3=ADc=C3=AD z=C3=A1stupce.
-
-
-Pozdravy
-Lukas Varga
+Herr Georg Johannes Proksch
+Kreditberater/Berater
